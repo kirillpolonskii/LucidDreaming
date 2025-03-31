@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/frgt_main_menu"
+    >
+
+    <fragment
+        android:id="@+id/frgt_main_menu"
+        android:name="com.youngsophomore.luciddreaming.ui.fragments.MainMenuFragment"
+        android:label="Main menu"
+        tools:layout="@layout/fragment_main_menu">
+        <action
+            android:id="@+id/action_main_menu_to_dreams_list"
+            app:destination="@id/frgt_dreams_list" />
+        <action
+            android:id="@+id/action_main_menu_to_dream_details"
+            app:destination="@id/frgt_dream_details" />
+        <action
+            android:id="@+id/action_main_menu_to_settings"
+            app:destination="@id/frgt_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/frgt_dreams_list"
+        android:name="com.youngsophomore.luciddreaming.ui.fragments.DreamsListFragment"
+        android:label="Dreams list"
+        tools:layout="@layout/fragment_dreams_list">
+    </fragment>
+    <fragment
+        android:id="@+id/frgt_dream_details"
+        android:name="com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragment"
+        android:label="Dream detail"
+        tools:layout="@layout/fragment_dream_details"
+        >
+    </fragment>
+    <fragment
+        android:id="@+id/frgt_settings"
+        android:name="com.youngsophomore.luciddreaming.ui.fragments.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings"
+        >
+    </fragment>
+
+</navigation>
