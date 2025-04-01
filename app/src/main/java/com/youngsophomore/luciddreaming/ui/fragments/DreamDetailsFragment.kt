@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.data.local.DreamDatabase
+import com.youngsophomore.luciddreaming.data.repository.DreamRepository
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
 
 class DreamDetailsFragment : Fragment() {
-    private val viewModel : DreamDetailsViewModel by viewModels()
+    private val viewModel : DreamDetailsViewModel by viewModels {
+        DreamDetailsViewModel.Factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +27,7 @@ class DreamDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        viewModel.addDream()
         return inflater.inflate(R.layout.fragment_dream_details, container, false)
     }
 
