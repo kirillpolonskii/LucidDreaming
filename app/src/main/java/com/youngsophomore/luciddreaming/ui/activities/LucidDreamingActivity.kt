@@ -9,7 +9,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.youngsophomore.luciddreaming.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LucidDreamingActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
