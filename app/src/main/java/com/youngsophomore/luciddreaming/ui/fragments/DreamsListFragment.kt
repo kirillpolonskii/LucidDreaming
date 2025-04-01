@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
+import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
 
 class DreamsListFragment : Fragment() {
+    private val viewModel : DreamsListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
