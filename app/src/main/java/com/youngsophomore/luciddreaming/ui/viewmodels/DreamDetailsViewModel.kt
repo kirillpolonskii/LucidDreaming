@@ -9,10 +9,13 @@ import androidx.lifecycle.createSavedStateHandle
 import com.youngsophomore.luciddreaming.LucidDreamingApplication
 import com.youngsophomore.luciddreaming.data.model.Dream
 import com.youngsophomore.luciddreaming.data.repository.DreamRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import javax.inject.Inject
 
-class DreamDetailsViewModel(private val repository: DreamRepository) : ViewModel() {
+@HiltViewModel
+class DreamDetailsViewModel @Inject constructor(private val repository: DreamRepository) : ViewModel() {
     fun addDream() = viewModelScope.launch {
         repository.addDream(Dream(
             title = "Title1",
@@ -23,26 +26,5 @@ class DreamDetailsViewModel(private val repository: DreamRepository) : ViewModel
             creationDateTime = LocalDateTime.now(),
             changeDateTime = LocalDateTime.now()
         ))
-    }
-
-    companion object {
-
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                // Get the Application object from extras
-                val application = checkNotNull(extras[APPLICATION_KEY])
-                // Create a SavedStateHandle for this ViewModel from extras
-                //val savedStateHandle = extras.createSavedStateHandle()
-
-                return DreamDetailsViewModel(
-                    (application as LucidDreamingApplication).repository
-                    //savedStateHandle
-                ) as T
-            }
-        }
     }
 }

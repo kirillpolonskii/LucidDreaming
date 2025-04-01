@@ -21,7 +21,7 @@ abstract class DreamDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 Log.d("Debug tag", "in synchronized()")
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
+                    context,
                     DreamDatabase::class.java,
                     "dream_database"
                 ).build()

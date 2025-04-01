@@ -13,18 +13,11 @@ class MainMenuViewModel : ViewModel() {
     internal var curButtonsBiases = mutableListOf<Float>()
 
     init {
-        Log.d("Debug_app", "in init{} in MainMenuViewModel")
         setNewBiases()
     }
 
     internal fun setNewBiases(){
         curButtonsBiases = predefButtonsBiases[Random.nextInt(0, predefButtonsBiases.size)]
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("Debug_app", "in onCleared() in MainMenuViewModel")
-    }
-
 
 }

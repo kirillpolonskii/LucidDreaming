@@ -12,11 +12,11 @@ import com.youngsophomore.luciddreaming.data.local.DreamDatabase
 import com.youngsophomore.luciddreaming.data.repository.DreamRepository
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DreamDetailsFragment : Fragment() {
-    private val viewModel : DreamDetailsViewModel by viewModels {
-        DreamDetailsViewModel.Factory
-    }
+    private val viewModel : DreamDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
