@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
+import com.youngsophomore.luciddreaming.databinding.FragmentDreamsListBinding
+import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
 
 class DreamsListFragment : Fragment() {
     private val viewModel : DreamsListViewModel by viewModels()
+    private var _binding: FragmentDreamsListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +26,13 @@ class DreamsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dreams_list, container, false)
+        _binding = FragmentDreamsListBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

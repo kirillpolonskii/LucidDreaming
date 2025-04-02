@@ -6,11 +6,11 @@ import kotlin.random.Random
 
 class MainMenuViewModel : ViewModel() {
     private val predefButtonsBiases = mutableListOf(
-        mutableListOf(0.1f, 0.1f, 0.5f, 0.5f, 0.9f, 0.9f),
-        mutableListOf(0.5f, 0.1f, 0.5f, 0.5f, 0.5f, 0.9f),
-        mutableListOf(0.1f, 0.9f, 0.5f, 0.9f, 0.9f, 0.9f)
+        mutableListOf(0.1f to 0.1f, 0.5f to 0.5f, 0.9f to 0.9f),
+        mutableListOf(0.5f to 0.1f, 0.5f to 0.5f, 0.5f to 0.9f),
+        mutableListOf(0.1f to 0.9f, 0.5f to 0.9f, 0.9f to 0.9f)
     )
-    internal var curButtonsBiases = mutableListOf<Float>()
+    internal var curButtonsBiases = mutableListOf<Pair<Float, Float>>()
 
     init {
         setNewBiases()
