@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.data.local.DreamDatabase
 import com.youngsophomore.luciddreaming.data.repository.DreamRepository
+import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
+import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DreamDetailsFragment : Fragment() {
     private val viewModel : DreamDetailsViewModel by viewModels()
+    private var _binding: FragmentDreamDetailsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +30,16 @@ class DreamDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
+        val view = binding.root
         viewModel.addDream()
-        return inflater.inflate(R.layout.fragment_dream_details, container, false)
+        return view
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

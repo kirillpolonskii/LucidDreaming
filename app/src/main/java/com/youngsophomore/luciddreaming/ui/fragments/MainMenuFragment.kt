@@ -6,19 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
+import com.youngsophomore.luciddreaming.utils.setBiases
 
 class MainMenuFragment : Fragment() {
     private val viewModel : MainMenuViewModel by viewModels()
     private lateinit var navController: NavController
+    private var _binding: FragmentMainMenuBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,39 +31,43 @@ class MainMenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("Debug_app", "in onCreateView() in MainMenuFragment")
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_main_menu, container, false)
-        val btnDreamDetails = view.findViewById<Button>(R.id.btn_add_new_dream)
-        val btnDreamsList = view.findViewById<Button>(R.id.btn_show_dreams_list)
-        val btnSettings = view.findViewById<Button>(R.id.btn_settings)
-        val cnstLaytMainMenu = view.findViewById<ConstraintLayout>(R.id.cnst_layt_main_menu)
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(cnstLaytMainMenu)
-        constraintSet.setHorizontalBias(btnDreamDetails.id, viewModel.curButtonsBiases[0])
-        constraintSet.setVerticalBias(btnDreamDetails.id, viewModel.curButtonsBiases[1])
-        constraintSet.setHorizontalBias(btnDreamsList.id, viewModel.curButtonsBiases[2])
-        constraintSet.setVerticalBias(btnDreamsList.id, viewModel.curButtonsBiases[3])
-        constraintSet.setHorizontalBias(btnSettings.id, viewModel.curButtonsBiases[4])
-        constraintSet.setVerticalBias(btnSettings.id, viewModel.curButtonsBiases[5])
-        constraintSet.applyTo(cnstLaytMainMenu)
+        _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        val view = binding.root
+        setBiasesForButtons()
 
         navController = findNavController()
-        btnDreamsList.setOnClickListener {
-            viewModel.setNewBiases()
-            navController.navigate(R.id.action_main_menu_to_dreams_list)
-        }
-        btnDreamDetails.setOnClickListener {
+        binding.btnMainMenuAddNewDream.setOnClickListener {
             viewModel.setNewBiases()
             navController.navigate(R.id.action_main_menu_to_dream_details)
         }
-        btnSettings.setOnClickListener {
+        binding.btnMainMenuShowDreamsList.setOnClickListener {
+            viewModel.setNewBiases()
+            navController.navigate(R.id.action_main_menu_to_dreams_list)
+        }
+        binding.btnMainMenuSettings.setOnClickListener {
             viewModel.setNewBiases()
             navController.navigate(R.id.action_main_menu_to_settings)
         }
 
 
         return view
+    }
+
+    private fun setBiasesForButtons(){
+        val constraintSet = ConstraintSet()
+        constraintSet.setBiases(
+            binding.cnstLaytMainMenu,
+            mapOf(
+                R.id.btnMainMenuAddNewDream to viewModel.curButtonsBiases[0],
+                R.id.btnMainMenuShowDreamsList to viewModel.curButtonsBiases[1],
+                R.id.btnMainMenuSettings to viewModel.curButtonsBiases[2]
+            )
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
