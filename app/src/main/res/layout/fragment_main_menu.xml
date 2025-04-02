@@ -6,11 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.MainMenuFragment"
     android:orientation="vertical"
-    android:id="@+id/cnst_layt_main_menu"
+    android:id="@+id/cnstLaytMainMenu"
     >
 
     <Button
-        android:id="@+id/btn_add_new_dream"
+        android:id="@+id/btnMainMenuAddNewDream"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
 
         android:text="New dream" />
     <Button
-        android:id="@+id/btn_show_dreams_list"
+        android:id="@+id/btnMainMenuShowDreamsList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
 
         android:text="List of dreams" />
     <Button
-        android:id="@+id/btn_settings"
+        android:id="@+id/btnMainMenuSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
