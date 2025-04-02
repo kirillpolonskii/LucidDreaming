@@ -15,7 +15,7 @@
  - Jetpack Navigation
  - Room
  - Dagger Hilt
- - (coming soon) Data & view binding
+ - View binding
  - (coming soon) Coroutines & Flow
  - (coming soon) WorkManager
 ## Возможности приложения
