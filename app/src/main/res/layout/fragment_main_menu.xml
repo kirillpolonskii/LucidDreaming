@@ -10,7 +10,25 @@
     android:id="@+id/cnstLaytMainMenu"
     >
 
-    <Button
+    <TextView
+        android:id="@+id/tvMainMenuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+
+        style="@style/LDTextView"
+        android:layout_margin="10dp"
+        android:text="@string/all_title"
+        android:textSize="25sp"
+        android:textAllCaps="true"
+        android:background="@drawable/shape_mainmenu_round"
+        />
+
+    <ImageButton
         android:id="@+id/btnMainMenuAddNewDream"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -23,23 +41,12 @@
         app:layout_constraintDimensionRatio="1"
 
         style="@style/LDButton.Round"
-        android:text="New dream" />
-    <Button
+        android:src="@drawable/all_adddream_96"
+        android:padding="18dp"
+        android:contentDescription="TODO"
+        />
+    <ImageButton
         android:id="@+id/btnMainMenuShowDreamsList"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintDimensionRatio="1"
-
-        style="@style/LDButton.Round"
-        android:text="List of dreams" />
-    <Button
-        android:id="@+id/btnMainMenuSettings"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +58,27 @@
         app:layout_constraintDimensionRatio="1"
 
         style="@style/LDButton.Round"
-        android:text="Settings" />
+        android:src="@drawable/mainmenu_dreamslist_96"
+        android:padding="18dp"
+        android:contentDescription="TODO"
+        />
+    <ImageButton
+        android:id="@+id/btnMainMenuSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintDimensionRatio="1"
+
+        style="@style/LDButton.Round"
+        android:src="@drawable/mainmenu_settings_48"
+        android:padding="6dp"
+        android:contentDescription="TODO"
+        />
+    <!--        android:drawableTint="@drawable/mainmenu_settings_48"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
