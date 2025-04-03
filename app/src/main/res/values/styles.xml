@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LDButton">
+        <item name="android:backgroundTint">@color/md_theme_primaryContainer</item>
+    </style>
+    
+</resources>
