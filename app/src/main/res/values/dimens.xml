@@ -2,4 +2,8 @@
 <resources>
 
     <dimen name="radius_all_roundbtn">20dp</dimen>
+
+    <dimen name="width_toolbar_bottomstroke">5dp</dimen>
+    <dimen name="width_toolbar_inset">-5dp</dimen>
+    <dimen name="padding_all_bottomroundbtn">6dp</dimen>
 </resources>

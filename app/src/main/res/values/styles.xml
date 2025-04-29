@@ -8,6 +8,11 @@
         <item name="android:background">@drawable/selector_all_roundbtn</item>
     </style>
 
+    <style name="LDButton.BottomRound" parent="LDButton">
+        <item name="android:background">@drawable/selector_all_bottomroundbtn</item>
+        <item name="android:padding">@dimen/padding_all_bottomroundbtn</item>
+    </style>
+
     <style name="LDTextView">
         <item name="android:textColor">@color/md_theme_primary</item>
         <item name="backgroundTint">@null</item>

@@ -36,15 +36,15 @@ class MainMenuFragment : Fragment() {
         setBiasesForButtons()
 
         navController = findNavController()
-        binding.btnMainMenuAddNewDream.setOnClickListener {
+        binding.ibtnMainMenuAddNewDream.setOnClickListener {
             viewModel.setNewBiases()
             navController.navigate(R.id.action_main_menu_to_dream_details)
         }
-        binding.btnMainMenuShowDreamsList.setOnClickListener {
+        binding.ibtnMainMenuShowDreamsList.setOnClickListener {
             viewModel.setNewBiases()
             navController.navigate(R.id.action_main_menu_to_dreams_list)
         }
-        binding.btnMainMenuSettings.setOnClickListener {
+        binding.ibtnMainMenuSettings.setOnClickListener {
             viewModel.setNewBiases()
             navController.navigate(R.id.action_main_menu_to_settings)
         }
@@ -58,9 +58,9 @@ class MainMenuFragment : Fragment() {
         constraintSet.setBiases(
             binding.cnstLaytMainMenu,
             mapOf(
-                R.id.btnMainMenuAddNewDream to viewModel.curButtonsBiases[0],
-                R.id.btnMainMenuShowDreamsList to viewModel.curButtonsBiases[1],
-                R.id.btnMainMenuSettings to viewModel.curButtonsBiases[2]
+                R.id.ibtnMainMenuAddNewDream to viewModel.curButtonsBiases[0],
+                R.id.ibtnMainMenuShowDreamsList to viewModel.curButtonsBiases[1],
+                R.id.ibtnMainMenuSettings to viewModel.curButtonsBiases[2]
             )
         )
     }

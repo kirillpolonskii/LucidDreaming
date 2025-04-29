@@ -3,5 +3,8 @@
     
     <string name="all_title">Осознанные сны</string>
 
+    <!--STRINGS FOR DREAM DETAILS    -->
+    <string name="dreamdetails_tlbrtitle">Детали сна</string>
+    <string name="dreamdetails_titlehint">Название</string>
 
 </resources>
