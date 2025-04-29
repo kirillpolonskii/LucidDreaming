@@ -29,7 +29,7 @@
         />
 
     <ImageButton
-        android:id="@+id/btnMainMenuAddNewDream"
+        android:id="@+id/ibtnMainMenuAddNewDream"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         android:contentDescription="TODO"
         />
     <ImageButton
-        android:id="@+id/btnMainMenuShowDreamsList"
+        android:id="@+id/ibtnMainMenuShowDreamsList"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:contentDescription="TODO"
         />
     <ImageButton
-        android:id="@+id/btnMainMenuSettings"
+        android:id="@+id/ibtnMainMenuSettings"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +79,6 @@
         android:padding="6dp"
         android:contentDescription="TODO"
         />
-    <!--        android:drawableTint="@drawable/mainmenu_settings_48"-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
