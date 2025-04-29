@@ -7,84 +7,80 @@
         motion:constraintSetStart="@id/toppanel_hidden"
         motion:constraintSetEnd="@id/toppanel_expanded"
         motion:duration="1000"
-
         >
         <OnSwipe
-            motion:touchAnchorId="@id/tpDreamDetailsMeta"
+            motion:touchAnchorId="@id/tpDreamsListSearch"
             motion:touchAnchorSide="bottom"
             motion:dragDirection="dragDown" />
     </Transition>
-    <!--motion:touchRegionId="@id/ibtnDreamDetailsShowMeta"-->
 
     <ConstraintSet android:id="@+id/toppanel_hidden">
         <Constraint
-            android:id="@+id/ibtnDreamDetailBack"
+            android:id="@+id/ibtnDreamsListBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toStartOf="@id/tvDreamDetailsTitle"
-            motion:layout_constraintTop_toTopOf="@id/tvDreamDetailsTitle"
-            motion:layout_constraintBottom_toBottomOf="@id/tvDreamDetailsTitle"
+            motion:layout_constraintEnd_toStartOf="@id/tvDreamsListTitle"
+            motion:layout_constraintTop_toTopOf="@id/tvDreamsListTitle"
+            motion:layout_constraintBottom_toBottomOf="@id/tvDreamsListTitle"
             motion:layout_constraintHorizontal_bias="0"
             motion:layout_constraintHorizontal_chainStyle="packed"
 
             />
         <Constraint
-            android:id="@+id/tvDreamDetailsTitle"
+            android:id="@+id/tvDreamsListTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintStart_toEndOf="@id/ibtnDreamDetailBack"
+            motion:layout_constraintStart_toEndOf="@id/ibtnDreamsListBack"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/ibtnDreamDetailsShowMeta"
+            motion:layout_constraintBottom_toTopOf="@id/ibtnDreamsListSearch"
             motion:layout_constraintHorizontal_bias="0"
             />
         <Constraint
-            android:id="@id/etDreamDetailsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/rvDreamsList"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripeLeft"
+            motion:layout_constraintTop_toBottomOf="@id/vwDreamsListButtonStripeLeft"
+            motion:layout_constraintBottom_toBottomOf="parent"
             />
         <Constraint
-            android:id="@+id/tpDreamDetailsMeta"
+            android:id="@+id/tpDreamsListSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/tvDreamDetailsTitle"
+            motion:layout_constraintBottom_toTopOf="@id/tvDreamsListTitle"
             />
 
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/toppanel_expanded">
         <Constraint
-            android:id="@+id/ibtnDreamDetailBack"
+            android:id="@+id/ibtnDreamsListBack"
             android:visibility="gone"
             />
         <Constraint
-            android:id="@+id/tvDreamDetailsTitle"
+            android:id="@+id/tvDreamsListTitle"
             android:visibility="gone"
             />
         <Constraint
-            android:id="@+id/ibtnDreamDetailsShowMeta"
+            android:id="@+id/ibtnDreamsListBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintStart_toEndOf="@id/vwDreamDetailsButtonStripeLeft"
+            motion:layout_constraintStart_toEndOf="@id/vwDreamsListButtonStripeLeft"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/tpDreamDetailsMeta"
+            motion:layout_constraintTop_toBottomOf="@id/tpDreamsListSearch"
             />
         <Constraint
-            android:id="@id/etDreamDetailsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/rvDreamsList"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
             />
         <Constraint
-            android:id="@+id/tpDreamDetailsMeta"
+            android:id="@+id/tpDreamsListSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"

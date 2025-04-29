@@ -10,10 +10,12 @@ import android.widget.ImageButton
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.youngsophomore.luciddreaming.R
 
-class DreamDetailsMotionLayout @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0) : MotionLayout(context, attrs, defStyleAttr) {
+class DreamDetailsMotionLayout: MotionLayout {
+    constructor(context: Context): super(context)
+    constructor(context: Context, attrs: AttributeSet? = null): super(context, attrs)
+    constructor(context: Context,
+                attrs: AttributeSet? = null,
+                defStyleAttr: Int = 0): super(context, attrs, defStyleAttr)
 
     lateinit var ibtnDreamDetailsShowMeta: ImageButton
     lateinit var etDreamDetailsTitle: EditText
