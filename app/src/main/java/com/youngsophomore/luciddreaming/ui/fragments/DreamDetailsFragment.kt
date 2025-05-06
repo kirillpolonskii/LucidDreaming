@@ -32,7 +32,10 @@ class DreamDetailsFragment : Fragment() {
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         
-
+        viewModel.addDream()
+        viewModel.addDream()
+        viewModel.addDream()
+        viewModel.addDream()
 
         return view
     }

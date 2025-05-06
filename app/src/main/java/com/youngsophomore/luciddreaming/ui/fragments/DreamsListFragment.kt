@@ -6,13 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamsListBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
+import com.youngsophomore.luciddreaming.ui.adapters.DreamsListAdapter
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DreamsListFragment : Fragment() {
     private val viewModel : DreamsListViewModel by viewModels()
     private var _binding: FragmentDreamsListBinding? = null
@@ -28,6 +33,13 @@ class DreamsListFragment : Fragment() {
     ): View? {
         _binding = FragmentDreamsListBinding.inflate(inflater, container, false)
         val view = binding.root
+        val adapter = DreamsListAdapter()
+        binding.rvDreamsList.adapter = adapter
+        binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
+        viewModel.allDreams.observe(viewLifecycleOwner, Observer { dreams ->
+            adapter.setDreams(dreams)
+        })
+
         return view
     }
     override fun onDestroyView() {

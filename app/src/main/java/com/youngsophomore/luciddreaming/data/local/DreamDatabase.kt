@@ -24,7 +24,9 @@ abstract class DreamDatabase : RoomDatabase() {
                     context,
                     DreamDatabase::class.java,
                     "dream_database"
-                ).build()
+                )
+                    .allowMainThreadQueries()
+                    .build()
                 INSTANCE = instance
                 instance
             }
