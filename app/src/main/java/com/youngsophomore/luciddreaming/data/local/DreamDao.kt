@@ -21,5 +21,5 @@ interface DreamDao {
     suspend fun delete(dream: Dream)
 
     @Query("SELECT * FROM dreams ORDER BY id")
-    fun getAllDreams(): Flow<List<Dream>>
+    fun getAllDreams(): LiveData<List<Dream>>
 }

@@ -4,8 +4,8 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto"
     >
     <Transition
-        motion:constraintSetStart="@id/toppanel_hidden"
-        motion:constraintSetEnd="@id/toppanel_expanded"
+        motion:constraintSetStart="@id/dreamdetails_toppanel_hidden"
+        motion:constraintSetEnd="@id/dreamdetails_toppanel_expanded"
         motion:duration="1000"
 
         >
@@ -14,19 +14,9 @@
             motion:touchAnchorSide="bottom"
             motion:dragDirection="dragDown" />
     </Transition>
-    <Transition
-        motion:constraintSetStart="@id/toppanel_hidden"
-        motion:constraintSetEnd="@id/toppanel_expanded"
-        motion:duration="100"
-        >
-        <OnClick
-            motion:clickAction="transitionToEnd"
-            motion:targetId="@id/ibtnDreamDetailsShowMeta"
-            />
-    </Transition>
     <!--motion:touchRegionId="@id/ibtnDreamDetailsShowMeta"-->
 
-    <ConstraintSet android:id="@+id/toppanel_hidden">
+    <ConstraintSet android:id="@+id/dreamdetails_toppanel_hidden">
         <Constraint
             android:id="@+id/ibtnDreamDetailBack"
             android:layout_width="wrap_content"
@@ -68,7 +58,7 @@
 
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/toppanel_expanded">
+    <ConstraintSet android:id="@+id/dreamdetails_toppanel_expanded">
         <Constraint
             android:id="@+id/ibtnDreamDetailBack"
             android:visibility="gone"

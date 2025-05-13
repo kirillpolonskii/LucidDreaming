@@ -1,14 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<com.youngsophomore.luciddreaming.ui.custom.DreamsListMotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.DreamsListFragment">
+    app:layoutDescription="@xml/scene_dreamslist_toppanel"
+    android:id="@+id/mtnLaytDreamsList"
+    app:motionDebug="SHOW_ALL"
+    >
 
+    <ImageButton
+        android:id="@+id/ibtnDreamsListBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/arrowback_all_24"
+        app:layout_constraintBottom_toBottomOf="@id/tvDreamsListTitle"
+        app:layout_constraintEnd_toStartOf="@id/tvDreamsListTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDreamsListTitle"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Dreams list" />
+        android:id="@+id/tvDreamsListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ibtnDreamsListBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/vwDreamsListButtonStripeLeft"
+        app:layout_constraintHorizontal_bias="0"
 
-</FrameLayout>
+        android:text="Детали сна"
+        android:textSize="22sp"
+        />
+
+    <View
+        android:id="@+id/vwDreamsListButtonStripeLeft"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@color/md_theme_primaryContainer"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamsListSearch"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="@id/ibtnDreamsListSearch" />
+
+    <ImageButton
+        android:id="@+id/ibtnDreamsListSearch"
+        style="@style/LDButton.BottomRound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="TODO"
+        android:src="@drawable/dreamslist_search_24"
+
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vwDreamsListButtonStripeLeft"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamsListTitle" />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDreamsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vwDreamsListButtonStripeLeft"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+
+        />
+
+    <ImageButton
+        android:id="@+id/ibtnMainMenuAddNewDream"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintDimensionRatio="1"
+
+        style="@style/LDButton.Round"
+        android:padding="6dp"
+        android:src="@drawable/dreamslist_adddream_48"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="TODO"
+        />
+
+    <com.youngsophomore.luciddreaming.ui.custom.SearchTopPanelPortrait
+        android:id="@+id/tpDreamsListSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+
+        />
+
+</com.youngsophomore.luciddreaming.ui.custom.DreamsListMotionLayout>
