@@ -33,7 +33,7 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        Log.d("RecyclerView", "allDreams.size = ${allDreams.size}")
+        //Log.d("RecyclerView", "allDreams.size = ${allDreams.size}")
         return allDreams.size
     }
 }

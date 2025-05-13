@@ -1,8 +1,10 @@
 package com.youngsophomore.luciddreaming.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -39,6 +41,40 @@ class DreamsListFragment : Fragment() {
         viewModel.allDreams.observe(viewLifecycleOwner, Observer { dreams ->
             adapter.setDreams(dreams)
         })
+        //binding.mtnLaytDreamsList.isInteractionEnabled = true
+        //binding.rvDreamsList.parent.requestDisallowInterceptTouchEvent(false)
+        binding.rvDreamsList.setOnTouchListener { v, event ->
+            v.getParent().requestDisallowInterceptTouchEvent(true)
+            when (event?.action){
+                MotionEvent.ACTION_DOWN -> {
+                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, DOWN")
+
+                    v.onTouchEvent(event)
+                    //false
+                    //true // - так rv не двигался
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, MOVE")
+                    v.onTouchEvent(event)
+                    //false
+                    //true //- так rv не двигался
+                }
+                MotionEvent.ACTION_UP -> {
+                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, UP")
+                    v.onTouchEvent(event)
+
+                    //false
+                    //true //- так rv не двигался
+                }
+                else -> {
+                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, else")
+                    v.onTouchEvent(event)
+
+                    //false
+                    //true //- так rv не двигался
+                }
+            }
+        }
 
         return view
     }

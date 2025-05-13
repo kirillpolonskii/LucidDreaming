@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/scene_dreamslist_toppanel"
-
+    android:id="@+id/mtnLaytDreamsList"
+    app:motionDebug="SHOW_ALL"
     >
 
     <ImageButton
@@ -32,7 +33,7 @@
         app:layout_constraintStart_toEndOf="@id/ibtnDreamsListBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListSearch"
+        app:layout_constraintBottom_toTopOf="@id/vwDreamsListButtonStripeLeft"
         app:layout_constraintHorizontal_bias="0"
 
         android:text="Детали сна"
