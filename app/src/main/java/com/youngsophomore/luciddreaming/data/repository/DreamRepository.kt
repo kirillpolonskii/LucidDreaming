@@ -1,5 +1,6 @@
 package com.youngsophomore.luciddreaming.data.repository
 
+import androidx.lifecycle.LiveData
 import com.youngsophomore.luciddreaming.data.local.DreamDao
 import com.youngsophomore.luciddreaming.data.model.Dream
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ class DreamRepository @Inject constructor(private val dreamDao: DreamDao) {
         dreamDao.insert(dream)
     }
 
-    suspend fun getAllDreams() : Flow<List<Dream>>{
+    fun getAllDreams() : LiveData<List<Dream>> {
         return dreamDao.getAllDreams()
     }
 }
