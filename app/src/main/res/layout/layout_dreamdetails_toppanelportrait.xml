@@ -72,7 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        app:flow_horizontalBias="0"
+        app:constraint_referenced_ids="ibtnDreamDetailsAddMood"
         app:flow_horizontalGap="10dp"
         app:flow_horizontalStyle="packed"
         app:flow_verticalBias="0"
@@ -82,7 +82,17 @@
         app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsMoods"
         app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsPlaces"
         />
+    <ImageButton
+        android:id="@+id/ibtnDreamDetailsAddMood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
+
+         />
     <TextView
         android:id="@+id/tvDreamDetailsPlaces"
         android:layout_width="wrap_content"
@@ -102,15 +112,27 @@
         android:id="@+id/flowDreamDetailsLocations"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsPlaces"
         android:padding="10dp"
-        app:flow_horizontalBias="0"
+        app:constraint_referenced_ids="ibtnDreamDetailsAddPlace"
         app:flow_horizontalGap="10dp"
         app:flow_horizontalStyle="packed"
         app:flow_verticalBias="0"
         app:flow_wrapMode="chain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsPlaces"
+
+
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamDetailsAddPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:padding="3dp"
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
 
         />
 
