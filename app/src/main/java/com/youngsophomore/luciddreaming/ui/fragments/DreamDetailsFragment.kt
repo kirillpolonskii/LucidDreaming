@@ -12,12 +12,13 @@ import androidx.fragment.app.viewModels
 import com.youngsophomore.luciddreaming.R
 
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
+import com.youngsophomore.luciddreaming.ui.custom.MetaPanelCallback
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DreamDetailsFragment : Fragment() {
-    private val viewModel : DreamDetailsViewModel by viewModels()
+    val viewModel : DreamDetailsViewModel by viewModels()
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -29,12 +30,22 @@ class DreamDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("Gestures", "DreamDetailsFragment.onCreateView")
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
-        
-        viewModel.addDream()
-        viewModel.addDream()
-        viewModel.addDream()
+        // вызывается после UP в MetaPanel
+        /*binding.tpDreamDetailsMeta.setOnClickListener {
+            Log.d("Gestures", " tpDreamDetailsMeta.setOnClickListener")
+        }*/
+        //binding.tpDreamDetailsMeta.setOnClickListener(this)
+        /*binding.tpDreamDetailsMeta.onClick(object : MetaPanelCallback {
+            override fun onClick() {
+                Log.d("Gestures", " tpDreamDetailsMeta.onClick")
+            }
+        })*/
+        /*binding.tpDreamDetailsMeta.binding.tglgrDreamDetailsPOV.setOnClickListener {
+            Log.d("Gestures", "DreamDetailsFragment.onCreateView, tpDreamDetailsMeta.binding.tglgrDreamDetailsPOV.setOnClickListener")
+        }*/
         viewModel.addDream()
 
         return view

@@ -89,6 +89,16 @@
         android:backgroundTint="@color/md_theme_onPrimaryContainer"
         android:autofillHints="@null"
         />
+
+    <!--<include
+        layout="@layout/layout_dreamdetails_toppanelportrait"
+        android:id="@+id/tpDreamDetailsMeta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />-->
     <com.youngsophomore.luciddreaming.ui.custom.MetaTopPanelPortrait
         android:id="@+id/tpDreamDetailsMeta"
         android:layout_width="match_parent"
@@ -97,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-
+        android:clickable="false"
         />
 
 </com.youngsophomore.luciddreaming.ui.custom.DreamDetailsMotionLayout>
