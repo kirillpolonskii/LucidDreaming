@@ -7,35 +7,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:alpha="1"
     android:background="@color/md_theme_onPrimaryContainer"
+    android:id="@+id/test"
+    android:clickable="false"
     >
 
     <TextView
         android:id="@+id/tvDreamDetailsPOV"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsFiller"
+        app:layout_constraintBottom_toTopOf="@id/tglgrDreamDetailsPOV"
         app:layout_constraintVertical_bias="0"
 
-        android:text="Метаданные"
+        android:text="Точка зрения во сне"
         android:textSize="20sp"
         android:alpha="1"
         />
-    <TextView
-        android:id="@+id/tvDreamDetailsFiller"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/tglgrDreamDetailsPOV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsPOV"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsMoods"
         app:layout_constraintVertical_bias="0"
 
-        android:text="Метаданные\nvtnf"
-        android:textSize="50sp"
+        >
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="От 1-го лица"
+            />
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="От 3-го лица"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <TextView
+        android:id="@+id/tvDreamDetailsMoods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tglgrDreamDetailsPOV"
+        app:layout_constraintBottom_toTopOf="@id/flowDreamDetailsMoods"
+        app:layout_constraintVertical_bias="0"
+
+        android:text="Настроения сна"
+        android:textSize="20sp"
         android:alpha="1"
         />
 
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowDreamDetailsMoods"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsMoods"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsPlaces"
+        />
+
+    <TextView
+        android:id="@+id/tvDreamDetailsPlaces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flowDreamDetailsMoods"
+        app:layout_constraintBottom_toTopOf="@id/flowDreamDetailsLocations"
+        app:layout_constraintVertical_bias="0"
+
+        android:text="Локации сна"
+        android:textSize="20sp"
+        android:alpha="1"
+        />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowDreamDetailsLocations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsPlaces"
+
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+<androidx.constraintlayout.widget.ConstraintLayout
+android:id="@+id/test"
+
+</androidx.constraintlayout.widget.ConstraintLayout>-->
