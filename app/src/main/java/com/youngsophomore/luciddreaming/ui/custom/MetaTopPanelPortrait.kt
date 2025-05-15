@@ -34,16 +34,11 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         Log.d("Gestures", "MetaTopPanelPortrait.onAttachedToWindow()")
-        binding.tglgrDreamDetailsPOV.setOnClickListener {
-            Log.d("Gestures", " tglgrDreamDetailsPOV.setOnClickListener")
+        binding.ibtnDreamDetailsAddMood.setOnClickListener {
+            Log.d("Gestures", " ibtnDreamDetailsAddMood.setOnClickListener")
         }
-        binding.tvDreamDetailsPOV.setOnClickListener {
-            Log.d("Gestures", " tvDreamDetailsPOV.setOnClickListener")
-        }
-        binding.tvDreamDetailsMoods.setOnTouchListener { v, event ->
-            Log.d("Gestures", " tvDreamDetailsMoods.setOnTouchListener")
-            performClick()
-            true
+        binding.ibtnDreamDetailsAddPlace.setOnClickListener {
+            Log.d("Gestures", " ibtnDreamDetailsAddPlace.setOnClickListener")
         }
 
     }

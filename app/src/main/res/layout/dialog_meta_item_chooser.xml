@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:id="@+id/tvMetaItemChooserTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibtnMetaItemChooserClose"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rvMetaItemChooser"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintVertical_bias="0"
+        android:text="Выбрать настроение"
+
+        />
+    <ImageButton
+        android:id="@+id/ibtnMetaItemChooserClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvMetaItemChooserTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+
+        android:src="@drawable/all_close_24"
+        />
+    <EditText
+        android:id="@+id/etMetaItemChooserFilter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMetaItemChooserTitle"
+        app:layout_constraintBottom_toTopOf="@id/rvMetaItemChooser"
+
+        android:hint="Поиск"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMetaItemChooser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etMetaItemChooserFilter"
+
+        />
+
+    <ImageButton
+        android:id="@+id/ibtnDreamDetailsAddPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvMetaItemChooser"
+        android:padding="3dp"
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
+
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

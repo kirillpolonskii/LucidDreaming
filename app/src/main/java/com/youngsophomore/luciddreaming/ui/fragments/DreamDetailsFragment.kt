@@ -33,19 +33,7 @@ class DreamDetailsFragment : Fragment() {
         Log.d("Gestures", "DreamDetailsFragment.onCreateView")
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
-        // вызывается после UP в MetaPanel
-        /*binding.tpDreamDetailsMeta.setOnClickListener {
-            Log.d("Gestures", " tpDreamDetailsMeta.setOnClickListener")
-        }*/
-        //binding.tpDreamDetailsMeta.setOnClickListener(this)
-        /*binding.tpDreamDetailsMeta.onClick(object : MetaPanelCallback {
-            override fun onClick() {
-                Log.d("Gestures", " tpDreamDetailsMeta.onClick")
-            }
-        })*/
-        /*binding.tpDreamDetailsMeta.binding.tglgrDreamDetailsPOV.setOnClickListener {
-            Log.d("Gestures", "DreamDetailsFragment.onCreateView, tpDreamDetailsMeta.binding.tglgrDreamDetailsPOV.setOnClickListener")
-        }*/
+
         viewModel.addDream()
 
         return view
