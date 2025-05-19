@@ -1,14 +1,23 @@
 package com.youngsophomore.luciddreaming.ui.custom
 
+import android.app.Dialog
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.Orientation
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.youngsophomore.luciddreaming.R
-import com.youngsophomore.luciddreaming.databinding.LayoutDreamdetailsToppanelportraitBinding
+import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooserBinding
+import com.youngsophomore.luciddreaming.databinding.ItemMetaBinding
+import com.youngsophomore.luciddreaming.databinding.LayoutDreamdetailsPanelportraitBinding
+import com.youngsophomore.luciddreaming.ui.adapters.MetaListAdapter
 import com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragment
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 
@@ -18,16 +27,13 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr)
     //, View.OnClickListener
 {
-    private var callback: MetaPanelCallback? = null
-    private var binding: LayoutDreamdetailsToppanelportraitBinding
+    private var binding: LayoutDreamdetailsPanelportraitBinding
     private val viewModel: DreamDetailsViewModel by lazy {
-        parent as DreamDetailsFragment
-        (context as DreamDetailsFragment).viewModel
+        ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
     }
     init {
-        //setOnClickListener(this)
         // true - панель показывается, false - панель исчезает
-        binding = LayoutDreamdetailsToppanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
+        binding = LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
         //addView(binding.root)
     }
 
@@ -36,6 +42,10 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         Log.d("Gestures", "MetaTopPanelPortrait.onAttachedToWindow()")
         binding.ibtnDreamDetailsAddMood.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddMood.setOnClickListener")
+            showMetaItemChooser(listOf("мета1", "мета2", "мета3", "мета2", "мета3"
+                //, "мета2", "мета3", "мета2", "мета3", "мета2", "мета3", "мета2", "мета3"
+                //, "мета2", "мета3", "мета2", "мета3", "мета2", "мета3", "мета2", "мета3"
+            ))
         }
         binding.ibtnDreamDetailsAddPlace.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddPlace.setOnClickListener")
@@ -103,17 +113,28 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         return super.performClick()
     }
 
-    /*override fun onClick(v: View?) {
-        Log.d("Gestures", "MetaTopPanelPortrait.onClick(), v.id=${v?.id.toString()}")
-        when (v){
-            binding.tglgrDreamDetailsPOV -> {
-                Log.d("Gestures", " binding.tglgrDreamDetailsPOV")
-            }
-            binding.tvDreamDetailsMoods -> {
-                Log.d("Gestures", " binding.tvDreamDetailsMoods")
-            }
+    fun showMetaItemChooser(metaItems: List<String>){
+        val dialog = Dialog(context)
+        val metaChooserBinding = DialogMetaItemChooserBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(metaChooserBinding.root);
+        /*if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
+        }*/
+        metaChooserBinding.tvMetaItemChooserTitle.text = "Выбрать настроение"
+        val metaAdapter = MetaListAdapter()
+        metaAdapter.setMetaItems(metaItems)
+        metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
+        val layoutManager = LinearLayoutManager(context)
+
+        //layoutManager.isAutoMeasureEnabled = true
+        metaChooserBinding.rvMetaItemChooser.layoutManager = layoutManager
+        metaChooserBinding.rvMetaItemChooser.setHasFixedSize(true)
+        metaChooserBinding.ibtnMetaItemChooserClose.setOnClickListener {
+            Log.d("Gestures", " ibtnMetaItemChooserClose.setOnClickListener")
         }
-    }*/
+        dialog.show();
+    }
+
     /*fun onClick(listener: MetaPanelCallback){
         Log.d("Gestures", " MetaTopPanelPortrait.onClick")
         callback = listener

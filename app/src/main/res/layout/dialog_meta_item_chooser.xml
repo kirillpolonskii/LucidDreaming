@@ -12,10 +12,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ibtnMetaItemChooserClose"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rvMetaItemChooser"
+        app:layout_constraintBottom_toTopOf="@id/etMetaItemChooserFilter"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintVertical_bias="0"
-        android:text="Выбрать настроение"
+        android:text="Заголовок"
 
         />
     <ImageButton
@@ -40,6 +40,7 @@
 
         android:hint="Поиск"
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMetaItemChooser"
         android:layout_width="wrap_content"
@@ -47,16 +48,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etMetaItemChooserFilter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constrainedHeight="true"
 
+        android:paddingHorizontal="80dp"
         />
+    <!--app:layout_constrainedHeight="true"
+    app:layout_constraintHeight_default="wrap"
+    -->
 
     <ImageButton
-        android:id="@+id/ibtnDreamDetailsAddPlace"
+        android:id="@+id/ibtnDreamDetailsAddItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvMetaItemChooser"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
         android:padding="3dp"
         style="@style/LDButton.Round"
         android:contentDescription="TODO"

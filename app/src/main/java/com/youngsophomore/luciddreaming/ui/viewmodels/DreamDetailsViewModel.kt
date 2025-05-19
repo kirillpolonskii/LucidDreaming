@@ -16,6 +16,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DreamDetailsViewModel @Inject constructor(private val repository: DreamRepository) : ViewModel() {
+
+    init {
+        
+    }
+
     fun addDream() = viewModelScope.launch {
         repository.addDream(Dream(
             title = "Title1",
