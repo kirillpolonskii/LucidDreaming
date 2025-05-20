@@ -42,10 +42,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         Log.d("Gestures", "MetaTopPanelPortrait.onAttachedToWindow()")
         binding.ibtnDreamDetailsAddMood.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddMood.setOnClickListener")
-            showMetaItemChooser(listOf("мета1", "мета2", "мета3", "мета2", "мета3"
-                //, "мета2", "мета3", "мета2", "мета3", "мета2", "мета3", "мета2", "мета3"
-                //, "мета2", "мета3", "мета2", "мета3", "мета2", "мета3", "мета2", "мета3"
-            ))
+            showMetaItemChooser(viewModel.moods)
         }
         binding.ibtnDreamDetailsAddPlace.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddPlace.setOnClickListener")

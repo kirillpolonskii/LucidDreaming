@@ -33,8 +33,8 @@ class DreamDetailsFragment : Fragment() {
         Log.d("Gestures", "DreamDetailsFragment.onCreateView")
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        viewModel.addDream()
+        viewModel.initMoods()
+        //viewModel.addDream()
 
         return view
     }
