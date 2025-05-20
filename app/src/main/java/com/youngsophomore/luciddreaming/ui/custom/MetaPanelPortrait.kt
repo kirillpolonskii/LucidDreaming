@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.GridLayoutManager
@@ -135,10 +136,9 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         metaChooserBinding.tvMetaItemChooserTitle.text = "Выбрать настроение"
         val metaAdapter = MetaListAdapter(this)
         metaAdapter.setMetaItems(metaItems)
+
         metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
         val layoutManager = LinearLayoutManager(context)
-
-        //layoutManager.isAutoMeasureEnabled = true
         metaChooserBinding.rvMetaItemChooser.layoutManager = layoutManager
         metaChooserBinding.rvMetaItemChooser.setHasFixedSize(true)
         metaChooserBinding.ibtnMetaItemChooserClose.setOnClickListener {
@@ -147,6 +147,10 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         }
         metaChooserBinding.ibtnDreamDetailsAddItem.setOnClickListener{
             showDialogMetaItemAppend()
+        }
+        metaChooserBinding.etMetaItemChooserFilter.addTextChangedListener { input ->
+            Log.d("Gestures", " etMetaItemChooserFilter.addTextChangedListener, ${input}")
+            metaAdapter.filter.filter(input)
         }
         dialogMetaItemChoose.show();
 
