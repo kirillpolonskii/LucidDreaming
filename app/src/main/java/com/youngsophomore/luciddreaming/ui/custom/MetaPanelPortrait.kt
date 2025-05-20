@@ -6,6 +6,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
@@ -14,30 +16,40 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Orientation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooseBinding
 import com.youngsophomore.luciddreaming.databinding.ItemMetaBinding
 import com.youngsophomore.luciddreaming.databinding.LayoutDreamdetailsPanelportraitBinding
 import com.youngsophomore.luciddreaming.ui.adapters.MetaListAdapter
 import com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragment
+import com.youngsophomore.luciddreaming.ui.interfaces.ConfirmActionListener
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 
 class MetaTopPanelPortrait @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr)
-    //, View.OnClickListener
+    defStyleAttr: Int = 0) :
+    ConstraintLayout(context, attrs, defStyleAttr)
+    , MetaItemChooseListener
 {
     private var binding: LayoutDreamdetailsPanelportraitBinding
     private val viewModel: DreamDetailsViewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
     }
     lateinit var listener: MetaItemAppendListener
+    val dialogMetaItemChoose = Dialog(context)
+    val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
     init {
         // true - панель показывается, false - панель исчезает
         binding = LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
         //addView(binding.root)
+        dialogMetaItemChoose.setContentView(metaChooserBinding.root)
+        dialogMetaItemChoose.setOnDismissListener {
+            viewModel.isNewMetaItemMood = null
+        }
     }
 
     override fun onAttachedToWindow() {
@@ -46,6 +58,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         binding.ibtnDreamDetailsAddMood.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddMood.setOnClickListener")
             showMetaItemChooser(viewModel.moods)
+
         }
         binding.ibtnDreamDetailsAddPlace.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddPlace.setOnClickListener")
@@ -114,14 +127,13 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     }
 
     fun showMetaItemChooser(metaItems: List<String>){
-        val dialog = Dialog(context)
-        val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
-        dialog.setContentView(metaChooserBinding.root);
+        viewModel.isNewMetaItemMood = true
+
         /*if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
         }*/
         metaChooserBinding.tvMetaItemChooserTitle.text = "Выбрать настроение"
-        val metaAdapter = MetaListAdapter()
+        val metaAdapter = MetaListAdapter(this)
         metaAdapter.setMetaItems(metaItems)
         metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
         val layoutManager = LinearLayoutManager(context)
@@ -131,11 +143,13 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         metaChooserBinding.rvMetaItemChooser.setHasFixedSize(true)
         metaChooserBinding.ibtnMetaItemChooserClose.setOnClickListener {
             Log.d("Gestures", " ibtnMetaItemChooserClose.setOnClickListener")
+            dialogMetaItemChoose.dismiss()
         }
         metaChooserBinding.ibtnDreamDetailsAddItem.setOnClickListener{
             showDialogMetaItemAppend()
         }
-        dialog.show();
+        dialogMetaItemChoose.show();
+
     }
 
     fun showDialogMetaItemAppend(){
@@ -146,18 +160,47 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         metaAppenderBinding.ibtnAppendDialogConfirm.setOnClickListener {
             listener.onConfirmItem(metaAppenderBinding.etAppendDialogFilter.text.toString())
             dialog.dismiss()
-
         }
         dialog.show()
     }
 
-    /*fun onClick(listener: MetaPanelCallback){
-        Log.d("Gestures", " MetaTopPanelPortrait.onClick")
-        callback = listener
-    }*/
+    fun showDialogConfirmMetaItemDelete(action: String, item: String){
+        val dialog = Dialog(context)
+        val confirmActionBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(confirmActionBinding.root)
+        confirmActionBinding.apply {
+            tvConfirmActionDialogTitle.text = "Подтвердить удаление"
+            tvConfirmActionDialogAction.text = action
+            ibtnConfirmActionDialogConfirm.setOnClickListener {
+                viewModel.deleteMood(item)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
 
-}
+    override fun onMetaItemChoose(item: String) {
+        Log.d("Gestures", "MetaTopPanelPortrait.onMetaItemChoose()")
+        // здесь добавить текст с нажатой в диалоге кнопке в Flow, т. е. создать Button и добавить id
+        if (viewModel.isNewMetaItemMood != null && viewModel.isNewMetaItemMood!!){
+            val newMetaItem = TextView(context)
+            newMetaItem.text = item
+            newMetaItem.id = View.generateViewId()
+            binding.root.addView(newMetaItem)
+            //binding.flowDreamDetailsMoods.addView(newMetaItem)
+            binding.flowDreamDetailsMoods.referencedIds += newMetaItem.id
+            binding.flowDreamDetailsMoods.referencedIds.also {
+                it[it.size - 1] = it[it.size - 2]
+                it[it.size - 2] = newMetaItem.id
+            }
+            dialogMetaItemChoose.dismiss()
+        }
 
-interface MetaPanelCallback {
-    fun onClick()
+    }
+
+    override fun onMetaItemDelete(item: String) {
+        showDialogConfirmMetaItemDelete("Удалить настроение \"${item}\"?", item)
+
+    }
+
 }

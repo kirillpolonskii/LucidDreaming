@@ -93,6 +93,7 @@
         android:src="@drawable/all_addmetaitem_36"
 
          />
+
     <TextView
         android:id="@+id/tvDreamDetailsPlaces"
         android:layout_width="wrap_content"

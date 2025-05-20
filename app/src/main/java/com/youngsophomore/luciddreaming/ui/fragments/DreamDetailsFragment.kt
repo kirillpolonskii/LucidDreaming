@@ -12,13 +12,13 @@ import androidx.fragment.app.viewModels
 import com.youngsophomore.luciddreaming.R
 
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
-import com.youngsophomore.luciddreaming.ui.custom.MetaPanelCallback
+import com.youngsophomore.luciddreaming.ui.interfaces.ConfirmActionListener
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
+class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
     val viewModel : DreamDetailsViewModel by viewModels()
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
@@ -54,6 +54,8 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
 
     override fun onConfirmItem(item: String) {
         Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
-        viewModel.updateMoods(item)
+        viewModel.appendMood(item)
     }
+
+
 }

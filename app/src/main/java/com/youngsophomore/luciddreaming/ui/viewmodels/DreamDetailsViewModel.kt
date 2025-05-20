@@ -27,7 +27,10 @@ class DreamDetailsViewModel @Inject constructor(
     private val repository: DreamRepository,
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
-    lateinit var moods: List<String>
+    lateinit var moods: MutableList<String>
+    var curDreamMoodsStr = ""
+    var isNewMetaItemMood: Boolean? = null
+    var isNewMetaItemPlace = false
     init {
         Log.d("Lifecycle", "DreamDetailsViewModel.init")
         //initMoods()
@@ -39,17 +42,27 @@ class DreamDetailsViewModel @Inject constructor(
         Log.d("Preferences", " preferences = $preferences")
         val moodsString = preferences[keyMoods] ?: ""
         Log.d("Preferences", " moodsString = $moodsString")
-        moods = moodsString.split("|")
+        moods = moodsString.split("|").toMutableList()
         Log.d("Preferences", " moods = $moods")
     }
 
-    fun updateMoods(newMood: String){
+    fun appendMood(newMood: String){
         Log.d("Preferences", "DreamDetailsViewModel.updateMoods, $newMood")
         val keyMoods = stringPreferencesKey("moods")
         viewModelScope.launch {
             dataStore.edit { prefs ->
                 val curMoods = prefs[keyMoods] ?: ""
                 prefs[keyMoods] = "$curMoods|$newMood"
+            }
+        }
+    }
+
+    fun deleteMood(mood: String){
+        moods.remove(mood)
+        val keyMoods = stringPreferencesKey("moods")
+        viewModelScope.launch {
+            dataStore.edit { prefs ->
+                prefs[keyMoods] = moods.joinToString("|")
             }
         }
     }
