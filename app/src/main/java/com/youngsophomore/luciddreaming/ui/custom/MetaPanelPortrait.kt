@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Orientation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.youngsophomore.luciddreaming.R
-import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooserBinding
+import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
+import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooseBinding
 import com.youngsophomore.luciddreaming.databinding.ItemMetaBinding
 import com.youngsophomore.luciddreaming.databinding.LayoutDreamdetailsPanelportraitBinding
 import com.youngsophomore.luciddreaming.ui.adapters.MetaListAdapter
 import com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragment
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 
 class MetaTopPanelPortrait @JvmOverloads constructor(
@@ -31,6 +33,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     private val viewModel: DreamDetailsViewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
     }
+    lateinit var listener: MetaItemAppendListener
     init {
         // true - панель показывается, false - панель исчезает
         binding = LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
@@ -112,7 +115,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
 
     fun showMetaItemChooser(metaItems: List<String>){
         val dialog = Dialog(context)
-        val metaChooserBinding = DialogMetaItemChooserBinding.inflate(LayoutInflater.from(context))
+        val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(metaChooserBinding.root);
         /*if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
@@ -129,7 +132,23 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         metaChooserBinding.ibtnMetaItemChooserClose.setOnClickListener {
             Log.d("Gestures", " ibtnMetaItemChooserClose.setOnClickListener")
         }
+        metaChooserBinding.ibtnDreamDetailsAddItem.setOnClickListener{
+            showDialogMetaItemAppend()
+        }
         dialog.show();
+    }
+
+    fun showDialogMetaItemAppend(){
+        val dialog = Dialog(context)
+        val metaAppenderBinding = DialogMetaItemAppendBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(metaAppenderBinding.root)
+        metaAppenderBinding.tvAppendDialogTitle.text = "Добавить настроение"
+        metaAppenderBinding.ibtnAppendDialogConfirm.setOnClickListener {
+            listener.onConfirmItem(metaAppenderBinding.etAppendDialogFilter.text.toString())
+            dialog.dismiss()
+
+        }
+        dialog.show()
     }
 
     /*fun onClick(listener: MetaPanelCallback){
