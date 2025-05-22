@@ -8,17 +8,24 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.room.util.toSQLiteConnection
 import com.youngsophomore.luciddreaming.R
 
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
-import com.youngsophomore.luciddreaming.ui.custom.MetaPanelCallback
+import com.youngsophomore.luciddreaming.ui.interfaces.ConfirmActionListener
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
+import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DreamDetailsFragment : Fragment() {
+class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
     val viewModel : DreamDetailsViewModel by viewModels()
+    private val lucidDreamingViewModel: LucidDreamingViewModel by activityViewModels()
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -32,21 +39,12 @@ class DreamDetailsFragment : Fragment() {
     ): View? {
         Log.d("Gestures", "DreamDetailsFragment.onCreateView")
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
+        binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
-        // вызывается после UP в MetaPanel
-        /*binding.tpDreamDetailsMeta.setOnClickListener {
-            Log.d("Gestures", " tpDreamDetailsMeta.setOnClickListener")
-        }*/
-        //binding.tpDreamDetailsMeta.setOnClickListener(this)
-        /*binding.tpDreamDetailsMeta.onClick(object : MetaPanelCallback {
-            override fun onClick() {
-                Log.d("Gestures", " tpDreamDetailsMeta.onClick")
-            }
-        })*/
-        /*binding.tpDreamDetailsMeta.binding.tglgrDreamDetailsPOV.setOnClickListener {
-            Log.d("Gestures", "DreamDetailsFragment.onCreateView, tpDreamDetailsMeta.binding.tglgrDreamDetailsPOV.setOnClickListener")
-        }*/
+        binding.tpDreamDetailsMeta.lucidDreamingViewModel = lucidDreamingViewModel
         viewModel.addDream()
+        Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingViewModel}")
+        //viewModel.addDream()
 
         return view
     }
@@ -61,4 +59,14 @@ class DreamDetailsFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             DreamDetailsFragment()
     }
+
+    override fun onConfirmItem(item: String, isItemMood: Boolean) {
+        Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
+        if (isItemMood)
+            lucidDreamingViewModel.appendMood(item)
+        else
+            lucidDreamingViewModel.appendLocation(item)
+    }
+
+
 }
