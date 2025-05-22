@@ -36,21 +36,22 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     ConstraintLayout(context, attrs, defStyleAttr)
     , MetaItemChooseListener
 {
-    private var binding: LayoutDreamdetailsPanelportraitBinding
+    // true - панель показывается, false - панель исчезает
+    private var binding: LayoutDreamdetailsPanelportraitBinding =
+        LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
     private val viewModel: DreamDetailsViewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
     }
     lateinit var listener: MetaItemAppendListener
-    val dialogMetaItemChoose = Dialog(context)
-    val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
+    private val dialogMetaItemChoose = Dialog(context)
+    private val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
     init {
-        // true - панель показывается, false - панель исчезает
-        binding = LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
         //addView(binding.root)
         dialogMetaItemChoose.setContentView(metaChooserBinding.root)
         dialogMetaItemChoose.setOnDismissListener {
             viewModel.isNewMetaItemMood = null
         }
+
     }
 
     override fun onAttachedToWindow() {
@@ -64,7 +65,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         binding.ibtnDreamDetailsAddPlace.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddPlace.setOnClickListener")
         }
-
+        viewModel.initMoods(binding.ibtnDreamDetailsAddMood.id)
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
@@ -182,24 +183,43 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         }
         dialog.show()
     }
+    private fun showDialogConfirmDreamMoodDelete(action: String, item: TextView){
+        val dialog = Dialog(context)
+        val confirmActionBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(confirmActionBinding.root)
+        confirmActionBinding.apply {
+            tvConfirmActionDialogTitle.text = "Подтвердить удаление"
+            tvConfirmActionDialogAction.text = action
+            ibtnConfirmActionDialogConfirm.setOnClickListener {
+                viewModel.deleteDreamMood(item.text.toString(), item.id)
+                binding.flowDreamDetailsMoods.referencedIds = viewModel.dreamMoodsIds.toIntArray()
+                binding.root.removeView(item)
+                binding.flowDreamDetailsMoods.requestLayout()
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
 
     override fun onMetaItemChoose(item: String) {
         Log.d("Gestures", "MetaTopPanelPortrait.onMetaItemChoose()")
         // здесь добавить текст с нажатой в диалоге кнопке в Flow, т. е. создать Button и добавить id
         if (viewModel.isNewMetaItemMood != null && viewModel.isNewMetaItemMood!!){
+            viewModel.addDreamMood(item, View.generateViewId())
             val newMetaItem = TextView(context)
             newMetaItem.text = item
-            newMetaItem.id = View.generateViewId()
+            newMetaItem.id = viewModel.dreamMoodsIds[viewModel.dreamMoodsIds.size - 2]
+            newMetaItem.setOnLongClickListener {
+                Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
+                showDialogConfirmDreamMoodDelete("Удалить выбранное настроение \"$item\"?", newMetaItem)
+                true
+            }
             binding.root.addView(newMetaItem)
             //binding.flowDreamDetailsMoods.addView(newMetaItem)
-            binding.flowDreamDetailsMoods.referencedIds += newMetaItem.id
-            binding.flowDreamDetailsMoods.referencedIds.also {
-                it[it.size - 1] = it[it.size - 2]
-                it[it.size - 2] = newMetaItem.id
-            }
+            binding.flowDreamDetailsMoods.referencedIds = viewModel.dreamMoodsIds.toIntArray()
+            binding.flowDreamDetailsMoods.requestLayout()
             dialogMetaItemChoose.dismiss()
         }
-
     }
 
     override fun onMetaItemDelete(item: String) {

@@ -35,7 +35,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
-        viewModel.initMoods()
+        viewModel.addDream()
         //viewModel.addDream()
 
         return view
