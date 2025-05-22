@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsMoods"
-        app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsPlaces"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsLocations"
         />
     <ImageButton
         android:id="@+id/ibtnDreamDetailsAddMood"
@@ -96,7 +96,7 @@
 
 
     <TextView
-        android:id="@+id/tvDreamDetailsPlaces"
+        android:id="@+id/tvDreamDetailsLocations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,9 +116,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsPlaces"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamDetailsLocations"
         android:padding="10dp"
-        app:constraint_referenced_ids="ibtnDreamDetailsAddPlace"
+        app:constraint_referenced_ids="ibtnDreamDetailsAddLocation"
         app:flow_horizontalGap="10dp"
         app:flow_horizontalStyle="packed"
         app:flow_verticalBias="0"
@@ -127,7 +127,7 @@
 
         />
     <ImageButton
-        android:id="@+id/ibtnDreamDetailsAddPlace"
+        android:id="@+id/ibtnDreamDetailsAddLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

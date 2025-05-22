@@ -8,18 +8,24 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.room.util.toSQLiteConnection
 import com.youngsophomore.luciddreaming.R
 
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
 import com.youngsophomore.luciddreaming.ui.interfaces.ConfirmActionListener
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
+import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
     val viewModel : DreamDetailsViewModel by viewModels()
+    private val lucidDreamingViewModel: LucidDreamingViewModel by activityViewModels()
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -35,7 +41,9 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
+        binding.tpDreamDetailsMeta.lucidDreamingViewModel = lucidDreamingViewModel
         viewModel.addDream()
+        Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingViewModel}")
         //viewModel.addDream()
 
         return view
@@ -52,9 +60,12 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
             DreamDetailsFragment()
     }
 
-    override fun onConfirmItem(item: String) {
+    override fun onConfirmItem(item: String, isItemMood: Boolean) {
         Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
-        viewModel.appendMood(item)
+        if (isItemMood)
+            lucidDreamingViewModel.appendMood(item)
+        else
+            lucidDreamingViewModel.appendLocation(item)
     }
 
 

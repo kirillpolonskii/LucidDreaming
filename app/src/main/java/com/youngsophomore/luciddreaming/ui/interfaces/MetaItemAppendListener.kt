@@ -1,5 +1,5 @@
 package com.youngsophomore.luciddreaming.ui.interfaces
 
 interface MetaItemAppendListener {
-    fun onConfirmItem(item: String)
+    fun onConfirmItem(item: String, isItemMood: Boolean)
 }

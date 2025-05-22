@@ -27,47 +27,20 @@ class DreamDetailsViewModel @Inject constructor(
     private val repository: DreamRepository,
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
-    lateinit var moods: MutableList<String>
+
     var curDreamMoodsStr = ""
     val curDreamMoods = mutableListOf<String>()
+    val curDreamLocations = mutableListOf<String>()
     val dreamMoodsIds = mutableListOf<Int>()
+    val dreamLocationsIds = mutableListOf<Int>()
     var isNewMetaItemMood: Boolean? = null
-    var isNewMetaItemPlace = false
     init {
         Log.d("Lifecycle", "DreamDetailsViewModel.init")
         //initMoods()
     }
-    fun initMoods(ibtnMoodsId: Int) = viewModelScope.launch{
-        Log.d("Preferences", "DreamDetailsViewModel.getMoods")
-        val keyMoods = stringPreferencesKey("moods")
-        val preferences = dataStore.data.first()
-        Log.d("Preferences", " preferences = $preferences")
-        val moodsString = preferences[keyMoods] ?: ""
-        Log.d("Preferences", " moodsString = $moodsString")
-        moods = moodsString.split("|").toMutableList()
-        Log.d("Preferences", " moods = $moods")
+    fun initMoodsAndLocations(ibtnMoodsId: Int, ibtnLocationsId: Int) {
         dreamMoodsIds.add(ibtnMoodsId)
-    }
-
-    fun appendMood(newMood: String){
-        Log.d("Preferences", "DreamDetailsViewModel.updateMoods, $newMood")
-        val keyMoods = stringPreferencesKey("moods")
-        viewModelScope.launch {
-            dataStore.edit { prefs ->
-                val curMoods = prefs[keyMoods] ?: ""
-                prefs[keyMoods] = "$curMoods|$newMood"
-            }
-        }
-    }
-
-    fun deleteMood(mood: String){
-        moods.remove(mood)
-        val keyMoods = stringPreferencesKey("moods")
-        viewModelScope.launch {
-            dataStore.edit { prefs ->
-                prefs[keyMoods] = moods.joinToString("|")
-            }
-        }
+        dreamLocationsIds.add(ibtnLocationsId)
     }
 
     fun addDreamMood(mood: String, moodId: Int){
@@ -78,6 +51,16 @@ class DreamDetailsViewModel @Inject constructor(
     fun deleteDreamMood(mood: String, moodId: Int){
         curDreamMoods.remove(mood)
         dreamMoodsIds.remove(moodId)
+    }
+
+    fun addDreamLocation(location: String, locationId: Int){
+        curDreamLocations.add(location)
+        dreamLocationsIds.add(if (dreamLocationsIds.size > 0) dreamLocationsIds.size - 1 else 0, locationId)
+    }
+
+    fun deleteDreamLocation(location: String, locationId: Int){
+        curDreamLocations.remove(location)
+        dreamLocationsIds.remove(locationId)
     }
 
     fun addDream() = viewModelScope.launch {
