@@ -18,46 +18,46 @@ import javax.inject.Inject
 class LucidDreamingViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 )  : ViewModel() {
-    val moods = MutableLiveData<MutableList<String>>(mutableListOf())
+    val feelings = MutableLiveData<MutableList<String>>(mutableListOf())
     val locations = MutableLiveData<MutableList<String>>(mutableListOf())
 
-    fun initMoodsAndLocations() = viewModelScope.launch {
-        Log.d("Preferences", "LucidDreamingViewModel.initMoodsAndLocations")
-        val keyMoods = stringPreferencesKey("moods")
+    fun initFeelingsAndLocations() = viewModelScope.launch {
+        Log.d("Preferences", "LucidDreamingViewModel.initFeelingsAndLocations")
+        val keyFeelings = stringPreferencesKey("feelings")
         val keyLocations = stringPreferencesKey("locations")
         val preferences = dataStore.data.first()
         Log.d("Preferences", " preferences = $preferences")
-        val moodsString = preferences[keyMoods] ?: ""
+        val feelingsString = preferences[keyFeelings] ?: ""
         val locationsString = preferences[keyLocations] ?: ""
-        Log.d("Preferences", " moodsString = $moodsString")
-        moods.value?.addAll(moodsString.split("|"))
+        Log.d("Preferences", " feelingsString = $feelingsString")
+        feelings.value?.addAll(feelingsString.split("|"))
         locations.value?.addAll(locationsString.split("|"))
-        Log.d("Preferences", " moods = $moods")
+        Log.d("Preferences", " feelings = $feelings")
     }
 
-    fun appendMood(newMood: String){
-        Log.d("Preferences", "LucidDreamingViewModel.appendMood, $newMood")
-        moods.value?.add(newMood)
-        val keyMoods = stringPreferencesKey("moods")
+    fun appendFeeling(newFeeling: String){
+        Log.d("Preferences", "LucidDreamingViewModel.appendFeeling, $newFeeling")
+        feelings.value?.add(newFeeling)
+        val keyFeelings = stringPreferencesKey("feelings")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                val curMoods = prefs[keyMoods] ?: ""
-                Log.d("Preferences", " $curMoods")
-                if (curMoods.isEmpty())
-                    prefs[keyMoods] = "$curMoods$newMood"
+                val curFeelings = prefs[keyFeelings] ?: ""
+                Log.d("Preferences", " $curFeelings")
+                if (curFeelings.isEmpty())
+                    prefs[keyFeelings] = "$curFeelings$newFeeling"
                 else
-                    prefs[keyMoods] = "$curMoods|$newMood"
+                    prefs[keyFeelings] = "$curFeelings|$newFeeling"
             }
         }
     }
 
-    fun deleteMood(mood: String){
-        moods.value?.remove(mood)
-        val keyMoods = stringPreferencesKey("moods")
+    fun deleteFeeling(feeling: String){
+        feelings.value?.remove(feeling)
+        val keyFeelings = stringPreferencesKey("feelings")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                Log.d("Preferences", " " + moods.value?.joinToString())
-                prefs[keyMoods] = moods.value?.joinToString()!!
+                Log.d("Preferences", " " + feelings.value?.joinToString())
+                prefs[keyFeelings] = feelings.value?.joinToString()!!
             }
         }
     }

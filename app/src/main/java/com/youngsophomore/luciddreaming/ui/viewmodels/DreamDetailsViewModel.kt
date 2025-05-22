@@ -28,29 +28,29 @@ class DreamDetailsViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    var curDreamMoodsStr = ""
-    val curDreamMoods = mutableListOf<String>()
+    var curDreamFeelingsStr = ""
+    val curDreamFeelings = mutableListOf<String>()
     val curDreamLocations = mutableListOf<String>()
-    val dreamMoodsIds = mutableListOf<Int>()
+    val dreamFeelingsIds = mutableListOf<Int>()
     val dreamLocationsIds = mutableListOf<Int>()
-    var isNewMetaItemMood: Boolean? = null
+    var isNewMetaItemFeeling: Boolean? = null
     init {
         Log.d("Lifecycle", "DreamDetailsViewModel.init")
-        //initMoods()
+        //initFeelings()
     }
-    fun initMoodsAndLocations(ibtnMoodsId: Int, ibtnLocationsId: Int) {
-        dreamMoodsIds.add(ibtnMoodsId)
+    fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
+        dreamFeelingsIds.add(ibtnFeelingsId)
         dreamLocationsIds.add(ibtnLocationsId)
     }
 
-    fun addDreamMood(mood: String, moodId: Int){
-        curDreamMoods.add(mood)
-        dreamMoodsIds.add(if (dreamMoodsIds.size > 0) dreamMoodsIds.size - 1 else 0, moodId)
+    fun addDreamFeeling(feeling: String, feelingId: Int){
+        curDreamFeelings.add(feeling)
+        dreamFeelingsIds.add(if (dreamFeelingsIds.size > 0) dreamFeelingsIds.size - 1 else 0, feelingId)
     }
 
-    fun deleteDreamMood(mood: String, moodId: Int){
-        curDreamMoods.remove(mood)
-        dreamMoodsIds.remove(moodId)
+    fun deleteDreamFeeling(feeling: String, feelingId: Int){
+        curDreamFeelings.remove(feeling)
+        dreamFeelingsIds.remove(feelingId)
     }
 
     fun addDreamLocation(location: String, locationId: Int){

@@ -60,10 +60,10 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
             DreamDetailsFragment()
     }
 
-    override fun onConfirmItem(item: String, isItemMood: Boolean) {
+    override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
         Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
-        if (isItemMood)
-            lucidDreamingViewModel.appendMood(item)
+        if (isItemFeeling)
+            lucidDreamingViewModel.appendFeeling(item)
         else
             lucidDreamingViewModel.appendLocation(item)
     }

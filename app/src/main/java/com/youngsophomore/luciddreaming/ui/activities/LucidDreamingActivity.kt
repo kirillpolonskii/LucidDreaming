@@ -36,7 +36,7 @@ class LucidDreamingActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
         navController = navHostFragment.navController
-        viewModel.initMoodsAndLocations()
+        viewModel.initFeelingsAndLocations()
         Log.d("Gestures", " lucidDreamingVM = ${viewModel}")
     }
 }
