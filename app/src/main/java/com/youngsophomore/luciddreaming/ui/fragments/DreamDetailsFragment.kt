@@ -43,7 +43,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
         val view = binding.root
         binding.tpDreamDetailsMeta.lucidDreamingViewModel = lucidDreamingViewModel
         viewModel.addDream()
-        Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingViewModel}")
+        viewModel.initFeelingsAndLocations(R.id.ibtnDreamDetailsAddFeeling, R.id.ibtnDreamDetailsAddLocation)
         //viewModel.addDream()
 
         return view

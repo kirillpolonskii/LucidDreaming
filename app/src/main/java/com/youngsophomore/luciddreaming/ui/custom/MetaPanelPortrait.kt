@@ -61,20 +61,25 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         Log.d("Gestures", "MetaTopPanelPortrait.onAttachedToWindow()")
-        Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingViewModel}")
+        
         binding.ibtnDreamDetailsAddFeeling.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddFeeling.setOnClickListener")
             dreamDetailsViewModel.isNewMetaItemFeeling = true
-            showMetaItemChooser(lucidDreamingViewModel.feelings.value!!)
+            showMetaItemChooser(lucidDreamingViewModel.feelings?.value!!)
 
         }
         binding.ibtnDreamDetailsAddLocation.setOnClickListener {
             dreamDetailsViewModel.isNewMetaItemFeeling = false
             Log.d("Gestures", " ibtnDreamDetailsAddLocation.setOnClickListener")
-            showMetaItemChooser(lucidDreamingViewModel.locations.value!!)
+            showMetaItemChooser(lucidDreamingViewModel.locations?.value!!)
         }
-        dreamDetailsViewModel.initFeelingsAndLocations(binding.ibtnDreamDetailsAddFeeling.id,
-            binding.ibtnDreamDetailsAddLocation.id)
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        Log.d("Gestures", "MetaTopPanelPortrait.onMeasure()")
+        /*dreamDetailsViewModel.initFeelingsAndLocations(binding.ibtnDreamDetailsAddFeeling.id,
+            binding.ibtnDreamDetailsAddLocation.id)*/
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {

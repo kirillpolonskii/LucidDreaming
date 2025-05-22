@@ -25,8 +25,8 @@ class DreamDetailsMotionLayout: MotionLayout {
     var touchInsideBtnShowMeta = false
 
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
-        ibtnDreamDetailsShowMeta = this.getChildAt(3) as ImageButton
-        etDreamDetailsTitle = this.getChildAt(4) as EditText
+        ibtnDreamDetailsShowMeta = this.getChildAt(2) as ImageButton
+        etDreamDetailsTitle = this.getChildAt(3) as EditText
         etDreamDetailsContent = this.getChildAt(4) as EditText
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {

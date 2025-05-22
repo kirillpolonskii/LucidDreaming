@@ -21,24 +21,14 @@
             android:id="@+id/ibtnDreamDetailBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@id/vwDreamDetailsButtonStripeLeft"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toStartOf="@id/tvDreamDetailsTitle"
-            motion:layout_constraintTop_toTopOf="@id/tvDreamDetailsTitle"
-            motion:layout_constraintBottom_toBottomOf="@id/tvDreamDetailsTitle"
+            motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintHorizontal_bias="0"
             motion:layout_constraintHorizontal_chainStyle="packed"
 
             />
-        <Constraint
-            android:id="@+id/tvDreamDetailsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintStart_toEndOf="@id/ibtnDreamDetailBack"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/ibtnDreamDetailsShowMeta"
-            motion:layout_constraintHorizontal_bias="0"
-            />
+
         <Constraint
             android:id="@id/etDreamDetailsTitle"
             android:layout_width="match_parent"
@@ -53,7 +43,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/tvDreamDetailsTitle"
+            motion:layout_constraintBottom_toTopOf="@id/ibtnDreamDetailBack"
             />
 
     </ConstraintSet>
@@ -61,10 +51,6 @@
     <ConstraintSet android:id="@+id/dreamdetails_toppanel_expanded">
         <Constraint
             android:id="@+id/ibtnDreamDetailBack"
-            android:visibility="gone"
-            />
-        <Constraint
-            android:id="@+id/tvDreamDetailsTitle"
             android:visibility="gone"
             />
         <Constraint
