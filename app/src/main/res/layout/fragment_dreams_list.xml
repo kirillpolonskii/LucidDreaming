@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:src="@drawable/arrowback_all_24"
+        android:src="@drawable/all_arrowback_24"
         app:layout_constraintBottom_toBottomOf="@id/tvDreamsListTitle"
         app:layout_constraintEnd_toStartOf="@id/tvDreamsListTitle"
         app:layout_constraintStart_toStartOf="parent"

@@ -14,15 +14,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:src="@drawable/arrowback_all_24"
-        app:layout_constraintBottom_toTopOf="@id/vwDreamDetailsButtonStripeLeft"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/all_arrowback_24"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/etDreamDetailsTitle"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintHorizontal_chainStyle="packed"
 
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         />
 
     <View
@@ -30,10 +31,11 @@
         android:layout_width="0dp"
         android:layout_height="4dp"
         android:background="@color/md_theme_primaryContainer"
-        app:layout_constraintEnd_toStartOf="@id/ibtnDreamDetailsShowMeta"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tpDreamDetailsMeta"
 
-        app:layout_constraintTop_toTopOf="@id/ibtnDreamDetailsShowMeta" />
+        />
 
     <ImageButton
         android:id="@+id/ibtnDreamDetailsShowMeta"
@@ -45,10 +47,25 @@
 
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/vwDreamDetailsButtonStripeLeft"
-        app:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailBack" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripeLeft" />
 
+    <ImageButton
+        android:id="@+id/ibtnDreamDetailSaveEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/all_save_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/etDreamDetailsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_chainStyle="packed"
 
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        />
 
 
     <EditText
@@ -57,7 +74,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripeLeft"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailBack"
 
         android:hint="@string/dreamdetails_titlehint"
 
