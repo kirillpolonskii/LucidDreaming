@@ -7,8 +7,12 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DreamRepository @Inject constructor(private val dreamDao: DreamDao) {
-    suspend fun addDream(dream: Dream){
-        dreamDao.insert(dream)
+    suspend fun addDream(dream: Dream): Long{
+        return dreamDao.insert(dream)
+    }
+
+    suspend fun updateDream(dream: Dream) {
+        dreamDao.update(dream)
     }
 
     fun getAllDreams() : LiveData<List<Dream>> {
