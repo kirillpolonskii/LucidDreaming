@@ -48,7 +48,7 @@
 
         android:contentDescription="TODO"
         android:src="@drawable/dreamdetails_showmeta_24"
-        android:layout_marginHorizontal="60dp"
+        android:layout_marginHorizontal="80dp"
 
 
         />
