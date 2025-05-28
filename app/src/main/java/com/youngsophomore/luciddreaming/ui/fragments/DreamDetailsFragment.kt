@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -41,9 +42,26 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
-        binding.tpDreamDetailsMeta.lucidDreamingViewModel = lucidDreamingViewModel
-        viewModel.addDream()
+        binding.tpDreamDetailsMeta.lucidDreamingVM = lucidDreamingViewModel
         viewModel.initFeelingsAndLocations(R.id.ibtnDreamDetailsAddFeeling, R.id.ibtnDreamDetailsAddLocation)
+        viewModel.isDreamEditable.observe(viewLifecycleOwner) { isDreamEditable ->
+            binding.ibtnDreamDetailSaveEdit.setImageDrawable(AppCompatResources.getDrawable(requireContext(),
+                if (isDreamEditable) R.drawable.all_save_24
+            else R.drawable.all_edit_24))
+        }
+        binding.ibtnDreamDetailSaveEdit.setOnClickListener {
+            Log.d("Gestures", " ibtnDreamDetailSaveEdit.setOnClickListener")
+            if (viewModel.isDreamEditable.value!!) {
+                with(binding){
+                    viewModel.addUpdateDream(
+                        title = etDreamDetailsTitle.text.toString(),
+                        content = etDreamDetailsContent.text.toString()
+                    )
+                }
+
+            }
+            viewModel.isDreamEditable.value = !viewModel.isDreamEditable.value!!
+        }
         //viewModel.addDream()
 
         return view

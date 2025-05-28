@@ -35,17 +35,21 @@
         app:layout_constraintBottom_toTopOf="@id/tvDreamDetailsFeelings"
         app:layout_constraintVertical_bias="0"
 
+        app:singleSelection="true"
+        app:selectionRequired="true"
         >
         <Button
             style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/button1"
+            android:id="@+id/btnDreamDetailsFirstPerson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="От 1-го лица"
+
+
             />
         <Button
             style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/button3"
+            android:id="@+id/btnDreamDetailsThirdPerson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="От 3-го лица"

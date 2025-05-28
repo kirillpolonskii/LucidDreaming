@@ -41,17 +41,17 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
 {
     private var binding: LayoutDreamdetailsPanelportraitBinding =
         LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
-    private val dreamDetailsViewModel: DreamDetailsViewModel by lazy {
+    private val dreamDetailsVM: DreamDetailsViewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
     }
-    lateinit var lucidDreamingViewModel: LucidDreamingViewModel
+    lateinit var lucidDreamingVM: LucidDreamingViewModel
     lateinit var listener: MetaItemAppendListener
     private val dialogMetaItemChoose = Dialog(context)
     private val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
     init {
         dialogMetaItemChoose.setContentView(metaChooserBinding.root)
         dialogMetaItemChoose.setOnDismissListener {
-            dreamDetailsViewModel.isNewMetaItemFeeling = null
+            dreamDetailsVM.isNewMetaItemFeeling = null
             binding.flowDreamDetailsFeelings.requestLayout()
             binding.flowDreamDetailsLocations.requestLayout()
         }
@@ -61,25 +61,24 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         Log.d("Gestures", "MetaTopPanelPortrait.onAttachedToWindow()")
-        
         binding.ibtnDreamDetailsAddFeeling.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailsAddFeeling.setOnClickListener")
-            dreamDetailsViewModel.isNewMetaItemFeeling = true
-            showMetaItemChooser(lucidDreamingViewModel.feelings?.value!!)
+            dreamDetailsVM.isNewMetaItemFeeling = true
+            showMetaItemChooser(lucidDreamingVM.feelings?.value!!)
 
         }
         binding.ibtnDreamDetailsAddLocation.setOnClickListener {
-            dreamDetailsViewModel.isNewMetaItemFeeling = false
+            dreamDetailsVM.isNewMetaItemFeeling = false
             Log.d("Gestures", " ibtnDreamDetailsAddLocation.setOnClickListener")
-            showMetaItemChooser(lucidDreamingViewModel.locations?.value!!)
+            showMetaItemChooser(lucidDreamingVM.locations?.value!!)
         }
-    }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        Log.d("Gestures", "MetaTopPanelPortrait.onMeasure()")
-        /*dreamDetailsViewModel.initFeelingsAndLocations(binding.ibtnDreamDetailsAddFeeling.id,
-            binding.ibtnDreamDetailsAddLocation.id)*/
+        binding.tglgrDreamDetailsPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            Log.d("Gestures", " tglgrDreamDetailsPOV.addOnButtonCheckedListener " +
+                    dreamDetailsVM.isDreamFirstPerson)
+            dreamDetailsVM.isDreamFirstPerson = group.checkedButtonId == R.id.btnDreamDetailsFirstPerson
+        }
+
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
@@ -147,7 +146,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
         }*/
         val metaAdapter = MetaListAdapter(this)
-        /*lucidDreamingViewModel.feelings.observe(findViewTreeLifecycleOwner()!!) { items ->
+        /*lucidDreamingVM.feelings.observe(findViewTreeLifecycleOwner()!!) { items ->
             metaAdapter.setMetaItems(items)
         }*/
         metaAdapter.setMetaItems(metaItems)
@@ -155,7 +154,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         val layoutManager = LinearLayoutManager(context)
         metaChooserBinding.rvMetaItemChooser.layoutManager = layoutManager
         metaChooserBinding.rvMetaItemChooser.setHasFixedSize(true)
-        if (dreamDetailsViewModel.isNewMetaItemFeeling!!) {
+        if (dreamDetailsVM.isNewMetaItemFeeling!!) {
             metaChooserBinding.tvMetaItemChooserTitle.text = "Выбрать настроение"
         }
         else {
@@ -179,7 +178,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         val dialog = Dialog(context)
         val metaAppenderBinding = DialogMetaItemAppendBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(metaAppenderBinding.root)
-        if (dreamDetailsViewModel.isNewMetaItemFeeling!!) {
+        if (dreamDetailsVM.isNewMetaItemFeeling!!) {
             metaAppenderBinding.tvAppendDialogTitle.text = "Добавить настроение"
         }
         else {
@@ -187,7 +186,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         }
         metaAppenderBinding.ibtnAppendDialogConfirm.setOnClickListener {
             listener.onConfirmItem(metaAppenderBinding.etAppendDialogFilter.text.toString(),
-                dreamDetailsViewModel.isNewMetaItemFeeling!!)
+                dreamDetailsVM.isNewMetaItemFeeling!!)
             metaChooserBinding.rvMetaItemChooser.adapter?.notifyDataSetChanged()
             dialog.dismiss()
         }
@@ -202,10 +201,10 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
             tvConfirmActionDialogTitle.text = "Подтвердить удаление"
             tvConfirmActionDialogAction.text = action
             ibtnConfirmActionDialogConfirm.setOnClickListener {
-                if (dreamDetailsViewModel.isNewMetaItemFeeling!!)
-                    lucidDreamingViewModel.deleteFeeling(item)
+                if (dreamDetailsVM.isNewMetaItemFeeling!!)
+                    lucidDreamingVM.deleteFeeling(item)
                 else
-                    lucidDreamingViewModel.deleteLocation(item)
+                    lucidDreamingVM.deleteLocation(item)
                 dialog.dismiss()
             }
         }
@@ -219,15 +218,15 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
             tvConfirmActionDialogTitle.text = "Подтвердить удаление"
             tvConfirmActionDialogAction.text = action
             ibtnConfirmActionDialogConfirm.setOnClickListener {
-                if (dreamDetailsViewModel.dreamFeelingsIds.contains(item.id)){
-                    dreamDetailsViewModel.deleteDreamFeeling(item.text.toString(), item.id)
-                    binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsViewModel.dreamFeelingsIds.toIntArray()
+                if (dreamDetailsVM.dreamFeelingsIds.contains(item.id)){
+                    dreamDetailsVM.deleteDreamFeeling(item.text.toString(), item.id)
+                    binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsVM.dreamFeelingsIds.toIntArray()
                     binding.root.removeView(item)
                     binding.flowDreamDetailsFeelings.requestLayout()
                 }
                 else {
-                    dreamDetailsViewModel.deleteDreamLocation(item.text.toString(), item.id)
-                    binding.flowDreamDetailsLocations.referencedIds = dreamDetailsViewModel.dreamLocationsIds.toIntArray()
+                    dreamDetailsVM.deleteDreamLocation(item.text.toString(), item.id)
+                    binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
                     binding.root.removeView(item)
                     binding.flowDreamDetailsLocations.requestLayout()
                 }
@@ -242,23 +241,23 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
         // здесь добавить текст с нажатой в диалоге кнопке в Flow, т. е. создать Button и добавить id
         val newMetaItem = TextView(context)
         newMetaItem.text = item
-        if (dreamDetailsViewModel.isNewMetaItemFeeling!!){
-            dreamDetailsViewModel.addDreamFeeling(item, View.generateViewId())
-            newMetaItem.id = dreamDetailsViewModel.dreamFeelingsIds[dreamDetailsViewModel.dreamFeelingsIds.size - 2]
+        if (dreamDetailsVM.isNewMetaItemFeeling!!){
+            dreamDetailsVM.addDreamFeeling(item, View.generateViewId())
+            newMetaItem.id = dreamDetailsVM.dreamFeelingsIds[dreamDetailsVM.dreamFeelingsIds.size - 2]
             binding.root.addView(newMetaItem)
-            binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsViewModel.dreamFeelingsIds.toIntArray()
+            binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsVM.dreamFeelingsIds.toIntArray()
 
         }
         else {
-            dreamDetailsViewModel.addDreamLocation(item, View.generateViewId())
-            newMetaItem.id = dreamDetailsViewModel.dreamLocationsIds[dreamDetailsViewModel.dreamLocationsIds.size - 2]
+            dreamDetailsVM.addDreamLocation(item, View.generateViewId())
+            newMetaItem.id = dreamDetailsVM.dreamLocationsIds[dreamDetailsVM.dreamLocationsIds.size - 2]
             binding.root.addView(newMetaItem)
-            binding.flowDreamDetailsLocations.referencedIds = dreamDetailsViewModel.dreamLocationsIds.toIntArray()
+            binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
         }
         newMetaItem.setOnLongClickListener {
             Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
             showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
-                    if (dreamDetailsViewModel.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
+                    if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
                     " \"$item\"?", newMetaItem)
             true
         }
@@ -267,7 +266,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
 
     override fun onMetaItemDelete(item: String) {
         showDialogConfirmMetaItemDelete("Удалить " +
-                if (dreamDetailsViewModel.isNewMetaItemFeeling!!) "настроение" else "место" +
+                if (dreamDetailsVM.isNewMetaItemFeeling!!) "настроение" else "место" +
                 " \"${item}\"?", item)
 
     }

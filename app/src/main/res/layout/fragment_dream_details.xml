@@ -27,41 +27,44 @@
         />
 
     <View
-        android:id="@+id/vwDreamDetailsButtonStripeLeft"
+        android:id="@+id/vwDreamDetailsButtonStripe"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:background="@color/md_theme_primaryContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tpDreamDetailsMeta"
-
+    
+        android:background="@drawable/selector_all_bottomroundbtn"
         />
 
     <ImageButton
         android:id="@+id/ibtnDreamDetailsShowMeta"
         style="@style/LDButton.BottomRound"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ibtnDreamDetailBack"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamDetailSaveEdit"
+        app:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripe"
+
         android:contentDescription="TODO"
         android:src="@drawable/dreamdetails_showmeta_24"
+        android:layout_marginHorizontal="60dp"
 
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripeLeft" />
+        />
 
     <ImageButton
         android:id="@+id/ibtnDreamDetailSaveEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:src="@drawable/all_save_24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/etDreamDetailsTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintHorizontal_chainStyle="packed"
 
+        android:background="@android:color/transparent"
+        android:src="@drawable/all_save_24"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"

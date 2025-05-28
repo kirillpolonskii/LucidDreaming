@@ -18,7 +18,7 @@
 
     <ConstraintSet android:id="@+id/dreamdetails_toppanel_hidden">
         <Constraint
-            android:id="@id/vwDreamDetailsButtonStripeLeft"
+            android:id="@id/vwDreamDetailsButtonStripe"
             android:layout_width="0dp"
             android:layout_height="4dp"
             android:background="@color/md_theme_primaryContainer"

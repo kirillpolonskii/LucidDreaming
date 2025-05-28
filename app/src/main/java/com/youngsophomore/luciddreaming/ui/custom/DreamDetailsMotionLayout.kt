@@ -17,6 +17,7 @@ class DreamDetailsMotionLayout: MotionLayout {
                 attrs: AttributeSet? = null,
                 defStyleAttr: Int = 0): super(context, attrs, defStyleAttr)
 
+    lateinit var vwDreamDetailsButtonStripe: View
     lateinit var ibtnDreamDetailsShowMeta: ImageButton
     lateinit var etDreamDetailsTitle: EditText
     lateinit var etDreamDetailsContent: EditText
@@ -24,10 +25,15 @@ class DreamDetailsMotionLayout: MotionLayout {
     var touchOutsideTopPanel = false
     var touchInsideBtnShowMeta = false
 
-    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        vwDreamDetailsButtonStripe = this.getChildAt(1)
         ibtnDreamDetailsShowMeta = this.getChildAt(2) as ImageButton
         etDreamDetailsTitle = this.getChildAt(4) as EditText
         etDreamDetailsContent = this.getChildAt(5) as EditText
+    }
+
+    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
                 Log.d("Gestures", "DreamDetailsMotionLayout.onInterceptTouchEvent, DOWN")
@@ -38,6 +44,7 @@ class DreamDetailsMotionLayout: MotionLayout {
                     Log.d("Gestures", "isEventInsideTargetView(event, ibtnDreamDetailsShowMeta)")
                     touchInsideBtnShowMeta = true
                     ibtnDreamDetailsShowMeta.isPressed = true
+                    vwDreamDetailsButtonStripe.isPressed = true
                     super.onTouchEvent(event)
                 }
                 else when (this.currentState){
@@ -176,6 +183,7 @@ class DreamDetailsMotionLayout: MotionLayout {
             MotionEvent.ACTION_UP -> {
                 Log.d("Gestures", "DreamDetailsMotionLayout.onTouchEvent, UP")
                 ibtnDreamDetailsShowMeta.isPressed = false
+                vwDreamDetailsButtonStripe.isPressed = false
                 when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
                         if (touchInsideBtnShowMeta){
@@ -184,7 +192,8 @@ class DreamDetailsMotionLayout: MotionLayout {
                                 Log.d("Gestures", "moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                ibtnDreamDetailsShowMeta.isPressed = false
+
+                                touchInsideBtnShowMeta = false
                                 //this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
                                 super.onTouchEvent(event)
                             }
@@ -192,7 +201,7 @@ class DreamDetailsMotionLayout: MotionLayout {
                                 Log.d("Gestures", "not moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                ibtnDreamDetailsShowMeta.isPressed = false
+                                touchInsideBtnShowMeta = false
                                 this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
                                 super.onTouchEvent(event)
                             }
@@ -209,14 +218,14 @@ class DreamDetailsMotionLayout: MotionLayout {
                                 Log.d("Gestures", "moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                ibtnDreamDetailsShowMeta.isPressed = false
+                                touchInsideBtnShowMeta = false
                                 super.onTouchEvent(event)
                             }
                             else{
                                 Log.d("Gestures", "not moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                ibtnDreamDetailsShowMeta.isPressed = false
+                                touchInsideBtnShowMeta = false
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                                 super.onInterceptTouchEvent(event)
                             }
@@ -226,7 +235,10 @@ class DreamDetailsMotionLayout: MotionLayout {
                             super.onInterceptTouchEvent(event)
                         }
                     }
-                    else -> true
+                    else -> {
+                        Log.d("Gestures", " else state")
+                        true
+                    }
                 }
                 super.onTouchEvent(event)
             }
