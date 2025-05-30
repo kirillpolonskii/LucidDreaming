@@ -13,11 +13,14 @@ import com.youngsophomore.luciddreaming.databinding.ItemDreamBinding
 import javax.inject.Inject
 
 class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
-    var allDreams = emptyList<Dream>()
+    private var allDreams = listOf<Dream>()
     class ViewHolder(val binding: ItemDreamBinding) : RecyclerView.ViewHolder(binding.root)
 
     fun setDreams(dreams: List<Dream>){
+        Log.d("RecyclerView", "DreamsListAdapter.setDreams()")
+        Log.d("RecyclerView", " dreams = ${dreams.joinToString() }}")
         allDreams = dreams
+        Log.d("RecyclerView", " allDreams = ${allDreams.joinToString() }}")
         notifyDataSetChanged()
     }
 
@@ -27,13 +30,15 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d("RecyclerView", "DreamsListAdapter.onBindViewHolder()")
         val dream = allDreams[position]
+        Log.d("RecyclerView", " ${allDreams[position]} = ${allDreams[position].title}")
         holder.binding.tvDreamsListItemTitle.text = dream.title ?: "null title"
         holder.binding.tvDreamsListItemContent.text = dream.content ?: "NULL CONTENT"
     }
 
     override fun getItemCount(): Int {
-        //Log.d("RecyclerView", "allDreams.size = ${allDreams.size}")
+        Log.d("RecyclerView", "allDreams.size = ${allDreams.size}")
         return allDreams.size
     }
 }

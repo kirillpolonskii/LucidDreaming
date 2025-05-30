@@ -24,13 +24,15 @@ class DreamsListMotionLayout: MotionLayout {
     var touchInsideBtnSearch = false
 
     override fun onAttachedToWindow() {
-        rvDreamsList = this.getChildAt(4) as RecyclerView
-        ibtnDreamsListSearch = this.getChildAt(3) as ImageButton
-        //this.isInteractionEnabled = false
         super.onAttachedToWindow()
+
+        //this.isInteractionEnabled = false
+
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
+        ibtnDreamsListSearch = this.getChildAt(2) as ImageButton
+        rvDreamsList = this.getChildAt(3) as RecyclerView
         // место расхождения
         //super.onInterceptTouchEvent(event) // - ничего не добавляет
         //super.onTouchEvent(event) // - ничего не добавляет

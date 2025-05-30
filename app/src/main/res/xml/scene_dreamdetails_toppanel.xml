@@ -17,7 +17,7 @@
     <!--motion:touchRegionId="@id/ibtnDreamDetailsShowMeta"-->
 
     <ConstraintSet android:id="@+id/dreamdetails_toppanel_hidden">
-        <Constraint
+        <!--<Constraint
             android:id="@id/vwDreamDetailsButtonStripe"
             android:layout_width="0dp"
             android:layout_height="4dp"
@@ -25,9 +25,9 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toBottomOf="@id/tpDreamDetailsMeta"
-            />
-        <Constraint
-            android:id="@+id/ibtnDreamDetailBack"
+            />-->
+        <!--<Constraint
+            android:id="@+id/ibtnDreamDetailsBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             motion:layout_constraintTop_toTopOf="parent"
@@ -39,7 +39,7 @@
             android:layout_marginTop="10dp"
             />
         <Constraint
-            android:id="@+id/ibtnDreamDetailSaveEdit"
+            android:id="@+id/ibtnDreamDetailsSaveEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             motion:layout_constraintTop_toTopOf="parent"
@@ -49,15 +49,15 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
-            />
-        <Constraint
+            />-->
+        <!--<Constraint
             android:id="@id/etDreamDetailsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailBack"
-            />
+            motion:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailsBack"
+            />-->
         <Constraint
             android:id="@+id/tpDreamDetailsMeta"
             android:layout_width="match_parent"

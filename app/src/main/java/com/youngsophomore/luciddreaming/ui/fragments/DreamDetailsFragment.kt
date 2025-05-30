@@ -45,11 +45,11 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
         binding.tpDreamDetailsMeta.lucidDreamingVM = lucidDreamingViewModel
         viewModel.initFeelingsAndLocations(R.id.ibtnDreamDetailsAddFeeling, R.id.ibtnDreamDetailsAddLocation)
         viewModel.isDreamEditable.observe(viewLifecycleOwner) { isDreamEditable ->
-            binding.ibtnDreamDetailSaveEdit.setImageDrawable(AppCompatResources.getDrawable(requireContext(),
+            binding.ibtnDreamDetailsSaveEdit.setImageDrawable(AppCompatResources.getDrawable(requireContext(),
                 if (isDreamEditable) R.drawable.all_save_24
             else R.drawable.all_edit_24))
         }
-        binding.ibtnDreamDetailSaveEdit.setOnClickListener {
+        binding.ibtnDreamDetailsSaveEdit.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailSaveEdit.setOnClickListener")
             if (viewModel.isDreamEditable.value!!) {
                 with(binding){

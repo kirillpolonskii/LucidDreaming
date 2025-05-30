@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DreamsListFragment : Fragment() {
-    private val viewModel : DreamsListViewModel by viewModels()
+    private val dreamsListVM : DreamsListViewModel by viewModels()
     private var _binding: FragmentDreamsListBinding? = null
     private val binding get() = _binding!!
 
@@ -36,11 +36,15 @@ class DreamsListFragment : Fragment() {
         _binding = FragmentDreamsListBinding.inflate(inflater, container, false)
         val view = binding.root
         val adapter = DreamsListAdapter()
-        binding.rvDreamsList.adapter = adapter
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
-        viewModel.allDreams.observe(viewLifecycleOwner, Observer { dreams ->
-            adapter.setDreams(dreams)
-        })
+        dreamsListVM
+            //.fetchAllDreams()
+            .allDreams
+            .observe(viewLifecycleOwner) { dreams ->
+                Log.d("Debug", "observe, dreams = ${dreams.joinToString()}")
+                adapter.setDreams(dreams)
+            }
+        binding.rvDreamsList.adapter = adapter
         //binding.mtnLaytDreamsList.isInteractionEnabled = true
         //binding.rvDreamsList.parent.requestDisallowInterceptTouchEvent(false)
         binding.rvDreamsList.setOnTouchListener { v, event ->
