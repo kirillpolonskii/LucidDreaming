@@ -24,7 +24,7 @@ import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DreamDetailsFragment : Fragment(), MetaItemAppendListener{
+class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
     val viewModel : DreamDetailsViewModel by viewModels()
     private val lucidDreamingViewModel: LucidDreamingViewModel by activityViewModels()
     private var _binding: FragmentDreamDetailsBinding? = null

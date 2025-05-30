@@ -26,6 +26,17 @@
         android:src="@drawable/all_arrowback_24"
         android:layout_margin="10dp"
         />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDreamsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListBack"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_marginHorizontal="5dp"
+        />
 
     <View
         android:id="@+id/vwDreamsListButtonStripe"
@@ -54,17 +65,7 @@
 
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvDreamsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListBack"
-        app:layout_constraintBottom_toBottomOf="parent"
 
-        android:layout_marginHorizontal="5dp"
-        />
 
     <ImageButton
         android:id="@+id/ibtnDreamsListAddNewDream"

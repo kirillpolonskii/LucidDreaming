@@ -39,7 +39,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
     ConstraintLayout(context, attrs, defStyleAttr)
     , MetaItemChooseListener
 {
-    private var binding: LayoutDreamdetailsPanelportraitBinding =
+    private val binding: LayoutDreamdetailsPanelportraitBinding =
         LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
     private val dreamDetailsVM: DreamDetailsViewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
@@ -164,7 +164,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
             Log.d("Gestures", " ibtnMetaItemChooserClose.setOnClickListener")
             dialogMetaItemChoose.dismiss()
         }
-        metaChooserBinding.ibtnDreamDetailsAddItem.setOnClickListener{
+        metaChooserBinding.ibtnMetaItemChooserAddItem.setOnClickListener{
             showDialogMetaItemAppend()
         }
         metaChooserBinding.etMetaItemChooserFilter.addTextChangedListener { input ->

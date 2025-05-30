@@ -17,16 +17,39 @@ import javax.inject.Inject
 class DreamsListViewModel @Inject constructor(val repository: DreamRepository) : ViewModel() {
 
     val allDreams: LiveData<List<Dream>> = repository.getAllDreams()
-    
+    private val searchFeelings = mutableListOf<String>()
+    private val searchLocations = mutableListOf<String>()
+    val searchFeelingsIds = mutableListOf<Int>()
+    val searchLocationsIds = mutableListOf<Int>()
+    var isNewSearchItemFeeling: Boolean? = null
+    var isDreamFirstPerson = true
     init {
         Log.d("Debug", "DreamsListViewModel.init")
-        //allDreams = repository.getAllDreams().asLiveData()
-
-        //Log.d("Debug", " allDreams.size = ${allDreams.value?.size}")
     }
 
-    fun fetchAllDreams(): LiveData<List<Dream>>{
-        return repository.getAllDreams()
+    fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
+        searchFeelingsIds.add(ibtnFeelingsId)
+        searchLocationsIds.add(ibtnLocationsId)
+    }
+
+    fun addSearchFeeling(feeling: String, feelingId: Int){
+        searchFeelings.add(feeling)
+        searchFeelingsIds.add(if (searchFeelingsIds.size > 0) searchFeelingsIds.size - 1 else 0, feelingId)
+    }
+
+    fun deleteSearchFeeling(feeling: String, feelingId: Int){
+        searchFeelings.remove(feeling)
+        searchFeelingsIds.remove(feelingId)
+    }
+
+    fun addSearchLocation(location: String, locationId: Int){
+        searchLocations.add(location)
+        searchLocationsIds.add(if (searchLocationsIds.size > 0) searchLocationsIds.size - 1 else 0, locationId)
+    }
+
+    fun deleteSearchLocation(location: String, locationId: Int){
+        searchLocations.remove(location)
+        searchLocationsIds.remove(locationId)
     }
 
 
