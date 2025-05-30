@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cnstLaytDreamsListItem"
 
-
+    android:background="?attr/colorSurfaceVariant"
     >
     <TextView
         android:id="@+id/tvDreamsListItemTitle"
