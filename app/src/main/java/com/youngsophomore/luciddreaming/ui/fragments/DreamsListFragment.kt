@@ -41,6 +41,7 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener {
         val view = binding.root
         binding.tpDreamsListSearch.listener = this
         binding.tpDreamsListSearch.lucidDreamingVM = lucidDreamingVM
+        binding.tpDreamsListSearch.fragmentManager = childFragmentManager
         dreamsListVM.initFeelingsAndLocations(R.id.ibtnDreamsListAddFeeling, R.id.ibtnDreamsListAddLocation)
         val adapter = DreamsListAdapter()
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)

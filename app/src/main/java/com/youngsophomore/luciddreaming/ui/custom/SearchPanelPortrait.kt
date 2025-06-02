@@ -10,9 +10,14 @@ import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
@@ -23,6 +28,13 @@ import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class SearchTopPanelPortrait : ConstraintLayout, MetaItemChooseListener {
     constructor(context: Context): super(context)
@@ -38,6 +50,7 @@ class SearchTopPanelPortrait : ConstraintLayout, MetaItemChooseListener {
     }
     lateinit var lucidDreamingVM: LucidDreamingViewModel
     lateinit var listener: MetaItemAppendListener
+    lateinit var fragmentManager: FragmentManager
     private val dialogMetaItemChoose = Dialog(context)
     private val metaChooserBinding = DialogMetaItemChooseBinding.inflate(LayoutInflater.from(context))
     init {
@@ -67,6 +80,16 @@ class SearchTopPanelPortrait : ConstraintLayout, MetaItemChooseListener {
         binding.tglgrDreamsListPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
             Log.d("Gestures", " tglgrDreamsListPOV.addOnButtonCheckedListener " + dreamsListVM.isDreamFirstPerson)
             dreamsListVM.isDreamFirstPerson = group.checkedButtonId == R.id.btnDreamsListFirstPerson
+        }
+
+        binding.ibtnDreamsListAddCreatedDateRange.setOnClickListener {
+            Log.d("Gestures", " ibtnDreamsListAddCreatedDateRange.setOnClickListener")
+            showDateCreatedChooser("Интервал даты создания", binding.tvDreamsListCreatedDateRange)
+
+        }
+        binding.ibtnDreamsListAddEditedDateRange.setOnClickListener {
+            Log.d("Gestures", " ibtnDreamsListAddEditedDateRange.setOnClickListener")
+            showDateCreatedChooser("Интервал даты изменения", binding.tvDreamsListEditedDateRange)
         }
 
     }
@@ -179,6 +202,26 @@ class SearchTopPanelPortrait : ConstraintLayout, MetaItemChooseListener {
         }
         dialog.show()
     }
+    // здесь можно в функцию передавать лямбду и уже на уровне вызова метода управлять,
+    // в какой именно tv установится выбранное значение
+    private fun showDateCreatedChooser(title: String, tvDateRange: TextView){
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        val dateRangePicker = builder
+            .setTitleText(title)
+            .build()
+        dateRangePicker.addOnPositiveButtonClickListener { selection ->
+            val dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+            val startDate = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(selection.first), ZoneId.of("UTC"))
+            val endDate = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(selection.second), ZoneId.of("UTC"))
+            val startDateStr = startDate.format(dtf)
+            val endDateStr = endDate.format(dtf)
+            tvDateRange.text = "$startDateStr - $endDateStr"
+        }
+        dateRangePicker.show(fragmentManager, "DATE_RANGE_PICKER")
+
+    }
 
     override fun onMetaItemChoose(item: String) {
         Log.d("Gestures", "SearchTopPanelPortrait.onMetaItemChoose()")
@@ -214,4 +257,6 @@ class SearchTopPanelPortrait : ConstraintLayout, MetaItemChooseListener {
                         " \"${item}\"?", item)
 
     }
+
+
 }
