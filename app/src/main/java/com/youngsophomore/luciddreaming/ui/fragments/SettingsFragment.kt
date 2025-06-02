@@ -1,13 +1,13 @@
 package com.youngsophomore.luciddreaming.ui.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.youngsophomore.luciddreaming.R
-import com.youngsophomore.luciddreaming.databinding.FragmentDreamsListBinding
-import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
+import com.youngsophomore.luciddreaming.databinding.DialogEnterPasswordBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -26,6 +26,21 @@ class SettingsFragment : Fragment() {
         val view = binding.root
         return view
     }
+
+
+    fun showDialogSetPassword(){
+        val dialog = Dialog(requireContext())
+        val setPasswordBinding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(setPasswordBinding.root)
+
+        setPasswordBinding.ibtnSettingsConfirm.setOnClickListener {
+            // показать диалоговое окно подтверждения, но это позже
+
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
