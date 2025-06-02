@@ -18,26 +18,37 @@
 
     <ConstraintSet android:id="@+id/dreamdetails_toppanel_hidden">
         <Constraint
+            android:id="@id/vwDreamDetailsButtonStripe"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:background="@color/md_theme_primaryContainer"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/tpDreamDetailsMeta"
+            />
+        <Constraint
             android:id="@+id/ibtnDreamDetailBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toTopOf="@id/etDreamDetailsTitle"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toStartOf="@id/tvDreamDetailsTitle"
-            motion:layout_constraintTop_toTopOf="@id/tvDreamDetailsTitle"
-            motion:layout_constraintBottom_toBottomOf="@id/tvDreamDetailsTitle"
             motion:layout_constraintHorizontal_bias="0"
-            motion:layout_constraintHorizontal_chainStyle="packed"
-
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             />
         <Constraint
-            android:id="@+id/tvDreamDetailsTitle"
+            android:id="@+id/ibtnDreamDetailSaveEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintStart_toEndOf="@id/ibtnDreamDetailBack"
-            motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/ibtnDreamDetailsShowMeta"
-            motion:layout_constraintHorizontal_bias="0"
+            motion:layout_constraintBottom_toTopOf="@id/etDreamDetailsTitle"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             />
         <Constraint
             android:id="@id/etDreamDetailsTitle"
@@ -45,7 +56,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripeLeft"
+            motion:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailBack"
             />
         <Constraint
             android:id="@+id/tpDreamDetailsMeta"
@@ -53,36 +64,13 @@
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/tvDreamDetailsTitle"
+            motion:layout_constraintBottom_toTopOf="parent"
             />
 
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/dreamdetails_toppanel_expanded">
-        <Constraint
-            android:id="@+id/ibtnDreamDetailBack"
-            android:visibility="gone"
-            />
-        <Constraint
-            android:id="@+id/tvDreamDetailsTitle"
-            android:visibility="gone"
-            />
-        <Constraint
-            android:id="@+id/ibtnDreamDetailsShowMeta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintStart_toEndOf="@id/vwDreamDetailsButtonStripeLeft"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/tpDreamDetailsMeta"
-            />
-        <Constraint
-            android:id="@id/etDreamDetailsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
-            />
+
         <Constraint
             android:id="@+id/tpDreamDetailsMeta"
             android:layout_width="match_parent"

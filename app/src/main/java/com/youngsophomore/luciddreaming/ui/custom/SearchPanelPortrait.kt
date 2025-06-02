@@ -9,7 +9,7 @@ import com.youngsophomore.luciddreaming.R
 class SearchTopPanelPortrait : ConstraintLayout {
 
     init {
-        View.inflate(context, R.layout.layout_dreamslist_toppanelportrait, this)
+        View.inflate(context, R.layout.layout_dreamslist_panelportrait, this)
     }
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet? = null): super(context, attrs)
