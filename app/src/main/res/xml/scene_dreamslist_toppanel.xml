@@ -10,7 +10,7 @@
 
         >
         <OnSwipe
-            motion:touchAnchorId="@id/tpDreamsListSearch"
+            motion:touchAnchorId="@id/tpDreamsListFilter"
             motion:touchAnchorSide="bottom"
             motion:dragDirection="dragDown"
             motion:autoCompleteMode="continuousVelocity"
@@ -23,7 +23,7 @@
     <ConstraintSet android:id="@+id/dreamslist_toppanel_hidden">
 
         <Constraint
-            android:id="@id/tpDreamsListSearch"
+            android:id="@id/tpDreamsListFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
     <ConstraintSet android:id="@+id/dreamslist_toppanel_expanded">
 
         <Constraint
-            android:id="@id/tpDreamsListSearch"
+            android:id="@id/tpDreamsListFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"

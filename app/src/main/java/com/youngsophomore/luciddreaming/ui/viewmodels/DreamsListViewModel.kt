@@ -11,47 +11,134 @@ import com.youngsophomore.luciddreaming.data.repository.DreamRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hilt_aggregated_deps._dagger_hilt_android_internal_managers_HiltWrapper_ActivityRetainedComponentManager_ActivityRetainedLifecycleEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class DreamsListViewModel @Inject constructor(val repository: DreamRepository) : ViewModel() {
 
     val allDreams: LiveData<List<Dream>> = repository.getAllDreams()
-    private val searchFeelings = mutableListOf<String>()
-    private val searchLocations = mutableListOf<String>()
-    val searchFeelingsIds = mutableListOf<Int>()
-    val searchLocationsIds = mutableListOf<Int>()
-    var isNewSearchItemFeeling: Boolean? = null
-    var isDreamFirstPerson = true
+    var filteredDreams = listOf<Dream>()
+    var isDreamFirstPerson: Boolean? = null
+    private val filterFeelings = mutableListOf<String>()
+    private val filterLocations = mutableListOf<String>()
+    val filterFeelingsIds = mutableListOf<Int>()
+    val filterLocationsIds = mutableListOf<Int>()
+    var isNewFilterItemFeeling: Boolean? = null
+    val filterKeywords = mutableListOf<String>()
+    val filterKeywordsIds = mutableListOf<Int>()
+    var dateRangeCreated: Pair<LocalDateTime, LocalDateTime>? = null
+    var dateRangeEdited: Pair<LocalDateTime, LocalDateTime>? = null
+
     init {
         Log.d("Debug", "DreamsListViewModel.init")
+        Log.d("Debug", " allDreams = ${allDreams.value}")
+
+        //filteredDreams.value = allDreams.value
     }
 
     fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
-        searchFeelingsIds.add(ibtnFeelingsId)
-        searchLocationsIds.add(ibtnLocationsId)
+        filterFeelingsIds.add(ibtnFeelingsId)
+        filterLocationsIds.add(ibtnLocationsId)
     }
 
-    fun addSearchFeeling(feeling: String, feelingId: Int){
-        searchFeelings.add(feeling)
-        searchFeelingsIds.add(if (searchFeelingsIds.size > 0) searchFeelingsIds.size - 1 else 0, feelingId)
+    fun addFilterFeeling(feeling: String, feelingId: Int){
+        filterFeelings.add(feeling)
+        filterFeelingsIds.add(if (filterFeelingsIds.size > 0) filterFeelingsIds.size - 1 else 0, feelingId)
     }
 
-    fun deleteSearchFeeling(feeling: String, feelingId: Int){
-        searchFeelings.remove(feeling)
-        searchFeelingsIds.remove(feelingId)
+    fun deleteFilterFeeling(feeling: String, feelingId: Int){
+        filterFeelings.remove(feeling)
+        filterFeelingsIds.remove(feelingId)
     }
 
-    fun addSearchLocation(location: String, locationId: Int){
-        searchLocations.add(location)
-        searchLocationsIds.add(if (searchLocationsIds.size > 0) searchLocationsIds.size - 1 else 0, locationId)
+    fun addFilterLocation(location: String, locationId: Int){
+        filterLocations.add(location)
+        filterLocationsIds.add(if (filterLocationsIds.size > 0) filterLocationsIds.size - 1 else 0, locationId)
     }
 
-    fun deleteSearchLocation(location: String, locationId: Int){
-        searchLocations.remove(location)
-        searchLocationsIds.remove(locationId)
+    fun deleteFilterLocation(location: String, locationId: Int){
+        filterLocations.remove(location)
+        filterLocationsIds.remove(locationId)
     }
 
+    fun addFilterKeyword(keyword: String, keywordId: Int){
+        filterKeywords.add(keyword)
+        filterKeywordsIds.add(keywordId)
+    }
+    fun deleteFilterKeyword(keyword: String, keywordId: Int){
+        filterKeywords.remove(keyword)
+        filterKeywordsIds.remove(keywordId)
+    }
+
+    fun applyFilters(){
+
+        filteredDreams = allDreams.value ?: listOf()
+        filteredDreams = filteredDreams
+            .filter {
+                var ans = filterKeywords.isEmpty()
+                for (keyword in filterKeywords)
+                    if (it.title.contains(keyword) || it.content.contains(keyword)) {
+                        ans = true
+                        break
+                    }
+                ans
+            }
+            .also {
+                Log.d("Debug", " aft keyword filter, " + it.joinToString())
+            }
+            .filter {
+                if (isDreamFirstPerson != null) it.isFirstPerson == isDreamFirstPerson
+                else true
+            }
+            .also {
+                Log.d("Debug", " aft pov filter, " + it.joinToString())
+            }
+            .filter {
+                var ans = filterFeelings.isEmpty()
+                for (feeling in filterFeelings)
+                    if (it.feelings.contains(feeling)) {
+                        ans = true
+                        break
+                    }
+                ans
+            }
+            .also {
+                Log.d("Debug", " aft feeling filter, " + it.joinToString())
+            }
+            .filter {
+                var ans = filterLocations.isEmpty()
+                for (location in filterLocations)
+                    if (it.locations.contains(location)) {
+                        ans = true
+                        break
+                    }
+                ans
+            }
+            .also {
+                Log.d("Debug", " aft locs filter, " + it.joinToString())
+            }
+            .filter {
+                if (dateRangeCreated != null)
+                    it.creationDateTime.isAfter(dateRangeCreated!!.first)
+                            && it.creationDateTime.isBefore(dateRangeCreated!!.second)
+                else true
+            }
+            .also {
+                Log.d("Debug", " aft created filter, " + it.joinToString())
+            }
+            .filter {
+                if (dateRangeEdited != null)
+                    it.changeDateTime.isAfter(dateRangeEdited!!.first)
+                            && it.changeDateTime.isBefore(dateRangeEdited!!.second)
+                else true
+            }
+            .also {
+                Log.d("Debug", " aft edited filter, " + it.joinToString())
+            }
+
+
+    }
 
 
 }

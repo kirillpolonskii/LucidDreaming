@@ -39,20 +39,25 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener {
     ): View? {
         _binding = FragmentDreamsListBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.tpDreamsListSearch.listener = this
-        binding.tpDreamsListSearch.lucidDreamingVM = lucidDreamingVM
-        binding.tpDreamsListSearch.fragmentManager = childFragmentManager
+        binding.tpDreamsListFilter.listener = this
+        binding.tpDreamsListFilter.lucidDreamingVM = lucidDreamingVM
+        binding.tpDreamsListFilter.fragmentManager = childFragmentManager
         dreamsListVM.initFeelingsAndLocations(R.id.ibtnDreamsListAddFeeling, R.id.ibtnDreamsListAddLocation)
         val adapter = DreamsListAdapter()
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
         dreamsListVM
             //.fetchAllDreams()
+            //.filteredDreams
             .allDreams
             .observe(viewLifecycleOwner) { dreams ->
-                Log.d("Debug", "observe, dreams = ${dreams.joinToString()}")
+                Log.d("Debug", "observe, dreams = ${dreams?.joinToString()}")
                 adapter.setDreams(dreams)
             }
         binding.rvDreamsList.adapter = adapter
+        binding.tpDreamsListFilter.dreamsAdapter = adapter
+        binding.ibtnDreamsListCancelFilter.setOnClickListener {
+            adapter.setDreams(dreamsListVM.allDreams.value!!)
+        }
         //binding.mtnLaytDreamsList.isInteractionEnabled = true
         //binding.rvDreamsList.parent.requestDisallowInterceptTouchEvent(false)
         binding.rvDreamsList.setOnTouchListener { v, event ->

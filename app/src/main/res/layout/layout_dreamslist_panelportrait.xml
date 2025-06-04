@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tglgrDreamsListPOV"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
 
         android:text="Точка зрения во сне"
         android:textSize="20sp"
@@ -34,7 +35,6 @@
         app:layout_constraintVertical_bias="0"
 
         app:singleSelection="true"
-        app:selectionRequired="true"
         >
         <Button
             style="?attr/materialButtonOutlinedStyle"
@@ -140,6 +140,52 @@
         android:src="@drawable/all_addmetaitem_36"
 
         />
+    <EditText
+        android:id="@+id/etDreamsListKeyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamsListAddKeyword"
+        app:layout_constraintTop_toTopOf="@id/ibtnDreamsListAddKeyword"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDreamsListAddKeyword"
+
+        android:hint="Ключевое слово"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="15dp"
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamsListAddKeyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/etDreamsListKeyword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flowDreamsListLocations"
+        app:layout_constraintBottom_toTopOf="@id/flowDreamsListKeywords"
+
+        android:padding="3dp"
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
+        android:layout_marginEnd="15dp"
+        />
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowDreamsListKeywords"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListAddKeyword"
+        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListAddCreatedDateRange"
+        android:padding="10dp"
+
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+
+
+        />
+
 
     <TextView
         android:id="@+id/tvDreamsListCreatedDateTitle"
@@ -161,7 +207,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tvDreamsListCreatedDateTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flowDreamsListLocations"
+        app:layout_constraintTop_toBottomOf="@id/flowDreamsListKeywords"
         app:layout_constraintBottom_toTopOf="@id/tvDreamsListCreatedDateRange"
 
         style="@style/LDButton.Round"
@@ -216,8 +262,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListAddEditedDateRange"
+        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListApplyFilter"
 
         android:textSize="18sp"
+        />
+
+    <ImageButton
+        android:id="@+id/ibtnDreamsListApplyFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamsListEditedDateRange"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_confirm_36"
+        android:padding="7dp"
         />
 
 
