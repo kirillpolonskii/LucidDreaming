@@ -1,6 +1,7 @@
 package com.youngsophomore.luciddreaming.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -62,6 +63,8 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
             }
             viewModel.isDreamEditable.value = !viewModel.isDreamEditable.value!!
         }
+        val editable = Editable.Factory.getInstance().newEditable(viewModel.dream.title)
+        binding.etDreamDetailsTitle.text = editable
         //viewModel.addDream()
 
         return view

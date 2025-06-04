@@ -14,7 +14,20 @@ import javax.inject.Inject
 
 class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     private var allDreams = listOf<Dream>()
-    class ViewHolder(val binding: ItemDreamBinding) : RecyclerView.ViewHolder(binding.root)
+    lateinit var listener: DreamClickListener
+
+    inner class ViewHolder(val binding: ItemDreamBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                listener.onDreamClick(allDreams[adapterPosition].id)
+            }
+            binding.root.setOnLongClickListener {
+                listener.onDreamLongClick(allDreams[adapterPosition].id)
+                true
+            }
+        }
+
+    }
 
     fun setDreams(dreams: List<Dream>){
         Log.d("RecyclerView", "DreamsListAdapter.setDreams()")
@@ -40,5 +53,10 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         Log.d("RecyclerView", "allDreams.size = ${allDreams.size}")
         return allDreams.size
+    }
+
+    interface DreamClickListener {
+        fun onDreamClick(id: Int)
+        fun onDreamLongClick(id: Int)
     }
 }

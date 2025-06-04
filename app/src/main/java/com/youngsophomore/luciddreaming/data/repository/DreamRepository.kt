@@ -13,6 +13,10 @@ class DreamRepository @Inject constructor(private val dreamDao: DreamDao) {
         return dreamDao.insert(dream)
     }
 
+    suspend fun getDream(id: Int): Dream {
+        return dreamDao.getDream(id)
+    }
+
     /*suspend fun updateDream(dream: Dream) {
         dreamDao.update(dream)
     }*/

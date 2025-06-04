@@ -2,10 +2,12 @@ package com.youngsophomore.luciddreaming.ui.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.youngsophomore.luciddreaming.data.model.Dream
 import com.youngsophomore.luciddreaming.data.repository.DreamRepository
+import com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -13,8 +15,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DreamDetailsViewModel @Inject constructor(
-    private val repository: DreamRepository
+    private val repository: DreamRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val navArgs: DreamDetailsFragmentArgs = DreamDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
     var dream = Dream(
         title = "",
@@ -38,11 +43,20 @@ class DreamDetailsViewModel @Inject constructor(
     var isDreamFirstPerson = true
     init {
         Log.d("Lifecycle", "DreamDetailsViewModel.init")
+        Log.d("Lifecycle", " id from args = ${navArgs.dreamId}")
+        if (navArgs.dreamId != -1) {
+            //dream = repository.getDream(navArgs.dreamId)
+            viewModelScope.launch {
+                dream = repository.getDream(navArgs.dreamId)
+            }
+        }
+        Log.d("Lifecycle", " title of a dream = ${dream.title}")
         //initFeelings()
     }
     fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
         dreamFeelingsIds.add(ibtnFeelingsId)
         dreamLocationsIds.add(ibtnLocationsId)
+        Log.d("Lifecycle", " title of a dream = ${dream.title}")
     }
 
     fun addDreamFeeling(feeling: String, feelingId: Int){
