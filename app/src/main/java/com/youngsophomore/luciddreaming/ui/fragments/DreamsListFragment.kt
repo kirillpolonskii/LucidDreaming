@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,13 +16,16 @@ import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamsListBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
 import com.youngsophomore.luciddreaming.ui.adapters.DreamsListAdapter
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
+import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DreamsListFragment : Fragment() {
-    private val viewModel : DreamsListViewModel by viewModels()
+class DreamsListFragment : Fragment(), MetaItemAppendListener {
+    private val dreamsListVM : DreamsListViewModel by viewModels()
+    private val lucidDreamingVM: LucidDreamingViewModel by activityViewModels()
     private var _binding: FragmentDreamsListBinding? = null
     private val binding get() = _binding!!
 
@@ -35,12 +39,25 @@ class DreamsListFragment : Fragment() {
     ): View? {
         _binding = FragmentDreamsListBinding.inflate(inflater, container, false)
         val view = binding.root
+        binding.tpDreamsListFilter.listener = this
+        binding.tpDreamsListFilter.lucidDreamingVM = lucidDreamingVM
+        binding.tpDreamsListFilter.fragmentManager = childFragmentManager
+        dreamsListVM.initFeelingsAndLocations(R.id.ibtnDreamsListAddFeeling, R.id.ibtnDreamsListAddLocation)
         val adapter = DreamsListAdapter()
-        binding.rvDreamsList.adapter = adapter
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
-        viewModel.allDreams.observe(viewLifecycleOwner, Observer { dreams ->
-            adapter.setDreams(dreams)
-        })
+        dreamsListVM
+            //.fetchAllDreams()
+            //.filteredDreams
+            .allDreams
+            .observe(viewLifecycleOwner) { dreams ->
+                Log.d("Debug", "observe, dreams = ${dreams?.joinToString()}")
+                adapter.setDreams(dreams)
+            }
+        binding.rvDreamsList.adapter = adapter
+        binding.tpDreamsListFilter.dreamsAdapter = adapter
+        binding.ibtnDreamsListCancelFilter.setOnClickListener {
+            adapter.setDreams(dreamsListVM.allDreams.value!!)
+        }
         //binding.mtnLaytDreamsList.isInteractionEnabled = true
         //binding.rvDreamsList.parent.requestDisallowInterceptTouchEvent(false)
         binding.rvDreamsList.setOnTouchListener { v, event ->
@@ -48,7 +65,7 @@ class DreamsListFragment : Fragment() {
             when (event?.action){
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, DOWN")
-
+                    binding.mtnLaytDreamsList.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     v.onTouchEvent(event)
                     //false
                     //true // - так rv не двигался
@@ -78,6 +95,15 @@ class DreamsListFragment : Fragment() {
 
         return view
     }
+
+    override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
+        Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
+        if (isItemFeeling)
+            lucidDreamingVM.appendFeeling(item)
+        else
+            lucidDreamingVM.appendLocation(item)
+    }
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

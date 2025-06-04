@@ -10,7 +10,7 @@
     >
 
     <ImageButton
-        android:id="@+id/ibtnDreamDetailBack"
+        android:id="@+id/ibtnDreamDetailsBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -42,8 +42,8 @@
         style="@style/LDButton.BottomRound"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/ibtnDreamDetailBack"
-        app:layout_constraintEnd_toStartOf="@id/ibtnDreamDetailSaveEdit"
+        app:layout_constraintStart_toEndOf="@id/ibtnDreamDetailsBack"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamDetailsSaveEdit"
         app:layout_constraintTop_toBottomOf="@id/vwDreamDetailsButtonStripe"
 
         android:contentDescription="TODO"
@@ -54,7 +54,7 @@
         />
 
     <ImageButton
-        android:id="@+id/ibtnDreamDetailSaveEdit"
+        android:id="@+id/ibtnDreamDetailsSaveEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailBack"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamDetailsBack"
 
         android:hint="@string/dreamdetails_titlehint"
 
@@ -97,7 +97,7 @@
         android:gravity="top"
         />
 
-    <com.youngsophomore.luciddreaming.ui.custom.MetaTopPanelPortrait
+    <com.youngsophomore.luciddreaming.ui.custom.MetaPanelPortrait
         android:id="@+id/tpDreamDetailsMeta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

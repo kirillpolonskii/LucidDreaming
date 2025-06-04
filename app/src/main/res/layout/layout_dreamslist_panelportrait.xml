@@ -11,31 +11,276 @@
 
     <TextView
         android:id="@+id/tvDreamsListPOV"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvDreamsListFiller"
+        app:layout_constraintBottom_toTopOf="@id/tglgrDreamsListPOV"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
 
-        android:text="Поиск"
+        android:text="Точка зрения во сне"
         android:textSize="20sp"
         android:alpha="1"
         />
-    <TextView
-        android:id="@+id/tvDreamsListFiller"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/tglgrDreamsListPOV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDreamsListPOV"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamsListFeelings"
         app:layout_constraintVertical_bias="0"
 
-        android:text="Метаданные\nvtnf"
-        android:textSize="50sp"
+        app:singleSelection="true"
+        >
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btnDreamsListFirstPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="От 1-го лица"
+
+
+            />
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btnDreamsListThirdPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="От 3-го лица"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <TextView
+        android:id="@+id/tvDreamsListFeelings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tglgrDreamsListPOV"
+        app:layout_constraintBottom_toTopOf="@id/flowDreamsListFeelings"
+        app:layout_constraintVertical_bias="0"
+
+        android:text="Настроения сна"
+        android:textSize="20sp"
         android:alpha="1"
         />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowDreamsListFeelings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:constraint_referenced_ids="ibtnDreamsListAddFeeling"
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamsListFeelings"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamsListLocations"
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamsListAddFeeling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
+
+        />
+
+
+    <TextView
+        android:id="@+id/tvDreamsListLocations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flowDreamsListFeelings"
+        app:layout_constraintBottom_toTopOf="@id/flowDreamsListLocations"
+        app:layout_constraintVertical_bias="0"
+
+        android:text="Локации сна"
+        android:textSize="20sp"
+        android:alpha="1"
+        />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowDreamsListLocations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamsListLocations"
+        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListAddCreatedDateRange"
+        android:padding="10dp"
+        app:constraint_referenced_ids="ibtnDreamsListAddLocation"
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+
+
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamsListAddLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:padding="3dp"
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
+
+        />
+    <EditText
+        android:id="@+id/etDreamsListKeyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamsListAddKeyword"
+        app:layout_constraintTop_toTopOf="@id/ibtnDreamsListAddKeyword"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDreamsListAddKeyword"
+
+        android:hint="Ключевое слово"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="15dp"
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamsListAddKeyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/etDreamsListKeyword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flowDreamsListLocations"
+        app:layout_constraintBottom_toTopOf="@id/flowDreamsListKeywords"
+
+        android:padding="3dp"
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_addmetaitem_36"
+        android:layout_marginEnd="15dp"
+        />
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowDreamsListKeywords"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListAddKeyword"
+        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListAddCreatedDateRange"
+        android:padding="10dp"
+
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalBias="0"
+        app:flow_wrapMode="chain"
+
+
+        />
+
+
+    <TextView
+        android:id="@+id/tvDreamsListCreatedDateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamsListAddCreatedDateRange"
+        app:layout_constraintTop_toTopOf="@id/ibtnDreamsListAddCreatedDateRange"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDreamsListAddCreatedDateRange"
+        app:layout_constraintHorizontal_chainStyle="packed"
+
+        android:text="Интервал даты создания"
+        android:layout_marginEnd="10dp"
+        android:textSize="20sp"
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamsListAddCreatedDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvDreamsListCreatedDateTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flowDreamsListKeywords"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamsListCreatedDateRange"
+
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_date_range_36"
+        android:padding="8dp"
+        />
+    <TextView
+        android:id="@+id/tvDreamsListCreatedDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListAddCreatedDateRange"
+        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListAddEditedDateRange"
+
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/tvDreamsListEditedDateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibtnDreamsListAddEditedDateRange"
+        app:layout_constraintTop_toTopOf="@id/ibtnDreamsListAddEditedDateRange"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDreamsListAddEditedDateRange"
+        app:layout_constraintHorizontal_chainStyle="packed"
+
+        android:text="Интервал даты изменения"
+        android:layout_marginEnd="10dp"
+        android:textSize="20sp"
+        />
+    <ImageButton
+        android:id="@+id/ibtnDreamsListAddEditedDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvDreamsListEditedDateTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamsListCreatedDateRange"
+        app:layout_constraintBottom_toTopOf="@id/tvDreamsListEditedDateRange"
+
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_date_range_36"
+        android:padding="8dp"
+        />
+    <TextView
+        android:id="@+id/tvDreamsListEditedDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibtnDreamsListAddEditedDateRange"
+        app:layout_constraintBottom_toTopOf="@id/ibtnDreamsListApplyFilter"
+
+        android:textSize="18sp"
+        />
+
+    <ImageButton
+        android:id="@+id/ibtnDreamsListApplyFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDreamsListEditedDateRange"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        style="@style/LDButton.Round"
+        android:contentDescription="TODO"
+        android:src="@drawable/all_confirm_36"
+        android:padding="7dp"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

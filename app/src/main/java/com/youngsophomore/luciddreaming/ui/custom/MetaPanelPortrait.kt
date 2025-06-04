@@ -10,36 +10,28 @@ import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Orientation
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooseBinding
-import com.youngsophomore.luciddreaming.databinding.ItemMetaBinding
 import com.youngsophomore.luciddreaming.databinding.LayoutDreamdetailsPanelportraitBinding
 import com.youngsophomore.luciddreaming.ui.adapters.MetaListAdapter
-import com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragment
-import com.youngsophomore.luciddreaming.ui.interfaces.ConfirmActionListener
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 
-class MetaTopPanelPortrait @JvmOverloads constructor(
+class MetaPanelPortrait @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr)
     , MetaItemChooseListener
 {
-    private var binding: LayoutDreamdetailsPanelportraitBinding =
+    private val binding: LayoutDreamdetailsPanelportraitBinding =
         LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
     private val dreamDetailsVM: DreamDetailsViewModel by lazy {
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get(DreamDetailsViewModel::class.java)
@@ -164,7 +156,7 @@ class MetaTopPanelPortrait @JvmOverloads constructor(
             Log.d("Gestures", " ibtnMetaItemChooserClose.setOnClickListener")
             dialogMetaItemChoose.dismiss()
         }
-        metaChooserBinding.ibtnDreamDetailsAddItem.setOnClickListener{
+        metaChooserBinding.ibtnMetaItemChooserAddItem.setOnClickListener{
             showDialogMetaItemAppend()
         }
         metaChooserBinding.etMetaItemChooserFilter.addTextChangedListener { input ->

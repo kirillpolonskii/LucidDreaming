@@ -1,32 +1,19 @@
 package com.youngsophomore.luciddreaming.ui.viewmodels
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import android.util.Log
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.createSavedStateHandle
-import com.youngsophomore.luciddreaming.LucidDreamingApplication
 import com.youngsophomore.luciddreaming.data.model.Dream
 import com.youngsophomore.luciddreaming.data.repository.DreamRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class DreamDetailsViewModel @Inject constructor(
-    private val repository: DreamRepository,
-    private val dataStore: DataStore<Preferences>
+    private val repository: DreamRepository
 ) : ViewModel() {
 
     var dream = Dream(
@@ -114,30 +101,7 @@ class DreamDetailsViewModel @Inject constructor(
             )
             repository.addDream(dream)
         }
-        /*if (!isDreamInDB) {
-            dream = dream.copy(
-                title = title,
-                content = content,
-                isFirstPerson = isDreamFirstPerson,
-                locations = dreamLocations.joinToString("|"),
-                feelings = dreamFeelings.joinToString("|"),
-                creationDateTime = LocalDateTime.now(),
-                changeDateTime = LocalDateTime.now()
-            )
-            repository.addDream(dream)
-            isDreamInDB = true
-        }
-        else {
-            dream = dream.copy(
-                title = title,
-                content = content,
-                isFirstPerson = isDreamFirstPerson,
-                locations = dreamLocations.joinToString("|"),
-                feelings = dreamFeelings.joinToString("|"),
-                changeDateTime = LocalDateTime.now()
-            )
-            repository.updateDream(dream)
-        }*/
+
     }
 
 

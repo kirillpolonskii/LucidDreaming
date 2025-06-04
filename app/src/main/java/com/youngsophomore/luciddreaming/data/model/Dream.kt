@@ -10,8 +10,8 @@ data class Dream(
     val title: String,
     val content: String,
     val isFirstPerson: Boolean,
-    val locations: String, // format: <location1>|<location2>|...<locationN>|
     val feelings: String, // format: <feeling1>|<feeling2>|...<feelingN>|
+    val locations: String, // format: <location1>|<location2>|...<locationN>|
     val creationDateTime: LocalDateTime,
     val changeDateTime: LocalDateTime
 )
