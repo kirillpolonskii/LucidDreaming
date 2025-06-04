@@ -1,14 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.SettingsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Settings" />
+    <ImageButton
+        android:id="@+id/ibtnSettingsBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvSettingsTitle"
+        app:layout_constraintTop_toTopOf="parent"
 
-</FrameLayout>
+        />
+    <TextView
+        android:id="@+id/tvSettingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ibtnSettingsBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:text="Settings"
+
+        />
+    <TextView
+        android:id="@+id/tvSettingsStrongNotifsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsTitle"
+        app:layout_constraintBottom_toTopOf="@id/vwStubStrongNotifs"
+
+        android:text="Сильные уведомления"
+
+        />
+    <View
+        android:id="@+id/vwStubStrongNotifs"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsStrongNotifsTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsTitle"
+
+        />
+
+    <TextView
+        android:id="@+id/tvSettingsWeakNotifsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vwStubStrongNotifs"
+        app:layout_constraintBottom_toTopOf="@id/vwStubWeakNotifs"
+
+        android:text="Сильные уведомления"
+
+        />
+    <View
+        android:id="@+id/vwStubWeakNotifs"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsThemesTitle"
+
+        />
+
+    <TextView
+        android:id="@+id/tvSettingsThemesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vwStubWeakNotifs"
+        app:layout_constraintBottom_toTopOf="@id/vwStubThemes"
+
+        android:text="Сильные уведомления"
+
+        />
+    <View
+        android:id="@+id/vwStubThemes"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsThemesTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsPasswordTitle"
+
+        />
+    <TextView
+        android:id="@+id/tvSettingsPasswordTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vwStubThemes"
+        app:layout_constraintBottom_toTopOf="@id/swchSettingsPassword"
+
+        android:text="Вход в список снов по паролю"
+
+        />
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/swchSettingsPassword"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsPasswordTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsLanguageTitle"
+
+        />
+    <TextView
+        android:id="@+id/tvSettingsLanguageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/swchSettingsPassword"
+        app:layout_constraintBottom_toTopOf="@id/sprSettingsLanguage"
+
+        android:text="Язык приложения"
+
+        />
+    <Spinner
+        android:id="@+id/sprSettingsLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsLanguageTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
