@@ -7,10 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.DialogEnterPasswordBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentSettingsBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
+import kotlinx.coroutines.launch
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -34,27 +38,34 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.swchSettingsPassword.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.swchSettingsPassword.setOnClickListener {
             Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
-            if (isChecked) {
-                showDialogSetPassword()
-            }
-            else {
-                // TODO: добавить проверку пароля перед его снятием (т.к. для захода в настройки пароль не нужен)
-
-            }
+            showDialogSetPassword(binding.swchSettingsPassword.isChecked)
         }
     }
 
 
-    private fun showDialogSetPassword(){
+    private fun showDialogSetPassword(isSwitchChecked: Boolean){
         val dialog = Dialog(requireContext())
         val setPasswordBinding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(setPasswordBinding.root)
 
         setPasswordBinding.ibtnSettingsConfirm.setOnClickListener {
-            // показать диалоговое окно подтверждения, но это позже
-            lucidDreamingVM.setPassword(setPasswordBinding.etSettingsPassword.text.toString())
+            if (isSwitchChecked) {
+                // показать диалоговое окно подтверждения, но это позже
+                lucidDreamingVM.setPassword(setPasswordBinding.etSettingsPassword.text.toString())
+            }
+            else {
+                lifecycleScope.launch {
+                    if (lucidDreamingVM.checkPassword(setPasswordBinding.etSettingsPassword.text.toString())) {
+                        lucidDreamingVM.disablePassword()
+                    } else {
+                        Toast.makeText(context, "Wrong password", Toast.LENGTH_LONG).show()
+                        binding.swchSettingsPassword.isChecked = true
+                    }
+                }
+            }
+
             dialog.dismiss()
         }
         dialog.show()

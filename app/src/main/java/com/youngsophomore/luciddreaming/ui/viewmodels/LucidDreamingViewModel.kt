@@ -101,6 +101,7 @@ class LucidDreamingViewModel @Inject constructor(
                 //Log.d("Preferences", " " + locations.value?.joinToString())
                 prefs[keyPassword] = password.sha256()
                 prefs[keyEnablePassword] = true
+                isPasswordEnabled = true
             }
         }
 
@@ -112,5 +113,16 @@ class LucidDreamingViewModel @Inject constructor(
         //val enablePassword = preferences[keyEnablePassword] ?: false
         val hashPassword = preferences[keyPassword] ?: ""
         return hashPassword == password.sha256()
+    }
+
+    fun disablePassword(){
+        val keyEnablePassword = booleanPreferencesKey("enable_password")
+        viewModelScope.launch {
+            dataStore.edit { prefs ->
+                //Log.d("Preferences", " " + locations.value?.joinToString())
+                prefs[keyEnablePassword] = false
+                isPasswordEnabled = false
+            }
+        }
     }
 }
