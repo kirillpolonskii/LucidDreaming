@@ -2,17 +2,21 @@ package com.youngsophomore.luciddreaming.ui.fragments
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.youngsophomore.luciddreaming.R
+import androidx.fragment.app.activityViewModels
 import com.youngsophomore.luciddreaming.databinding.DialogEnterPasswordBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentSettingsBinding
+import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+    private val lucidDreamingVM: LucidDreamingViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,19 +27,34 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        binding.swchSettingsPassword.isChecked = lucidDreamingVM.isPasswordEnabled
         val view = binding.root
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.swchSettingsPassword.setOnCheckedChangeListener { buttonView, isChecked ->
+            Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
+            if (isChecked) {
+                showDialogSetPassword()
+            }
+            else {
+                // TODO: добавить проверку пароля перед его снятием (т.к. для захода в настройки пароль не нужен)
 
-    fun showDialogSetPassword(){
+            }
+        }
+    }
+
+
+    private fun showDialogSetPassword(){
         val dialog = Dialog(requireContext())
         val setPasswordBinding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(setPasswordBinding.root)
 
         setPasswordBinding.ibtnSettingsConfirm.setOnClickListener {
             // показать диалоговое окно подтверждения, но это позже
-
+            lucidDreamingVM.setPassword(setPasswordBinding.etSettingsPassword.text.toString())
             dialog.dismiss()
         }
         dialog.show()
