@@ -137,8 +137,10 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                 Log.d("Debug", " aft edited filter, " + it.joinToString())
             }
 
-
     }
 
+    fun deleteDream(dream: Dream) = viewModelScope.launch {
+        repository.deleteDream(dream)
+    }
 
 }
