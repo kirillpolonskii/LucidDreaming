@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
@@ -23,7 +24,7 @@ import com.youngsophomore.luciddreaming.ui.viewmodels.MainMenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DreamsListFragment : Fragment(), MetaItemAppendListener {
+class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter.DreamClickListener {
     private val dreamsListVM : DreamsListViewModel by viewModels()
     private val lucidDreamingVM: LucidDreamingViewModel by activityViewModels()
     private var _binding: FragmentDreamsListBinding? = null
@@ -44,6 +45,7 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener {
         binding.tpDreamsListFilter.fragmentManager = childFragmentManager
         dreamsListVM.initFeelingsAndLocations(R.id.ibtnDreamsListAddFeeling, R.id.ibtnDreamsListAddLocation)
         val adapter = DreamsListAdapter()
+        adapter.listener = this
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
         dreamsListVM
             //.fetchAllDreams()
@@ -91,6 +93,10 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener {
                     //true //- так rv не двигался
                 }
             }
+
+        }
+        binding.ibtnDreamsListAddNewDream.setOnClickListener {
+            findNavController().navigate(R.id.action_dreams_list_to_dream_details)
         }
 
         return view
@@ -113,5 +119,14 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             DreamsListFragment()
+    }
+
+    override fun onDreamClick(id: Int) {
+        val action = DreamsListFragmentDirections.actionDreamsListToDreamDetails(dreamId = id)
+        findNavController().navigate(action)
+    }
+
+    override fun onDreamLongClick(id: Int) {
+        TODO("Not yet implemented")
     }
 }

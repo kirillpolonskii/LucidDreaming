@@ -27,13 +27,22 @@
         android:name="com.youngsophomore.luciddreaming.ui.fragments.DreamsListFragment"
         android:label="Dreams list"
         tools:layout="@layout/fragment_dreams_list">
+        <action
+            android:id="@+id/action_dreams_list_to_dream_details"
+            app:destination="@id/frgt_dream_details"
+            />
     </fragment>
     <fragment
         android:id="@+id/frgt_dream_details"
         android:name="com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragment"
-        android:label="Dream detail"
+        android:label="Dream details"
         tools:layout="@layout/fragment_dream_details"
         >
+        <argument
+            android:name="dreamId"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
     </fragment>
     <fragment
         android:id="@+id/frgt_settings"

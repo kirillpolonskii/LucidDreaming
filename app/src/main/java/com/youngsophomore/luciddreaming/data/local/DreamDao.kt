@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DreamDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(dream: Dream): Long
 
     @Update
@@ -20,6 +20,9 @@ interface DreamDao {
 
     @Delete
     suspend fun delete(dream: Dream)
+
+    @Query("SELECT * FROM dreams WHERE id = :id")
+    fun getDream(id: Int): Flow<Dream>
 
     @Query("SELECT * FROM dreams ORDER BY id")
     fun getAllDreams(): LiveData<List<Dream>>

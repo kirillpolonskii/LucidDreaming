@@ -1,20 +1,29 @@
 package com.youngsophomore.luciddreaming.ui.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.youngsophomore.luciddreaming.data.model.Dream
 import com.youngsophomore.luciddreaming.data.repository.DreamRepository
+import com.youngsophomore.luciddreaming.ui.fragments.DreamDetailsFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class DreamDetailsViewModel @Inject constructor(
-    private val repository: DreamRepository
+    private val repository: DreamRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val navArgs: DreamDetailsFragmentArgs = DreamDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
     var dream = Dream(
         title = "",
@@ -27,6 +36,8 @@ class DreamDetailsViewModel @Inject constructor(
         changeDateTime = LocalDateTime.now()
         //changeDateTime = dreamChangeDateTime
     )
+    var dreamById: Flow<Dream>? = null
+    lateinit var dreamListener: DreamArgsListener
     private var dreamId = 0
     private val dreamFeelings = mutableListOf<String>()
     private val dreamLocations = mutableListOf<String>()
@@ -35,14 +46,28 @@ class DreamDetailsViewModel @Inject constructor(
     var isNewMetaItemFeeling: Boolean? = null
     val isDreamEditable = MutableLiveData<Boolean>(true)
     private var isDreamInDB = false
-    var isDreamFirstPerson = true
     init {
         Log.d("Lifecycle", "DreamDetailsViewModel.init")
+        Log.d("Lifecycle", " id from args = ${navArgs.dreamId}")
+        if (navArgs.dreamId != -1) {
+            //dream = repository.getDream(navArgs.dreamId)
+            //dream = repository.getDream(navArgs.dreamId).first()
+            viewModelScope.launch {
+                dreamById = repository.getDream(navArgs.dreamId)
+                dream = dreamById!!.first()
+                Log.d("Debug", "  dream = ${dream}")
+                dreamListener.onDreamCollected(dream)
+                isDreamInDB = true
+                isDreamEditable.value = false
+            }
+        }
+        Log.d("Lifecycle", " title of a dream = ${dream.title}")
         //initFeelings()
     }
     fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
         dreamFeelingsIds.add(ibtnFeelingsId)
         dreamLocationsIds.add(ibtnLocationsId)
+        Log.d("Lifecycle", " title of a dream = ${dream.title}")
     }
 
     fun addDreamFeeling(feeling: String, feelingId: Int){
@@ -78,7 +103,6 @@ class DreamDetailsViewModel @Inject constructor(
             dream = dream.copy(
                 title = title,
                 content = content,
-                isFirstPerson = isDreamFirstPerson,
                 locations = dreamLocations.joinToString("|"),
                 feelings = dreamFeelings.joinToString("|"),
                 creationDateTime = LocalDateTime.now(),
@@ -94,7 +118,7 @@ class DreamDetailsViewModel @Inject constructor(
             dream = dream.copy(
                 title = title,
                 content = content,
-                isFirstPerson = isDreamFirstPerson,
+                //isFirstPerson = isDreamFirstPerson,
                 locations = dreamLocations.joinToString("|"),
                 feelings = dreamFeelings.joinToString("|"),
                 changeDateTime = LocalDateTime.now()
@@ -104,5 +128,7 @@ class DreamDetailsViewModel @Inject constructor(
 
     }
 
-
+    interface DreamArgsListener {
+        fun onDreamCollected(dream: Dream)
+    }
 }

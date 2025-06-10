@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.data.model.Dream
 import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooseBinding
@@ -67,8 +68,10 @@ class MetaPanelPortrait @JvmOverloads constructor(
 
         binding.tglgrDreamDetailsPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
             Log.d("Gestures", " tglgrDreamDetailsPOV.addOnButtonCheckedListener " +
-                    dreamDetailsVM.isDreamFirstPerson)
-            dreamDetailsVM.isDreamFirstPerson = group.checkedButtonId == R.id.btnDreamDetailsFirstPerson
+                    dreamDetailsVM.dream.isFirstPerson)
+            dreamDetailsVM.dream = dreamDetailsVM.dream.copy(
+                isFirstPerson = group.checkedButtonId == R.id.btnDreamDetailsFirstPerson
+            )
         }
 
     }
@@ -226,6 +229,47 @@ class MetaPanelPortrait @JvmOverloads constructor(
             }
         }
         dialog.show()
+    }
+
+    fun setDreamMeta(dream: Dream) {
+        if (dream.isFirstPerson) {
+            binding.btnDreamDetailsFirstPerson.performClick()
+        }
+        else {
+            binding.btnDreamDetailsThirdPerson.performClick()
+        }
+        // TODO: заполнить список чувств
+        dream.feelings.split("|").forEach { feeling ->
+            val newMetaItem = TextView(context)
+            newMetaItem.text = feeling
+            dreamDetailsVM.addDreamFeeling(feeling, View.generateViewId())
+            newMetaItem.id = dreamDetailsVM.dreamFeelingsIds[dreamDetailsVM.dreamFeelingsIds.size - 2]
+            binding.root.addView(newMetaItem)
+            binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsVM.dreamFeelingsIds.toIntArray()
+            newMetaItem.setOnLongClickListener {
+                Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
+                showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
+                        if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
+                                " \"$feeling\"?", newMetaItem)
+                true
+            }
+        }
+        // TODO: заполнить список мест
+        dream.locations.split("|").forEach { location ->
+            val newMetaItem = TextView(context)
+            newMetaItem.text = location
+            dreamDetailsVM.addDreamLocation(location, View.generateViewId())
+            newMetaItem.id = dreamDetailsVM.dreamLocationsIds[dreamDetailsVM.dreamLocationsIds.size - 2]
+            binding.root.addView(newMetaItem)
+            binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
+            newMetaItem.setOnLongClickListener {
+                Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
+                showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
+                        if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
+                                " \"$location\"?", newMetaItem)
+                true
+            }
+        }
     }
 
     override fun onMetaItemChoose(item: String) {
