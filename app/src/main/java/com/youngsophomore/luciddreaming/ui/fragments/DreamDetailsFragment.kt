@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.room.util.toSQLiteConnection
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.data.model.Dream
@@ -68,7 +69,9 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
             }
             dreamDetailsVM.isDreamEditable.value = !dreamDetailsVM.isDreamEditable.value!!
         }
-
+        binding.ibtnDreamDetailsBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
         //dreamDetailsVM.addDream()
 
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.DialogEnterPasswordBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentSettingsBinding
@@ -32,6 +33,10 @@ class SettingsFragment : Fragment() {
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         binding.swchSettingsPassword.isChecked = lucidDreamingVM.isPasswordEnabled
+        binding.ibtnSettingsBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         val view = binding.root
         return view
     }

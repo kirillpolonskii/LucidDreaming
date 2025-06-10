@@ -101,6 +101,9 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
         binding.ibtnDreamsListAddNewDream.setOnClickListener {
             findNavController().navigate(R.id.action_dreams_list_to_dream_details)
         }
+        binding.ibtnDreamsListBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         return view
     }
