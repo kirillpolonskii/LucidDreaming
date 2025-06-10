@@ -22,7 +22,7 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
                 listener.onDreamClick(allDreams[adapterPosition].id)
             }
             binding.root.setOnLongClickListener {
-                listener.onDreamLongClick(allDreams[adapterPosition].id)
+                listener.onDreamLongClick(allDreams[adapterPosition])
                 true
             }
         }
@@ -57,6 +57,6 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
 
     interface DreamClickListener {
         fun onDreamClick(id: Int)
-        fun onDreamLongClick(id: Int)
+        fun onDreamLongClick(dream: Dream)
     }
 }

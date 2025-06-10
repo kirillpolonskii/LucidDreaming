@@ -1,5 +1,6 @@
 package com.youngsophomore.luciddreaming.ui.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.data.model.Dream
+import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamsListBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentMainMenuBinding
@@ -126,7 +129,21 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
         findNavController().navigate(action)
     }
 
-    override fun onDreamLongClick(id: Int) {
-        TODO("Not yet implemented")
+    override fun onDreamLongClick(dream: Dream) {
+        val dialog = Dialog(requireContext())
+        val confirmActionBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(confirmActionBinding.root)
+        confirmActionBinding.apply {
+            tvConfirmActionDialogTitle.text = "Подтвердить удаление"
+            tvConfirmActionDialogAction.text = "Удалить сон из списка?"
+            ibtnConfirmActionDialogConfirm.setOnClickListener {
+                dreamsListVM.deleteDream(dream)
+                dialog.dismiss()
+            }
+            ibtnConfirmActionDialogClose.setOnClickListener {
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
     }
 }
