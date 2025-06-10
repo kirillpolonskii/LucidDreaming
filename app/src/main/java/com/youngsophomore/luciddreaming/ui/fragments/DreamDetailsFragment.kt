@@ -8,14 +8,17 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.room.util.toSQLiteConnection
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.data.model.Dream
 
 import com.youngsophomore.luciddreaming.databinding.FragmentDreamDetailsBinding
 import com.youngsophomore.luciddreaming.ui.interfaces.ConfirmActionListener
@@ -23,10 +26,11 @@ import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
-    val viewModel : DreamDetailsViewModel by viewModels()
+class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsViewModel.DreamArgsListener {
+    val dreamDetailsVM : DreamDetailsViewModel by viewModels()
     private val lucidDreamingViewModel: LucidDreamingViewModel by activityViewModels()
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
@@ -44,32 +48,44 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
         binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
         binding.tpDreamDetailsMeta.lucidDreamingVM = lucidDreamingViewModel
-        viewModel.initFeelingsAndLocations(R.id.ibtnDreamDetailsAddFeeling, R.id.ibtnDreamDetailsAddLocation)
-        viewModel.isDreamEditable.observe(viewLifecycleOwner) { isDreamEditable ->
+        dreamDetailsVM.initFeelingsAndLocations(R.id.ibtnDreamDetailsAddFeeling, R.id.ibtnDreamDetailsAddLocation)
+        dreamDetailsVM.dreamListener = this
+        dreamDetailsVM.isDreamEditable.observe(viewLifecycleOwner) { isDreamEditable ->
             binding.ibtnDreamDetailsSaveEdit.setImageDrawable(AppCompatResources.getDrawable(requireContext(),
                 if (isDreamEditable) R.drawable.all_save_24
             else R.drawable.all_edit_24))
         }
         binding.ibtnDreamDetailsSaveEdit.setOnClickListener {
             Log.d("Gestures", " ibtnDreamDetailSaveEdit.setOnClickListener")
-            if (viewModel.isDreamEditable.value!!) {
+            if (dreamDetailsVM.isDreamEditable.value!!) {
                 with(binding){
-                    viewModel.addUpdateDream(
+                    dreamDetailsVM.addUpdateDream(
                         title = etDreamDetailsTitle.text.toString(),
                         content = etDreamDetailsContent.text.toString()
                     )
                 }
 
             }
-            viewModel.isDreamEditable.value = !viewModel.isDreamEditable.value!!
+            dreamDetailsVM.isDreamEditable.value = !dreamDetailsVM.isDreamEditable.value!!
         }
-        val editable = Editable.Factory.getInstance().newEditable(viewModel.dream.title)
-        binding.etDreamDetailsTitle.text = editable
-        //viewModel.addDream()
+
+        //dreamDetailsVM.addDream()
+
 
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /*dreamDetailsVM.dreamById?.observe(viewLifecycleOwner) { dream ->
+            Log.d("Debug", " dreamById?.observe, dream=${dream}")
+            val editable = Editable.Factory.getInstance().newEditable(dream.title)
+            binding.etDreamDetailsTitle.text = editable
+        }*/
+        /*Toast.makeText(context, "title=${dreamDetailsVM.dream.title}", Toast.LENGTH_LONG).show()
+        val editable = Editable.Factory.getInstance().newEditable(dreamDetailsVM.dream.title)
+        binding.etDreamDetailsTitle.text = editable*/
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -87,6 +103,15 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener {
             lucidDreamingViewModel.appendFeeling(item)
         else
             lucidDreamingViewModel.appendLocation(item)
+    }
+
+    override fun onDreamCollected(dream: Dream) {
+        Log.d("Debug", "onDreamCollected, dream=${dream}")
+        val editableTitle = Editable.Factory.getInstance().newEditable(dream.title)
+        binding.etDreamDetailsTitle.text = editableTitle
+        val editableContent = Editable.Factory.getInstance().newEditable(dream.content)
+        binding.etDreamDetailsContent.text = editableContent
+        binding.tpDreamDetailsMeta.setDreamMeta(dream)
     }
 
 
