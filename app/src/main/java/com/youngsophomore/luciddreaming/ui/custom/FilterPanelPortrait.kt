@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
@@ -238,6 +239,7 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
     // в какой именно tv установится выбранное значение
     private fun showDateCreatedChooser(title: String, tvDateRange: TextView){
         val builder = MaterialDatePicker.Builder.dateRangePicker()
+
         val dateRangePicker = builder
             .setTitleText(title)
             .build()
