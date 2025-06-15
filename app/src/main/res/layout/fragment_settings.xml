@@ -97,6 +97,7 @@
         app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
 
         android:text="Период активности"
+
         />
     <TextView
         android:id="@+id/tvSettingsWeakNotifsActiveHoursStart"
@@ -107,6 +108,8 @@
         app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
         app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
 
+
+        android:text="08:00"
         />
     <TextView
         android:id="@+id/tvSettingsWeakNotifsActiveHoursDash"
@@ -129,6 +132,7 @@
         app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
         app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
 
+        android:text="23:00"
         />
 
     <TextView
@@ -140,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
         app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsMessageSubtitle"
 
-        android:text="Количество уведомлений в день"
+        android:text="Интервал между уведомлениями"
         />
     <Spinner
         android:id="@+id/sprSettingsWeakNotifsFrequency"
@@ -151,6 +155,7 @@
         app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
         app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
 
+        android:entries="@array/frequencies"
 
         />
 

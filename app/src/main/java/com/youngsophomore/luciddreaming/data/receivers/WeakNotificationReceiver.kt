@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.youngsophomore.luciddreaming.LucidDreamingApplication
 
 class WeakNotificationReceiver : BroadcastReceiver() {
     private var notifManager: NotificationManagerCompat? = null
@@ -16,7 +17,7 @@ class WeakNotificationReceiver : BroadcastReceiver() {
         val weakNotif = context?.let { context ->
             // тег канала потом нужно переместить в LucidDreamingApplication,
             // где будет создаваться канал для слабых уведомлений
-            NotificationCompat.Builder(context, "weak_notifications_channel")
+            NotificationCompat.Builder(context, LucidDreamingApplication.WEAK_NOTIFS_CHANNEL_ID)
                 .setContentTitle("Проверка реальности")
                 .setContentText("Выполните проверку окружения на реальность")
                 .setAutoCancel(true)
