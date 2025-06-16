@@ -1,10 +1,12 @@
 package com.youngsophomore.luciddreaming.ui.fragments
 
+import android.Manifest
 import android.app.AlarmManager
 import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +16,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,6 +26,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import com.youngsophomore.luciddreaming.LucidDreamingApplication
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.data.receivers.WeakNotificationReceiver
 import com.youngsophomore.luciddreaming.databinding.DialogEnterPasswordBinding
@@ -60,6 +67,25 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         settingsVM.initSettings()
+        val weakNotif = context?.let { context ->
+            // тег канала потом нужно переместить в LucidDreamingApplication,
+            // где будет создаваться канал для слабых уведомлений
+            NotificationCompat.Builder(context, LucidDreamingApplication.WEAK_NOTIFS_CHANNEL_ID)
+                .setContentTitle("Проверка реальности")
+                .setContentText("Тестовое")
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .build()
+        }
+        val notifManager = context.let { NotificationManagerCompat.from(it!!) }
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED){
+            Log.d("Debug", " BLYAT! Gde razreshenie???")
+        }
+        notifManager.notify(1, weakNotif!!)
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         binding.swchSettingsPassword.isChecked = lucidDreamingVM.isPasswordEnabled
 
@@ -77,15 +103,17 @@ class SettingsFragment : Fragment() {
             }
         }
         settingsVM.weakNotifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
+            Log.d("Debug", " weakNotifsActiveHoursCalendarStart.observe")
             Log.d("Debug", " " + activeHoursStart.toString())
             binding.tvSettingsWeakNotifsActiveHoursStart.text =
-                "${activeHoursStart.get(Calendar.HOUR)}-${activeHoursStart.get(Calendar.MINUTE)}"
+                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}-${activeHoursStart.get(Calendar.MINUTE)}"
 
         }
         settingsVM.weakNotifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
+            Log.d("Debug", " weakNotifsActiveHoursCalendarEnd.observe")
             Log.d("Debug", " " + activeHoursEnd.toString())
             binding.tvSettingsWeakNotifsActiveHoursEnd.text =
-                "${activeHoursEnd.get(Calendar.HOUR)}-${activeHoursEnd.get(Calendar.MINUTE)}"
+                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}-${activeHoursEnd.get(Calendar.MINUTE)}"
         }
 
         val view = binding.root
@@ -161,6 +189,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun scheduleWeakNotifs(){
+        Log.d("Debug", "SettingsFragment.scheduleWeakNotifs()")
         val weakNotifsReceiverIntent = Intent(context, WeakNotificationReceiver::class.java)
         val weakNotifsPendingIntent = PendingIntent.getBroadcast(
             context,
@@ -176,6 +205,10 @@ class SettingsFragment : Fragment() {
                 AlarmManager.INTERVAL_DAY,
                 weakNotifsPendingIntent
             )
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = it
+            Log.d("Debug", " cur time point for alarm = ")
+            Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
         }
 
     }
@@ -184,6 +217,7 @@ class SettingsFragment : Fragment() {
         Log.d("Debug", "SettingFragment.showTimeChooser()")
         val timePicker = MaterialTimePicker.Builder()
             .setTitleText("Время начала")
+            .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
         timePicker.addOnPositiveButtonClickListener {
             Log.d("Debug", " timePicker.addOnPositiveButtonClickListener")

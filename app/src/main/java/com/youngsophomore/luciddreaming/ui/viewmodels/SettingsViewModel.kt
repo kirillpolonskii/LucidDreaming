@@ -24,8 +24,8 @@ class SettingsViewModel @Inject constructor(
 
     val weakNotifsIsEnabled = MutableLiveData(false)
     var weakNotifsActiveHours = mutableListOf(0L, 0L)
-    val weakNotifsActiveHoursCalendarStart = MutableLiveData(Calendar.getInstance())
-    val weakNotifsActiveHoursCalendarEnd = MutableLiveData(Calendar.getInstance())
+    val weakNotifsActiveHoursCalendarStart = MutableLiveData<Calendar>()
+    val weakNotifsActiveHoursCalendarEnd = MutableLiveData<Calendar>()
     var weakNotifsFrequency = 1
     var weakNotifsMessage = ""
     var weakNotifsTimePoints = mutableListOf<Long>()
@@ -45,8 +45,12 @@ class SettingsViewModel @Inject constructor(
                 .split("-")
                 .map { it.toLong() }
                 .toMutableList()
-        weakNotifsActiveHoursCalendarStart.value?.timeInMillis = weakNotifsActiveHours[0]
-        weakNotifsActiveHoursCalendarEnd.value?.timeInMillis = weakNotifsActiveHours[1]
+        weakNotifsActiveHoursCalendarStart.value = Calendar.getInstance().apply {
+            timeInMillis = weakNotifsActiveHours[0]
+        }
+        weakNotifsActiveHoursCalendarEnd.value = Calendar.getInstance().apply {
+            timeInMillis = weakNotifsActiveHours[1]
+        }
         weakNotifsFrequency = preferences[keyWeakNotifsFrequency] ?: 1
         weakNotifsMessage = preferences[keyWeakNotifsMessage] ?: "СООБЩЕНИЕ СЛАБОГО УВЕДОМЛЕНИЯ"
 
@@ -55,7 +59,7 @@ class SettingsViewModel @Inject constructor(
     fun updateActiveHours(hours: Int, minutes: Int, isStart: Boolean){
         Log.d("Debug", "SettingsViewModel.updateActiveHours()")
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR, hours)
+        calendar.set(Calendar.HOUR_OF_DAY, hours)
         calendar.set(Calendar.MINUTE, minutes)
         Log.d("Debug", " $calendar")
         if (isStart) {
@@ -90,10 +94,15 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun updateTimePoints(){
+        Log.d("Debug", "SettingsViewModel.updateTimePoints()")
         weakNotifsTimePoints.clear()
         val timeInterval = (weakNotifsActiveHours[1] - weakNotifsActiveHours[0]) / weakNotifsFrequency
         for (i in 0..<weakNotifsFrequency){
             weakNotifsTimePoints.add(weakNotifsActiveHours[0] + i * timeInterval)
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = weakNotifsActiveHours[0] + i * timeInterval
+            Log.d("Debug", " cur time point for alarm = ")
+            Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
         }
     }
 
