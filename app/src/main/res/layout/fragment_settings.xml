@@ -30,130 +30,98 @@
         android:text="Settings"
 
         />
+
+
     <TextView
-        android:id="@+id/tvSettingsStrongNotifsTitle"
+        android:id="@+id/tvSettingsNotifsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSettingsTitle"
-        app:layout_constraintBottom_toTopOf="@id/vwStubStrongNotifs"
-        app:layout_constraintHorizontal_bias="0"
-
-        android:text="Включить сильные уведомления"
-
-        />
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/swchSettingsStrongNotifs"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:layout_constraintStart_toEndOf="@id/tvSettingsStrongNotifsTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvSettingsStrongNotifsTitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvSettingsStrongNotifsTitle"
-
-        />
-    <View
-        android:id="@+id/vwStubStrongNotifs"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSettingsStrongNotifsTitle"
-        app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsTitle"
-
-        />
-
-    <TextView
-        android:id="@+id/tvSettingsWeakNotifsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vwStubStrongNotifs"
-        app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsNotifsActiveHoursSubtitle"
         app:layout_constraintHorizontal_bias="0"
 
         android:text="Включить слабые уведомления"
 
         />
     <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/swchSettingsWeakNotifs"
+        android:id="@+id/swchSettingsNotifs"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        app:layout_constraintStart_toEndOf="@id/tvSettingsWeakNotifsTitle"
+        app:layout_constraintStart_toEndOf="@id/tvSettingsNotifsTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsTitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsTitle"
+        app:layout_constraintTop_toTopOf="@id/tvSettingsNotifsTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvSettingsNotifsTitle"
 
         />
     <TextView
-        android:id="@+id/tvSettingsWeakNotifsActiveHoursSubtitle"
+        android:id="@+id/tvSettingsNotifsActiveHoursSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvSettingsWeakNotifsActiveHoursStart"
-        app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsTitle"
-        app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
+        app:layout_constraintEnd_toStartOf="@id/tvSettingsNotifsActiveHoursStart"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsNotifsTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsNotifsFrequencySubtitle"
 
         android:text="Период активности"
 
         />
     <TextView
-        android:id="@+id/tvSettingsWeakNotifsActiveHoursStart"
+        android:id="@+id/tvSettingsNotifsActiveHoursStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
-        app:layout_constraintEnd_toStartOf="@id/tvSettingsWeakNotifsActiveHoursDash"
-        app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
+        app:layout_constraintStart_toEndOf="@id/tvSettingsNotifsActiveHoursSubtitle"
+        app:layout_constraintEnd_toStartOf="@id/tvSettingsNotifsActiveHoursDash"
+        app:layout_constraintTop_toTopOf="@id/tvSettingsNotifsActiveHoursSubtitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvSettingsNotifsActiveHoursSubtitle"
 
 
         android:text="08:00"
         />
     <TextView
-        android:id="@+id/tvSettingsWeakNotifsActiveHoursDash"
+        android:id="@+id/tvSettingsNotifsActiveHoursDash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tvSettingsWeakNotifsActiveHoursStart"
-        app:layout_constraintEnd_toStartOf="@id/tvSettingsWeakNotifsActiveHoursEnd"
-        app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
+        app:layout_constraintStart_toEndOf="@id/tvSettingsNotifsActiveHoursStart"
+        app:layout_constraintEnd_toStartOf="@id/tvSettingsNotifsActiveHoursEnd"
+        app:layout_constraintTop_toTopOf="@id/tvSettingsNotifsActiveHoursSubtitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvSettingsNotifsActiveHoursSubtitle"
 
         android:text=" - "
 
         />
     <TextView
-        android:id="@+id/tvSettingsWeakNotifsActiveHoursEnd"
+        android:id="@+id/tvSettingsNotifsActiveHoursEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tvSettingsWeakNotifsActiveHoursDash"
+        app:layout_constraintStart_toEndOf="@id/tvSettingsNotifsActiveHoursDash"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
+        app:layout_constraintTop_toTopOf="@id/tvSettingsNotifsActiveHoursSubtitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvSettingsNotifsActiveHoursSubtitle"
 
         android:text="23:00"
         />
 
     <TextView
-        android:id="@+id/tvSettingsWeakNotifsFrequencySubtitle"
+        android:id="@+id/tvSettingsNotifsFrequencySubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/sprSettingsWeakNotifsFrequency"
-        app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
+        app:layout_constraintEnd_toStartOf="@id/sprSettingsNotifsFrequency"
+        app:layout_constraintTop_toBottomOf="@id/tvSettingsNotifsActiveHoursSubtitle"
         app:layout_constraintBottom_toTopOf="@id/tvSettingsThemesTitle"
 
         android:text="Интервал между уведомлениями"
         />
     <Spinner
-        android:id="@+id/sprSettingsWeakNotifsFrequency"
+        android:id="@+id/sprSettingsNotifsFrequency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
+        app:layout_constraintStart_toEndOf="@id/tvSettingsNotifsFrequencySubtitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
+        app:layout_constraintTop_toTopOf="@id/tvSettingsNotifsFrequencySubtitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvSettingsNotifsFrequencySubtitle"
 
         android:entries="@array/frequencies"
 
@@ -165,7 +133,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sprSettingsWeakNotifsFrequency"
+        app:layout_constraintTop_toBottomOf="@id/sprSettingsNotifsFrequency"
         app:layout_constraintBottom_toTopOf="@id/vwStubThemes"
 
         android:text="Выбор темы"

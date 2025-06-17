@@ -12,14 +12,14 @@ import android.util.Log
 import com.youngsophomore.luciddreaming.LucidDreamingApplication
 import com.youngsophomore.luciddreaming.R
 
-class WeakNotificationReceiver : BroadcastReceiver() {
+class NotificationReceiver : BroadcastReceiver() {
     private var notifManager: NotificationManagerCompat? = null
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("Debug", "WeakNotificationReceiver.onReceive()")
-        val weakNotif = context?.let { context ->
+        Log.d("Debug", "NotificationReceiver.onReceive()")
+        val notif = context?.let { context ->
             // тег канала потом нужно переместить в LucidDreamingApplication,
             // где будет создаваться канал для слабых уведомлений
-            NotificationCompat.Builder(context, LucidDreamingApplication.WEAK_NOTIFS_CHANNEL_ID)
+            NotificationCompat.Builder(context, LucidDreamingApplication.NOTIFS_CHANNEL_ID)
                 .setContentTitle("Проверка реальности")
                 .setContentText("Выполните проверку окружения на реальность")
                 .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -35,7 +35,7 @@ class WeakNotificationReceiver : BroadcastReceiver() {
             Log.d("Debug", " BLYAT! Gde razreshenie???")
             return
         }
-        notifManager?.notify(1, weakNotif!!)
+        notifManager?.notify(1, notif!!)
     }
 
 }

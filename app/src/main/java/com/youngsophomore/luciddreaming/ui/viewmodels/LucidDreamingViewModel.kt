@@ -24,13 +24,12 @@ class LucidDreamingViewModel @Inject constructor(
     val feelings = MutableLiveData<MutableList<String>>(mutableListOf())
     val locations = MutableLiveData<MutableList<String>>(mutableListOf())
 
-    var weakNotifsIsEnabled = false
-    var weakNotifsActiveHours = mutableListOf(0L, 0L)
-    val weakNotifsActiveHoursCalendarStart = MutableLiveData<Calendar>()
-    val weakNotifsActiveHoursCalendarEnd = MutableLiveData<Calendar>()
-    var weakNotifsFrequency = 1
-    var weakNotifsMessage = ""
-    var weakNotifsTimePoints = mutableListOf<Long>()
+    var notifsIsEnabled = false
+    var notifsActiveHours = mutableListOf(0L, 0L)
+    val notifsActiveHoursCalendarStart = MutableLiveData<Calendar>()
+    val notifsActiveHoursCalendarEnd = MutableLiveData<Calendar>()
+    var notifsFrequency = 1
+    var notifsTimePoints = mutableListOf<Long>()
     var isPasswordEnabled: Boolean = false
 
     fun initFromPrefs() = viewModelScope.launch {
@@ -105,27 +104,25 @@ class LucidDreamingViewModel @Inject constructor(
 
     fun initSettings() = viewModelScope.launch {
         Log.d("Lifecycle", "LucidDreamingViewModel.initSettings()")
-        val keyWeakNotifsEnabled = booleanPreferencesKey("weak_notifs_enabled")
-        val keyWeakNotifsActiveHours = stringPreferencesKey("weak_notifs_active_hours")
-        val keyWeakNotifsFrequency = intPreferencesKey("weak_notifs_frequency")
-        val keyWeakNotifsMessage = stringPreferencesKey("weak_notifs_message")
+        val keyNotifsEnabled = booleanPreferencesKey("notifs_enabled")
+        val keyNotifsActiveHours = stringPreferencesKey("notifs_active_hours")
+        val keyNotifsFrequency = intPreferencesKey("notifs_frequency")
         val preferences = dataStore.data.first()
 
-        weakNotifsIsEnabled = preferences[keyWeakNotifsEnabled] ?: false
-        val weakNotifsActiveHoursStrPref = preferences[keyWeakNotifsActiveHours] ?: "0-0"
-        weakNotifsActiveHours =
-            weakNotifsActiveHoursStrPref
+        notifsIsEnabled = preferences[keyNotifsEnabled] ?: false
+        val notifsActiveHoursStrPref = preferences[keyNotifsActiveHours] ?: "0-0"
+        notifsActiveHours =
+            notifsActiveHoursStrPref
                 .split("-")
                 .map { it.toLong() }
                 .toMutableList()
-        weakNotifsActiveHoursCalendarStart.value = Calendar.getInstance().apply {
-            timeInMillis = weakNotifsActiveHours[0]
+        notifsActiveHoursCalendarStart.value = Calendar.getInstance().apply {
+            timeInMillis = notifsActiveHours[0]
         }
-        weakNotifsActiveHoursCalendarEnd.value = Calendar.getInstance().apply {
-            timeInMillis = weakNotifsActiveHours[1]
+        notifsActiveHoursCalendarEnd.value = Calendar.getInstance().apply {
+            timeInMillis = notifsActiveHours[1]
         }
-        weakNotifsFrequency = preferences[keyWeakNotifsFrequency] ?: 1
-        weakNotifsMessage = preferences[keyWeakNotifsMessage] ?: "СООБЩЕНИЕ СЛАБОГО УВЕДОМЛЕНИЯ"
+        notifsFrequency = preferences[keyNotifsFrequency] ?: 1
 
     }
 
@@ -145,13 +142,13 @@ class LucidDreamingViewModel @Inject constructor(
 
 
 
-    fun updateWeakNotifsEnabled(isChecked: Boolean) {
-        weakNotifsIsEnabled = isChecked
-        val keyWeakNotifsEnabled = booleanPreferencesKey("weak_notifs_enabled")
+    fun updateNotifsEnabled(isChecked: Boolean) {
+        notifsIsEnabled = isChecked
+        val keyNotifsEnabled = booleanPreferencesKey("notifs_enabled")
         viewModelScope.launch {
             dataStore.edit { prefs ->
                 //Log.d("Preferences", " " + locations.value?.joinToString())
-                prefs[keyWeakNotifsEnabled] = isChecked
+                prefs[keyNotifsEnabled] = isChecked
             }
         }
     }
@@ -163,18 +160,18 @@ class LucidDreamingViewModel @Inject constructor(
         calendar.set(Calendar.MINUTE, minutes)
         Log.d("Debug", " $calendar")
         if (isStart) {
-            weakNotifsActiveHours[0] = calendar.timeInMillis
-            weakNotifsActiveHoursCalendarStart.value = calendar
+            notifsActiveHours[0] = calendar.timeInMillis
+            notifsActiveHoursCalendarStart.value = calendar
         }
         else {
-            weakNotifsActiveHours[1] = calendar.timeInMillis
-            weakNotifsActiveHoursCalendarEnd.value = calendar
+            notifsActiveHours[1] = calendar.timeInMillis
+            notifsActiveHoursCalendarEnd.value = calendar
         }
-        val keyWeakNotifsActiveHours = stringPreferencesKey("weak_notifs_active_hours")
+        val keyNotifsActiveHours = stringPreferencesKey("notifs_active_hours")
         viewModelScope.launch {
             dataStore.edit { prefs ->
                 //Log.d("Preferences", " " + locations.value?.joinToString())
-                prefs[keyWeakNotifsActiveHours] = "${weakNotifsActiveHours[0]}-${weakNotifsActiveHours[1]}"
+                prefs[keyNotifsActiveHours] = "${notifsActiveHours[0]}-${notifsActiveHours[1]}"
             }
         }
         updateTimePoints()
@@ -182,12 +179,12 @@ class LucidDreamingViewModel @Inject constructor(
     }
 
     fun updateFrequency(newFrequency: Int){
-        weakNotifsFrequency = newFrequency
-        val keyWeakNotifsFrequency = intPreferencesKey("weak_notifs_frequency")
+        notifsFrequency = newFrequency
+        val keyNotifsFrequency = intPreferencesKey("notifs_frequency")
         viewModelScope.launch {
             dataStore.edit { prefs ->
                 //Log.d("Preferences", " " + locations.value?.joinToString())
-                prefs[keyWeakNotifsFrequency] = newFrequency
+                prefs[keyNotifsFrequency] = newFrequency
             }
         }
         updateTimePoints()
@@ -195,12 +192,12 @@ class LucidDreamingViewModel @Inject constructor(
 
     fun updateTimePoints(){
         Log.d("Debug", "LucidDreamingViewModel.updateTimePoints()")
-        weakNotifsTimePoints.clear()
-        val timeInterval = (weakNotifsActiveHours[1] - weakNotifsActiveHours[0]) / weakNotifsFrequency
-        for (i in 0..<weakNotifsFrequency){
-            weakNotifsTimePoints.add(weakNotifsActiveHours[0] + i * timeInterval)
+        notifsTimePoints.clear()
+        val timeInterval = (notifsActiveHours[1] - notifsActiveHours[0]) / notifsFrequency
+        for (i in 0..<notifsFrequency){
+            notifsTimePoints.add(notifsActiveHours[0] + i * timeInterval)
             val cal = Calendar.getInstance()
-            cal.timeInMillis = weakNotifsActiveHours[0] + i * timeInterval
+            cal.timeInMillis = notifsActiveHours[0] + i * timeInterval
             Log.d("Debug", " cur time point for alarm = ")
             Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
         }
@@ -208,7 +205,7 @@ class LucidDreamingViewModel @Inject constructor(
 
     suspend fun checkPassword(password: String): Boolean{
         val keyPassword = stringPreferencesKey("hash_password")
-        val keyEnablePassword = booleanPreferencesKey("enable_password")
+        //val keyEnablePassword = booleanPreferencesKey("enable_password")
         val preferences = dataStore.data.first()
         //val enablePassword = preferences[keyEnablePassword] ?: false
         val hashPassword = preferences[keyPassword] ?: ""

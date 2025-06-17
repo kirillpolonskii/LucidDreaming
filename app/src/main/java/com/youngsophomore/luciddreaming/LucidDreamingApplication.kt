@@ -17,20 +17,20 @@ class LucidDreamingApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val weakNotifsChannel = NotificationChannel(
-                    WEAK_NOTIFS_CHANNEL_ID,
-                    WEAK_NOTIFS_CHANEL_NAME,
+            val notifsChannel = NotificationChannel(
+                    NOTIFS_CHANNEL_ID,
+                    NOTIFS_CHANEL_NAME,
                     NotificationManager.IMPORTANCE_DEFAULT
                 )
             val notifsManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notifsManager.createNotificationChannel(weakNotifsChannel)
+            notifsManager.createNotificationChannel(notifsChannel)
         }
     }
 
     companion object {
-        val WEAK_NOTIFS_CHANNEL_ID = "weak_notifications_channel_id"
-        val WEAK_NOTIFS_CHANEL_NAME = "Слабые уведомления"
+        val NOTIFS_CHANNEL_ID = "notifications_channel_id"
+        val NOTIFS_CHANEL_NAME = "Слабые уведомления"
     }
 
 }
