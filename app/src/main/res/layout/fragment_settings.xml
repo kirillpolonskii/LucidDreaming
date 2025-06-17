@@ -142,7 +142,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/sprSettingsWeakNotifsFrequency"
         app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsActiveHoursSubtitle"
-        app:layout_constraintBottom_toTopOf="@id/tvSettingsWeakNotifsMessageSubtitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsThemesTitle"
 
         android:text="Интервал между уведомлениями"
         />
@@ -160,37 +160,12 @@
         />
 
     <TextView
-        android:id="@+id/tvSettingsWeakNotifsMessageSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsFrequencySubtitle"
-        app:layout_constraintBottom_toTopOf="@id/etSettingsWeakNotifsMessage"
-        app:layout_constraintHorizontal_bias="0"
-
-        android:text="Сообщение уведомления"
-        />
-    <EditText
-        android:id="@+id/etSettingsWeakNotifsMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSettingsWeakNotifsMessageSubtitle"
-        app:layout_constraintBottom_toTopOf="@id/tvSettingsThemesTitle"
-        app:layout_constraintHorizontal_bias="0"
-
-        android:hint="Сообщение"
-        />
-
-    <TextView
         android:id="@+id/tvSettingsThemesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSettingsWeakNotifsMessage"
+        app:layout_constraintTop_toBottomOf="@id/sprSettingsWeakNotifsFrequency"
         app:layout_constraintBottom_toTopOf="@id/vwStubThemes"
 
         android:text="Выбор темы"

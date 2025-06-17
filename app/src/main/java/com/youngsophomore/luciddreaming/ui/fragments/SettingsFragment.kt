@@ -66,54 +66,28 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        settingsVM.initSettings()
-        val weakNotif = context?.let { context ->
-            // тег канала потом нужно переместить в LucidDreamingApplication,
-            // где будет создаваться канал для слабых уведомлений
-            NotificationCompat.Builder(context, LucidDreamingApplication.WEAK_NOTIFS_CHANNEL_ID)
-                .setContentTitle("Проверка реальности")
-                .setContentText("Тестовое")
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .build()
-        }
-        val notifManager = context.let { NotificationManagerCompat.from(it!!) }
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(), Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED){
-            Log.d("Debug", " BLYAT! Gde razreshenie???")
-        }
-        notifManager.notify(1, weakNotif!!)
+        lucidDreamingVM.initSettings()
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        binding.swchSettingsPassword.isChecked = lucidDreamingVM.isPasswordEnabled
 
         with(binding){
-            swchSettingsWeakNotifs.isChecked = settingsVM.weakNotifsIsEnabled.value ?: false
-
+            swchSettingsWeakNotifs.isChecked = lucidDreamingVM.weakNotifsIsEnabled
+            swchSettingsPassword.isChecked = lucidDreamingVM.isPasswordEnabled
+            sprSettingsWeakNotifsFrequency.setSelection(lucidDreamingVM.weakNotifsFrequency)
         }
 
-        settingsVM.weakNotifsIsEnabled.observe(viewLifecycleOwner) { enabled ->
-            if (enabled){
-                weakNotifsUIToEnabledState()
-            }
-            else {
-                weakNotifsUIToDisabledState()
-            }
-        }
-        settingsVM.weakNotifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
+
+        lucidDreamingVM.weakNotifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
             Log.d("Debug", " weakNotifsActiveHoursCalendarStart.observe")
             Log.d("Debug", " " + activeHoursStart.toString())
             binding.tvSettingsWeakNotifsActiveHoursStart.text =
-                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}-${activeHoursStart.get(Calendar.MINUTE)}"
+                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}:${activeHoursStart.get(Calendar.MINUTE)}"
 
         }
-        settingsVM.weakNotifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
+        lucidDreamingVM.weakNotifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
             Log.d("Debug", " weakNotifsActiveHoursCalendarEnd.observe")
             Log.d("Debug", " " + activeHoursEnd.toString())
             binding.tvSettingsWeakNotifsActiveHoursEnd.text =
-                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}-${activeHoursEnd.get(Calendar.MINUTE)}"
+                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
         }
 
         val view = binding.root
@@ -123,13 +97,20 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
-            swchSettingsPassword.setOnClickListener {
-                Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
-                showDialogSetPassword(binding.swchSettingsPassword.isChecked)
-            }
             ibtnSettingsBack.setOnClickListener {
                 scheduleWeakNotifs()
                 findNavController().navigateUp()
+            }
+
+            swchSettingsWeakNotifs.setOnCheckedChangeListener { buttonView, isChecked ->
+                Log.d("Debug", " swchSettingsWeakNotifs.setOnCheckedChangeListener")
+                lucidDreamingVM.updateWeakNotifsEnabled(isChecked)
+                if (isChecked){
+                    weakNotifsUIToEnabledState()
+                }
+                else {
+                    weakNotifsUIToDisabledState()
+                }
             }
             tvSettingsWeakNotifsActiveHoursStart.setOnClickListener {
                 showTimeChooser(true)
@@ -144,8 +125,9 @@ class SettingsFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    Log.d("Debug", " sprSettingsWeakNotifsFrequency.onItemSelectedListener, pos=$position")
                     if (position > 0)
-                        settingsVM.updateFrequency(position)
+                        lucidDreamingVM.updateFrequency(position)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -154,8 +136,10 @@ class SettingsFragment : Fragment() {
 
             }
 
-            etSettingsWeakNotifsMessage.addTextChangedListener { text ->
-                settingsVM.weakNotifsMessage = text.toString()
+
+            swchSettingsPassword.setOnClickListener {
+                Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
+                showDialogSetPassword(binding.swchSettingsPassword.isChecked)
             }
         }
 
@@ -198,7 +182,7 @@ class SettingsFragment : Fragment() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        settingsVM.weakNotifsTimePoints.forEach {
+        lucidDreamingVM.weakNotifsTimePoints.forEach {
             alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 it,
@@ -221,7 +205,7 @@ class SettingsFragment : Fragment() {
             .build()
         timePicker.addOnPositiveButtonClickListener {
             Log.d("Debug", " timePicker.addOnPositiveButtonClickListener")
-            settingsVM.updateActiveHours(timePicker.hour, timePicker.minute, isStart)
+            lucidDreamingVM.updateActiveHours(timePicker.hour, timePicker.minute, isStart)
         }
         timePicker.show(childFragmentManager, "TIME_PICKER")
     }
