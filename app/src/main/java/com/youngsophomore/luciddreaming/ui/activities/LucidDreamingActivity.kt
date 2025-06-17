@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.ActivityLucidDreamingBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
+import com.youngsophomore.luciddreaming.ui.viewmodels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,8 @@ class LucidDreamingActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityLucidDreamingBinding
-    private val viewModel: LucidDreamingViewModel by viewModels()
+    private val lucidDreamingVM: LucidDreamingViewModel by viewModels()
+    private val settingsVM: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,8 @@ class LucidDreamingActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
         navController = navHostFragment.navController
-        viewModel.initFromPrefs()
-        Log.d("Gestures", " lucidDreamingVM = ${viewModel}")
+        lucidDreamingVM.initFromPrefs()
+        lucidDreamingVM.initSettings()
+        //Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingVM}")
     }
 }
