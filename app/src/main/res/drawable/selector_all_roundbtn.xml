@@ -8,7 +8,7 @@
 
         <shape android:shape="oval">
             <corners android:radius="@dimen/radius_all_roundbtn" />
-            <solid android:color="@color/md_theme_primary"/>
+            <solid android:color="?attr/colorPrimary"/>
         </shape>
 
     </item>
@@ -16,7 +16,7 @@
         >
         <shape android:shape="oval">
             <corners android:radius="@dimen/radius_all_roundbtn" />
-            <solid android:color="@color/md_theme_primaryContainer"/>
+            <solid android:color="?attr/colorPrimaryContainer"/>
 
         </shape>
     </item>

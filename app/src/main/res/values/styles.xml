@@ -14,7 +14,7 @@
     </style>
 
     <style name="LDTextView">
-        <item name="android:textColor">@color/md_theme_primary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="backgroundTint">@null</item>
         <item name="android:textStyle">bold</item>
     </style>
