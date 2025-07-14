@@ -4,7 +4,7 @@
     >
 
     <shape>
-        <solid android:color="@color/blue_theme_onPrimaryContainer"/>
+        <solid android:color="?attr/colorOnPrimaryContainer"/>
     </shape>
 
 </inset>

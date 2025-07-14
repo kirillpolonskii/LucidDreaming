@@ -64,6 +64,7 @@ class SettingsFragment : Fragment() {
             swchSettingsNotifs.isChecked = lucidDreamingVM.notifsIsEnabled
             swchSettingsPassword.isChecked = lucidDreamingVM.isPasswordEnabled
             sprSettingsNotifsFrequency.setSelection(lucidDreamingVM.notifsFrequency)
+            hscrvwSettingsThemes.isHorizontalScrollBarEnabled = false
         }
 
 
