@@ -10,10 +10,12 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.youngsophomore.luciddreaming.utils.LDTheme
 import com.youngsophomore.luciddreaming.utils.sha256
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -24,7 +26,9 @@ class LucidDreamingViewModel @Inject constructor(
     val feelings = MutableLiveData<MutableList<String>>(mutableListOf())
     val locations = MutableLiveData<MutableList<String>>(mutableListOf())
 
-    var
+    var ivThemesSelectedState = MutableLiveData<MutableList<Boolean>>()
+    var selectedTheme = 0
+
     var notifsIsEnabled = false
     var notifsActiveHours = mutableListOf(0L, 0L)
     val notifsActiveHoursCalendarStart = MutableLiveData<Calendar>()
@@ -33,20 +37,31 @@ class LucidDreamingViewModel @Inject constructor(
     var notifsTimePoints = mutableListOf<Long>()
     var isPasswordEnabled: Boolean = false
 
+    fun initTheme() = runBlocking {
+        val keyTheme = intPreferencesKey("theme")
+        val preferences = dataStore.data.first()
+        selectedTheme = preferences[keyTheme] ?: 0
+        ivThemesSelectedState.value = (BooleanArray(4){i -> if (i == selectedTheme) true else false}).toMutableList()
+
+    }
+
     fun initFromPrefs() = viewModelScope.launch {
         Log.d("Preferences", "LucidDreamingViewModel.initFeelingsAndLocations")
         val keyFeelings = stringPreferencesKey("feelings")
         val keyLocations = stringPreferencesKey("locations")
+
         val keyEnablePassword = booleanPreferencesKey("enable_password")
         val preferences = dataStore.data.first()
         Log.d("Preferences", " preferences = $preferences")
         val feelingsString = preferences[keyFeelings] ?: ""
         val locationsString = preferences[keyLocations] ?: ""
+
         isPasswordEnabled = preferences[keyEnablePassword] ?: false
         Log.d("Preferences", " feelingsString = $feelingsString")
         feelings.value?.addAll(feelingsString.split("|"))
         locations.value?.addAll(locationsString.split("|"))
         Log.d("Preferences", " feelings = $feelings")
+
     }
 
     fun appendFeeling(newFeeling: String){
@@ -99,6 +114,18 @@ class LucidDreamingViewModel @Inject constructor(
             dataStore.edit { prefs ->
                 Log.d("Preferences", " " + locations.value?.joinToString())
                 prefs[keyLocations] = locations.value?.joinToString()!!
+            }
+        }
+    }
+
+    fun setSelectedTheme(theme: LDTheme){
+        selectedTheme = theme.ordinal
+        ivThemesSelectedState.value = (BooleanArray(4){i -> if (i == theme.ordinal) true else false}).toMutableList()
+        val keyTheme = intPreferencesKey("theme")
+        viewModelScope.launch {
+            dataStore.edit { prefs ->
+                //Log.d("Preferences", " " + locations.value?.joinToString())
+                prefs[keyTheme] = theme.ordinal
             }
         }
     }

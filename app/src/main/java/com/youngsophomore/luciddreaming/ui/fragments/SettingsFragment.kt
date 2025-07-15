@@ -21,10 +21,13 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.youngsophomore.luciddreaming.data.receivers.NotificationReceiver
+import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogEnterPasswordBinding
+import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
 import com.youngsophomore.luciddreaming.databinding.FragmentSettingsBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.SettingsViewModel
+import com.youngsophomore.luciddreaming.utils.LDTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -82,6 +85,15 @@ class SettingsFragment : Fragment() {
                 "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
         }
 
+        lucidDreamingVM.ivThemesSelectedState.observe(viewLifecycleOwner) { ivSelectedState ->
+            Log.d("Debug", " ivThemesSelectedState.observe")
+            Log.d("Debug", " " + ivSelectedState.joinToString())
+            binding.ivSettingsThemeBlue.isSelected = ivSelectedState[0]
+            binding.ivSettingsThemePurple.isSelected = ivSelectedState[1]
+            binding.ivSettingsThemeGreen.isSelected = ivSelectedState[2]
+            binding.ivSettingsThemePink.isSelected = ivSelectedState[3]
+        }
+
         val view = binding.root
         return view
     }
@@ -129,16 +141,20 @@ class SettingsFragment : Fragment() {
             }
 
             ivSettingsThemeBlue.setOnClickListener {
-                ivSettingsThemeBlue.isSelected = true
+                lucidDreamingVM.setSelectedTheme(LDTheme.Blue)
+                showDialogConfirmTheme()
             }
             ivSettingsThemePurple.setOnClickListener {
-
+                lucidDreamingVM.setSelectedTheme(LDTheme.Purple)
+                showDialogConfirmTheme()
             }
             ivSettingsThemeGreen.setOnClickListener {
-
+                lucidDreamingVM.setSelectedTheme(LDTheme.Green)
+                showDialogConfirmTheme()
             }
             ivSettingsThemePink.setOnClickListener {
-
+                lucidDreamingVM.setSelectedTheme(LDTheme.Pink)
+                showDialogConfirmTheme()
             }
 
             swchSettingsPassword.setOnClickListener {
@@ -149,6 +165,19 @@ class SettingsFragment : Fragment() {
 
     }
 
+    private fun showDialogConfirmTheme(){
+        val dialog = Dialog(requireContext())
+        val confirmThemeBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(confirmThemeBinding.root)
+        confirmThemeBinding.tvConfirmActionDialogTitle.text = "Подтверждение"
+        confirmThemeBinding.tvConfirmActionDialogAction.text = "Для смены темы требуется перезапуск приложения. Сменить тему?"
+
+        confirmThemeBinding.ibtnConfirmActionDialogConfirm.setOnClickListener {
+            activity?.recreate()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
 
     private fun showDialogSetPassword(isSwitchChecked: Boolean){
         val dialog = Dialog(requireContext())
