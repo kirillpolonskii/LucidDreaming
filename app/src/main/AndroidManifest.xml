@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LucidDreaming.Blue"
+        android:theme="@style/Theme.LucidDreaming.Pink"
         tools:targetApi="31">
         <receiver android:name=".data.receivers.NotificationReceiver"/>
         <activity

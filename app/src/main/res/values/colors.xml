@@ -20,7 +20,7 @@
     <color name="blue_theme_errorContainer">#FFDAD6</color>
     <color name="blue_theme_onErrorContainer">#93000A</color>
     <color name="blue_theme_background">#FAF8FF</color>
-    <color name="blue_theme_onBackground">#191B24</color>
+    <color name="blue_theme_onBackground">#000000</color>
 
     <color name="blue_theme_surface">#EFEDFF</color>
     <color name="blue_theme_surfaceVariant">#F0F0FF</color>
@@ -174,7 +174,7 @@
     <color name="purple_theme_errorContainer">#FFDAD6</color>
     <color name="purple_theme_onErrorContainer">#93000A</color>
     <color name="purple_theme_background">#FDF7FF</color>
-    <color name="purple_theme_onBackground">#1D1B20</color>
+    <color name="purple_theme_onBackground">#000000</color>
 
     <color name="purple_theme_surface">#FDF7FF</color>
     <color name="purple_theme_surfaceVariant">#fcf5ff</color>
@@ -326,7 +326,7 @@
     <color name="green_theme_errorContainer">#FFDAD6</color>
     <color name="green_theme_onErrorContainer">#93000A</color>
     <color name="green_theme_background">#F6FAFE</color>
-    <color name="green_theme_onBackground">#171C1F</color>
+    <color name="green_theme_onBackground">#000000</color>
 
     <color name="green_theme_surface">#F6FAFE</color>
     <color name="green_theme_surfaceVariant">#f7fbff</color>
@@ -477,7 +477,7 @@
     <color name="pink_theme_errorContainer">#FFDAD6</color>
     <color name="pink_theme_onErrorContainer">#93000A</color>
     <color name="pink_theme_background">#FFF7FA</color>
-    <color name="pink_theme_onBackground">#1F1A1F</color>
+    <color name="pink_theme_onBackground">#000000</color>
 
     <color name="pink_theme_surface">#FFF7FA</color>
     <color name="pink_theme_surfaceVariant">#fff7fc</color>

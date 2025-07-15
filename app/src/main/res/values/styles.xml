@@ -18,5 +18,12 @@
         <item name="backgroundTint">@null</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="LDImageView">
+        <item name="android:background">@drawable/selector_settings_themebtn</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">10dp</item>
+        <!--<item name="android:clickable">true</item>-->
+    </style>
     
 </resources>

@@ -24,6 +24,7 @@ class LucidDreamingViewModel @Inject constructor(
     val feelings = MutableLiveData<MutableList<String>>(mutableListOf())
     val locations = MutableLiveData<MutableList<String>>(mutableListOf())
 
+    var
     var notifsIsEnabled = false
     var notifsActiveHours = mutableListOf(0L, 0L)
     val notifsActiveHoursCalendarStart = MutableLiveData<Calendar>()

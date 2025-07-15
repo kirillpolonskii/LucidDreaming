@@ -155,40 +155,39 @@
             >
             <ImageView
                 android:id="@+id/ivSettingsThemeBlue"
-                android:layout_width="210dp"
+                android:layout_width="200dp"
                 android:layout_height="400dp"
 
                 android:src="@drawable/settings_blue_theme_raw"
-                android:scaleType="fitXY"
                 android:layout_marginHorizontal="15dp"
-
+                style="@style/LDImageView"
                 />
             <ImageView
                 android:id="@+id/ivSettingsThemePurple"
-                android:layout_width="210dp"
+                android:layout_width="200dp"
                 android:layout_height="400dp"
 
-                android:src="@drawable/settings_blue_theme_raw"
-                android:scaleType="fitXY"
+                android:src="@drawable/settings_purple_theme_raw"
                 android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
                 />
             <ImageView
                 android:id="@+id/ivSettingsThemeGreen"
-                android:layout_width="210dp"
+                android:layout_width="200dp"
                 android:layout_height="400dp"
 
-                android:src="@drawable/settings_blue_theme_raw"
-                android:scaleType="fitXY"
+                android:src="@drawable/settings_green_theme_raw"
                 android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
                 />
             <ImageView
                 android:id="@+id/ivSettingsThemePink"
-                android:layout_width="210dp"
+                android:layout_width="200dp"
                 android:layout_height="400dp"
 
-                android:src="@drawable/settings_blue_theme_raw"
-                android:scaleType="fitXY"
+                android:src="@drawable/settings_pink_theme_raw"
                 android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
                 />
         </LinearLayout>
 

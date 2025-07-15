@@ -128,6 +128,18 @@ class SettingsFragment : Fragment() {
 
             }
 
+            ivSettingsThemeBlue.setOnClickListener {
+                ivSettingsThemeBlue.isSelected = true
+            }
+            ivSettingsThemePurple.setOnClickListener {
+
+            }
+            ivSettingsThemeGreen.setOnClickListener {
+
+            }
+            ivSettingsThemePink.setOnClickListener {
+
+            }
 
             swchSettingsPassword.setOnClickListener {
                 Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
