@@ -14,6 +14,7 @@ import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.ActivityLucidDreamingBinding
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.SettingsViewModel
+import com.youngsophomore.luciddreaming.utils.LDTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,10 +27,19 @@ class LucidDreamingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lucidDreamingVM.initTheme()
         enableEdgeToEdge()
+
+        Log.d("Debug", "bef setTheme(), lucidDreamingVM.selectedTheme=${lucidDreamingVM.selectedTheme}")
+        setTheme(when (lucidDreamingVM.selectedTheme){
+            LDTheme.Blue.ordinal -> R.style.Theme_LucidDreaming_Blue
+            LDTheme.Purple.ordinal -> R.style.Theme_LucidDreaming_Purple
+            LDTheme.Green.ordinal -> R.style.Theme_LucidDreaming_Green
+            LDTheme.Pink.ordinal -> R.style.Theme_LucidDreaming_Pink
+            else -> R.style.Theme_LucidDreaming_Blue
+        })
         binding = ActivityLucidDreamingBinding.inflate(layoutInflater)
-        val root = binding.root
-        setContentView(root)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.cnstLaytActivity) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -38,7 +48,7 @@ class LucidDreamingActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
         navController = navHostFragment.navController
-        lucidDreamingVM.initFromPrefs()
+
         lucidDreamingVM.initSettings()
         //Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingVM}")
     }

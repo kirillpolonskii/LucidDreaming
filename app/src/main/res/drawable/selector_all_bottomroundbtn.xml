@@ -12,7 +12,7 @@
                 android:bottomLeftRadius="@dimen/radius_all_roundbtn"
                 android:bottomRightRadius="@dimen/radius_all_roundbtn"
                 />
-            <solid android:color="@color/md_theme_primary"/>
+            <solid android:color="?attr/colorPrimaryVariant"/>
         </shape>
 
     </item>
@@ -25,7 +25,7 @@
                 android:bottomLeftRadius="@dimen/radius_all_roundbtn"
                 android:bottomRightRadius="@dimen/radius_all_roundbtn"
                 />
-            <solid android:color="@color/md_theme_primaryContainer"/>
+            <solid android:color="?attr/colorPrimary"/>
 
         </shape>
     </item>

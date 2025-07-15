@@ -134,28 +134,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sprSettingsNotifsFrequency"
-        app:layout_constraintBottom_toTopOf="@id/vwStubThemes"
+        app:layout_constraintBottom_toTopOf="@id/hscrvwSettingsThemes"
 
         android:text="Выбор темы"
 
         />
-    <View
-        android:id="@+id/vwStubThemes"
+    <HorizontalScrollView
+        android:id="@+id/hscrvwSettingsThemes"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSettingsThemesTitle"
-        app:layout_constraintBottom_toTopOf="@id/tvSettingsPasswordTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvSettingsPasswordTitle">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
 
-        />
+            >
+            <ImageView
+                android:id="@+id/ivSettingsThemeBlue"
+                android:layout_width="200dp"
+                android:layout_height="400dp"
+
+                android:src="@drawable/settings_blue_theme_raw"
+                android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
+                />
+            <ImageView
+                android:id="@+id/ivSettingsThemePurple"
+                android:layout_width="200dp"
+                android:layout_height="400dp"
+
+                android:src="@drawable/settings_purple_theme_raw"
+                android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
+                />
+            <ImageView
+                android:id="@+id/ivSettingsThemeGreen"
+                android:layout_width="200dp"
+                android:layout_height="400dp"
+
+                android:src="@drawable/settings_green_theme_raw"
+                android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
+                />
+            <ImageView
+                android:id="@+id/ivSettingsThemePink"
+                android:layout_width="200dp"
+                android:layout_height="400dp"
+
+                android:src="@drawable/settings_pink_theme_raw"
+                android:layout_marginHorizontal="15dp"
+                style="@style/LDImageView"
+                />
+        </LinearLayout>
+
+    </HorizontalScrollView>
     <TextView
         android:id="@+id/tvSettingsPasswordTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vwStubThemes"
+        app:layout_constraintTop_toBottomOf="@id/hscrvwSettingsThemes"
         app:layout_constraintBottom_toTopOf="@id/swchSettingsPassword"
 
         android:text="Вход в список снов по паролю"
