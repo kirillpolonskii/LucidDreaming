@@ -38,12 +38,7 @@ class DreamDetailsMotionLayout: MotionLayout {
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Log.d("Gestures", "DreamDetailsMotionLayout.onInterceptTouchEvent, DOWN")
-                Log.d("Gestures", "event.y = ${event.y}")
-                Log.d("Gestures", "ibtnDreamDetailsShowMeta.y + ibtnDreamDetailsShowMeta.height / 2 = " +
-                        "${ibtnDreamDetailsShowMeta.y + ibtnDreamDetailsShowMeta.height / 2}")
                 if (isEventInsideTargetView(event, ibtnDreamDetailsShowMeta)){
-                    Log.d("Gestures", "isEventInsideTargetView(event, ibtnDreamDetailsShowMeta)")
                     touchInsideBtnShowMeta = true
                     ibtnDreamDetailsShowMeta.isPressed = true
                     vwDreamDetailsButtonStripe.isPressed = true
@@ -55,7 +50,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                 }
                 else when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
-                        Log.d("Gestures", " dreamdetails_toppanel_hidden")
                         //super.onInterceptTouchEvent(event)
                         //true
                         if (etDreamDetailsContent.hasFocus()){
@@ -66,32 +60,26 @@ class DreamDetailsMotionLayout: MotionLayout {
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
                         if (event.y <= ibtnDreamDetailsShowMeta.y){
-                            Log.d("Gestures", " dreamdetails_toppanel_expanded, event.rawY <= ibtnDreamDetailsShowMeta.y")
                             //super.onTouchEvent(event)
                             false
                         }
                         else {
-                            Log.d("Gestures", " dreamdetails_toppanel_expanded, event.rawY > ibtnDreamDetailsShowMeta.top")
                             touchOutsideTopPanel = true
                             super.onInterceptTouchEvent(event)
                         }
                     }
                     else -> {
-                        Log.d("Gestures", " state else")
                         true
                     }
                 }
 
             }
             MotionEvent.ACTION_MOVE -> {
-                Log.d("Gestures", "DreamDetailsMotionLayout.onInterceptTouchEvent, MOVE")
                 moveWasCaptured = true
                 super.onInterceptTouchEvent(event)
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("Gestures", "DreamDetailsMotionLayout.onInterceptTouchEvent, UP")
                 if (!moveWasCaptured && touchOutsideTopPanel){
-                    Log.d("Gestures", " !moveWasCaptured && touchOutsideTopPanel")
                     this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                     moveWasCaptured = false
                     touchOutsideTopPanel = false
@@ -103,18 +91,15 @@ class DreamDetailsMotionLayout: MotionLayout {
                 when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
                         if (touchInsideBtnShowMeta){
-                            Log.d("Gestures", " dreamdetails_toppanel_hidden, touchInsideBtnShowMetal")
                             touchOutsideTopPanel = false
                             touchInsideBtnShowMeta = false
                             ibtnDreamDetailsShowMeta.isPressed = false
                             if (moveWasCaptured){
-                                Log.d("Gestures", " moveWasCaptured")
                                 moveWasCaptured = false
                                 //this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
                                 super.onTouchEvent(event)
                             }
                             else{
-                                Log.d("Gestures", " not moveWasCaptured")
                                 moveWasCaptured = false
                                 this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
                                 true
@@ -122,7 +107,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                         }
                         else {
                             touchInsideBtnShowMeta = false
-                            Log.d("Gestures", " dreamdetails_toppanel_hidden, not touchInsideBtnShowMetal")
                             super.onInterceptTouchEvent(event)
                         }
                     }
@@ -132,7 +116,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                             ibtnDreamDetailsShowMeta.isPressed = false
                             vwDreamDetailsButtonStripe.isPressed = false
                             if (moveWasCaptured){
-                                Log.d("Gestures", " moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
                                 //touchInsideBtnShowMeta = false
@@ -140,7 +123,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                                 super.onTouchEvent(event)
                             }
                             else{
-                                Log.d("Gestures", " not moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
                                 touchInsideBtnShowMeta = false
@@ -149,16 +131,13 @@ class DreamDetailsMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            Log.d("Gestures", " dreamdetails_toppanel_expanded, not touchInsideBtnShowMetal")
                             touchInsideBtnShowMeta = false
                             moveWasCaptured = false
                             if (event.y <= ibtnDreamDetailsShowMeta.y){
-                                Log.d("Gestures", " event.rawY <= ibtnDreamDetailsShowMeta.top")
                                 //super.onTouchEvent(event)
                                 false
                             }
                             else {
-                                Log.d("Gestures", " event.rawY > ibtnDreamDetailsShowMeta.top")
                                 touchOutsideTopPanel = false
                                 //super.onInterceptTouchEvent(event)
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
@@ -168,7 +147,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                         }
                     }
                     else -> {
-                        Log.d("Gestures", " UP, state else")
                         true
                     }
                 }
@@ -181,25 +159,20 @@ class DreamDetailsMotionLayout: MotionLayout {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Log.d("Gestures", "DreamDetailsMotionLayout.onTouchEvent, DOWN")
                 super.onTouchEvent(event)
             }
             MotionEvent.ACTION_MOVE -> {
-                Log.d("Gestures", "DreamDetailsMotionLayout.onTouchEvent, MOVE")
                 moveWasCaptured = true
                 super.onTouchEvent(event)
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("Gestures", "DreamDetailsMotionLayout.onTouchEvent, UP")
                 ibtnDreamDetailsShowMeta.isPressed = false
                 vwDreamDetailsButtonStripe.isPressed = false
 
                 when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
                         if (touchInsideBtnShowMeta){
-                            Log.d("Gestures", "dreamdetails_toppanel_hidden, touchInsideBtnShowMetal")
                             if (moveWasCaptured){
-                                Log.d("Gestures", "moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
 
@@ -208,7 +181,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                                 //super.onTouchEvent(event)
                             }
                             else{
-                                Log.d("Gestures", "not moveWasCaptured")
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
                                 touchInsideBtnShowMeta = false
@@ -217,31 +189,25 @@ class DreamDetailsMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            Log.d("Gestures", "dreamdetails_toppanel_hidden, not touchInsideBtnShowMetal")
                             //super.onInterceptTouchEvent(event)
                             //super.onTouchEvent(event)
                         }
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
                         if (touchInsideBtnShowMeta){
-                            Log.d("Gestures", "dreamdetails_toppanel_expanded, touchInsideBtnShowMetal")
                             if (moveWasCaptured){
-                                Log.d("Gestures", "moveWasCaptured")
                             }
                             else{
-                                Log.d("Gestures", "not moveWasCaptured")
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                             }
                         }
                         else {
-                            Log.d("Gestures", "dreamdetails_toppanel_expanded, not touchInsideBtnShowMetal")
                         }
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
                         touchInsideBtnShowMeta = false
                     }
                     else -> {
-                        Log.d("Gestures", " else state")
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
                         touchInsideBtnShowMeta = false

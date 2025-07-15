@@ -42,7 +42,7 @@ class DreamsListMotionLayout: MotionLayout {
         //return false - сразу в onTouch в RV
         /*event?.let {
             if (it.y > ibtnDreamsListSearch.y *//*&& it.x < ibtnDreamsListSearch.x*//*){
-                Log.d("Gestures", "DreamsListMotionLayout.onInterceptTouchEvent, event.rawY > ibtnDreamsListSearch.top")
+                
                 //this.isInteractionEnabled = false
                 //return super.onInterceptTouchEvent(event) // - идёт в rv.onTouch, но запускает анимацию
                 //return super.onTouchEvent(event) //
@@ -52,15 +52,15 @@ class DreamsListMotionLayout: MotionLayout {
         }*/
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onInterceptTouchEvent, DOWN")
-                Log.d("Gestures", "event.y = ${event.y}")
+                
+                
                 // место расхождения
                 //super.onInterceptTouchEvent(event)
                 //super.onTouchEvent(event)
                 //true
                 //false
                 if (isEventInsideTargetView(event, ibtnDreamsListSearch)){
-                    Log.d("Gestures", " isEventInsideTargetView(event, ibtnDreamsListSearch)")
+                    
                     touchInsideBtnSearch = true
                     ibtnDreamsListSearch.isPressed = true
                     vwDreamsListButtonStripe.isPressed = true
@@ -72,12 +72,12 @@ class DreamsListMotionLayout: MotionLayout {
                 }
                 else when (this.currentState){
                     R.id.dreamslist_toppanel_hidden -> {
-                        Log.d("Gestures", " dreamslist_toppanel_hidden")
+                        
                         false
                     }
                     R.id.dreamslist_toppanel_expanded -> {
                         if (event.y <= ibtnDreamsListSearch.y + ibtnDreamsListSearch.height){
-                            Log.d("Gestures", " dreamslist_toppanel_expanded, event.rawY <= ibtnDreamsListSearch.top")
+                            
                             // место расхождения
                             //super.onInterceptTouchEvent(event) // - так вообще не работало
                             //super.onTouchEvent(event)
@@ -85,7 +85,7 @@ class DreamsListMotionLayout: MotionLayout {
                             false
                         }
                         else {
-                            Log.d("Gestures", " dreamslist_toppanel_expanded, event.rawY > ibtnDreamsListSearch.top")
+                            
                             touchOutsideTopPanel = true
                             // место расхождения
                             //super.onInterceptTouchEvent(event)
@@ -95,7 +95,7 @@ class DreamsListMotionLayout: MotionLayout {
                         }
                     }
                     else -> {
-                        Log.d("Gestures", "state else")
+                        
                         // место расхождения
                         //super.onInterceptTouchEvent(event)
                         //super.onTouchEvent(event)
@@ -106,7 +106,7 @@ class DreamsListMotionLayout: MotionLayout {
 
             }
             MotionEvent.ACTION_MOVE -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onInterceptTouchEvent, MOVE")
+                
                 // место расхождения
                 //super.onInterceptTouchEvent(event)
                 //super.onTouchEvent(event)
@@ -115,7 +115,7 @@ class DreamsListMotionLayout: MotionLayout {
                 moveWasCaptured = true
                 super.onInterceptTouchEvent(event)
                 /*if (event.y <= ibtnDreamsListSearch.y){
-                    Log.d("Gestures", "event.rawY <= ibtnDreamsListSearch.top")
+                    
                     // место расхождения
                     //super.onInterceptTouchEvent(event)
                     //super.onTouchEvent(event)
@@ -123,7 +123,7 @@ class DreamsListMotionLayout: MotionLayout {
                     //false
                 }
                 else {
-                    Log.d("Gestures", "event.rawY > ibtnDreamsListSearch.top")
+                    
                     // место расхождения
                     //super.onInterceptTouchEvent(event)
                     //super.onTouchEvent(event) // - так ничего не двигалось
@@ -133,14 +133,14 @@ class DreamsListMotionLayout: MotionLayout {
 
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onInterceptTouchEvent, UP")
+                
                 // место расхождения
                 //super.onInterceptTouchEvent(event)
                 //super.onTouchEvent(event)
                 //true
                 //false
                 if (!moveWasCaptured && touchOutsideTopPanel){
-                    Log.d("Gestures", "!moveWasCaptured && touchOutsideTopPanel")
+                    
                     this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     moveWasCaptured = false
                     touchOutsideTopPanel = false
@@ -156,13 +156,13 @@ class DreamsListMotionLayout: MotionLayout {
                 when (this.currentState){
                     R.id.dreamslist_toppanel_hidden -> {
                         if (touchInsideBtnSearch){
-                            Log.d("Gestures", "dreamslist_toppanel_hidden, touchInsideBtnSearchl")
+                            
                             touchOutsideTopPanel = false
                             touchInsideBtnSearch = false
                             ibtnDreamsListSearch.isPressed = false
                             vwDreamsListButtonStripe.isPressed = false
                             if (moveWasCaptured){
-                                Log.d("Gestures", "moveWasCaptured")
+                                
                                 moveWasCaptured = false
                                 this.transitionToState(R.id.dreamslist_toppanel_expanded, 100)
                                 // место расхождения
@@ -172,7 +172,7 @@ class DreamsListMotionLayout: MotionLayout {
                                 //false
                             }
                             else{
-                                Log.d("Gestures", "not moveWasCaptured")
+                                
                                 moveWasCaptured = false
                                 this.transitionToState(R.id.dreamslist_toppanel_expanded, 100)
                                 // место расхождения
@@ -183,7 +183,7 @@ class DreamsListMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            Log.d("Gestures", "dreamslist_toppanel_hidden, not touchInsideBtnSearchl")
+                            
                             touchInsideBtnSearch = false
                             // место расхождения
                             super.onInterceptTouchEvent(event)
@@ -194,12 +194,12 @@ class DreamsListMotionLayout: MotionLayout {
                     }
                     R.id.dreamslist_toppanel_expanded -> {
                         if (touchInsideBtnSearch){
-                            Log.d("Gestures", "dreamslist_toppanel_expanded, touchInsideBtnSearchl")
+                            
                             ibtnDreamsListSearch.isPressed = false
                             vwDreamsListButtonStripe.isPressed = false
                             touchOutsideTopPanel = false
                             if (moveWasCaptured){
-                                Log.d("Gestures", "moveWasCaptured")
+                                
                                 moveWasCaptured = false
                                 // место расхождения
                                 //super.onInterceptTouchEvent(event)
@@ -208,7 +208,7 @@ class DreamsListMotionLayout: MotionLayout {
                                 //false
                             }
                             else{
-                                Log.d("Gestures", "not moveWasCaptured")
+                                
                                 moveWasCaptured = false
                                 this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                                 // место расхождения
@@ -219,16 +219,16 @@ class DreamsListMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            Log.d("Gestures", "dreamslist_toppanel_expanded, not touchInsideBtnSearchl")
+                            
                             moveWasCaptured = false
                             touchInsideBtnSearch = false
                             if (event.y <= ibtnDreamsListSearch.y){
-                                Log.d("Gestures", " event.rawY <= ibtnDreamsListSearch.top")
+                                
                                 //super.onTouchEvent(event)
                                 false
                             }
                             else {
-                                Log.d("Gestures", " event.rawY > ibtnDreamsListSearch.top")
+                                
                                 touchOutsideTopPanel = false
                                 //super.onInterceptTouchEvent(event)
                                 this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
@@ -243,7 +243,7 @@ class DreamsListMotionLayout: MotionLayout {
                         }
                     }
                     else -> {
-                        Log.d("Gestures", "state else")
+                        
                         // место расхождения
                         super.onInterceptTouchEvent(event)
                         //super.onTouchEvent(event)
@@ -254,7 +254,7 @@ class DreamsListMotionLayout: MotionLayout {
 
             }
             else -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onInterceptTouchEvent, else")
+                
                 // место расхождения
                 super.onInterceptTouchEvent(event)
                 //super.onTouchEvent(event)
@@ -273,7 +273,7 @@ class DreamsListMotionLayout: MotionLayout {
         //false
         /*event?.let {
             if (it.y > ibtnDreamsListSearch.y + ibtnDreamsListSearch.height / 2){
-                Log.d("Gestures", "DreamsListMotionLayout.MotionEvent, event.rawY > ibtnDreamsListSearch.top")
+                
                 //return super.onInterceptTouchEvent(event) // -
                 //return super.onTouchEvent(event) //
                 //return true // -
@@ -282,9 +282,9 @@ class DreamsListMotionLayout: MotionLayout {
         }*/
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onTouchEvent, DOWN")
+                
                 if (event.y > ibtnDreamsListSearch.y + ibtnDreamsListSearch.height){
-                    Log.d("Gestures", " event.rawY > ibtnDreamsListSearch.top")
+                    
                     //return super.onInterceptTouchEvent(event) // -
                     //return super.onTouchEvent(event) // - ничего не происходит, rv не скроллится
                     //return true // - ничего не происходит, rv не скроллится
@@ -293,7 +293,7 @@ class DreamsListMotionLayout: MotionLayout {
                     false
                 }
                 else {
-                    Log.d("Gestures", " event.rawY <= ibtnDreamsListSearch.top + height")
+                    
                     super.onTouchEvent(event)
                 }
                 // место расхождения
@@ -303,7 +303,7 @@ class DreamsListMotionLayout: MotionLayout {
                 //false
             }
             MotionEvent.ACTION_MOVE -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onTouchEvent, MOVE")
+                
                 moveWasCaptured = true
                 // место расхождения
                 //super.onInterceptTouchEvent(event)
@@ -312,7 +312,7 @@ class DreamsListMotionLayout: MotionLayout {
                 //false
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onTouchEvent, UP")
+                
                 // место расхождения
                 //super.onInterceptTouchEvent(event)
                 //super.onTouchEvent(event)
@@ -323,9 +323,9 @@ class DreamsListMotionLayout: MotionLayout {
                 when (this.currentState){
                     R.id.dreamslist_toppanel_hidden -> {
                         if (touchInsideBtnSearch){
-                            Log.d("Gestures", "dreamslist_toppanel_hidden, touchInsideBtnSearchl")
+                            
                             if (moveWasCaptured){
-                                Log.d("Gestures", "moveWasCaptured")
+                                
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
                                 touchInsideBtnSearch = false
@@ -337,7 +337,7 @@ class DreamsListMotionLayout: MotionLayout {
                                 //false
                             }
                             else{
-                                Log.d("Gestures", "not moveWasCaptured")
+                                
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
                                 touchInsideBtnSearch = false
@@ -350,7 +350,7 @@ class DreamsListMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            Log.d("Gestures", "dreamslist_toppanel_hidden, not touchInsideBtnSearchl")
+                            
                             // место расхождения
                             //super.onInterceptTouchEvent(event)
                             //super.onTouchEvent(event)
@@ -360,11 +360,11 @@ class DreamsListMotionLayout: MotionLayout {
                     }
                     R.id.dreamslist_toppanel_expanded -> {
                         if (touchInsideBtnSearch){
-                            Log.d("Gestures", " dreamslist_toppanel_expanded, touchInsideBtnSearchl")
+                            
                             touchOutsideTopPanel = false
                             touchInsideBtnSearch = false
                             if (moveWasCaptured){
-                                Log.d("Gestures", " moveWasCaptured")
+                                
                                 // место расхождения
                                 //super.onInterceptTouchEvent(event)
                                 //super.onTouchEvent(event)
@@ -372,7 +372,7 @@ class DreamsListMotionLayout: MotionLayout {
                                 //false
                             }
                             else{
-                                Log.d("Gestures", " not moveWasCaptured")
+                                
                                 this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                                 // место расхождения
                                 //super.onInterceptTouchEvent(event)
@@ -383,7 +383,7 @@ class DreamsListMotionLayout: MotionLayout {
                             moveWasCaptured = false
                         }
                         else {
-                            Log.d("Gestures", "dreamslist_toppanel_expanded, not touchInsideBtnSearchl")
+                            
                             if (touchOutsideTopPanel){
                                 this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                                 touchOutsideTopPanel = false
@@ -396,7 +396,7 @@ class DreamsListMotionLayout: MotionLayout {
                         }
                     }
                     else -> {
-                        Log.d("Gestures", "state else, touchInsideBtnSearch=$touchInsideBtnSearch")
+                        
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
                         touchInsideBtnSearch = false
@@ -406,7 +406,7 @@ class DreamsListMotionLayout: MotionLayout {
                 super.onTouchEvent(event)
             }
             else -> {
-                Log.d("Gestures", "DreamsListMotionLayout.onTouchEvent, else")
+                
                 // место расхождения
                 //super.onInterceptTouchEvent(event)
                 super.onTouchEvent(event)

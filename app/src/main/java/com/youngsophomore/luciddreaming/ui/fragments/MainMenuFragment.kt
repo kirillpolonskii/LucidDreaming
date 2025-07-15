@@ -31,7 +31,7 @@ class MainMenuFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Debug_app", "in onCreate() in MainMenuFragment")
+        
     }
 
     override fun onCreateView(

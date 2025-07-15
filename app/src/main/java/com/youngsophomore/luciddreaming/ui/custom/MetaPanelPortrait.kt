@@ -53,16 +53,16 @@ class MetaPanelPortrait @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        Log.d("Gestures", "MetaTopPanelPortrait.onAttachedToWindow()")
+        
         binding.ibtnDreamDetailsAddFeeling.setOnClickListener {
-            Log.d("Gestures", " ibtnDreamDetailsAddFeeling.setOnClickListener")
+            
             dreamDetailsVM.isNewMetaItemFeeling = true
             showMetaItemChooser(lucidDreamingVM.feelings?.value!!)
 
         }
         binding.ibtnDreamDetailsAddLocation.setOnClickListener {
             dreamDetailsVM.isNewMetaItemFeeling = false
-            Log.d("Gestures", " ibtnDreamDetailsAddLocation.setOnClickListener")
+            
             showMetaItemChooser(lucidDreamingVM.locations?.value!!)
         }
 
@@ -77,26 +77,26 @@ class MetaPanelPortrait @JvmOverloads constructor(
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        Log.d("Gestures", "MetaTopPanelPortrait.onInterceptTouchEvent()")
+        
         //return super.onInterceptTouchEvent(ev)
         return when (ev?.action){
             MotionEvent.ACTION_DOWN -> {
-                Log.d("Gestures", " ACTION_DOWN, ev.x=${ev?.x}")
+                
                 //true
                 false
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("Gestures", " ACTION_UP")
+                
                 //true
                 false
             }
             MotionEvent.ACTION_BUTTON_PRESS -> {
-                Log.d("Gestures", " ACTION_BUTTON_PRESS, ev.x=${ev?.x}")
+                
                 //true
                 false
             }
             else -> {
-                Log.d("Gestures", " else")
+                
                 //true
                 false
             }
@@ -104,35 +104,35 @@ class MetaPanelPortrait @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        Log.d("Gestures", "MetaTopPanelPortrait.onTouchEvent()")
+        
         //return super.onTouchEvent(event)
         //return false
         super.onTouchEvent(event)
         //performClick()
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Log.d("Gestures", " ACTION_DOWN, ev.x=${event?.x}")
+                
                 true
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("Gestures", " ACTION_UP")
+                
                 //binding.tglgrDreamDetailsPOV.check(0)
                 //binding.tvDreamDetailsFeelings.text = "WHAT"
                 true
             }
             MotionEvent.ACTION_BUTTON_PRESS -> {
-                Log.d("Gestures", " ACTION_BUTTON_PRESS, ev.x=${event?.x}")
+                
                 true
             }
             else -> {
-                Log.d("Gestures", " else")
+                
                 true
             }
         }
     }
 
     override fun performClick(): Boolean {
-        Log.d("Gestures", "MetaTopPanelPortrait.performClick()")
+        
         return super.performClick()
     }
 
@@ -156,14 +156,14 @@ class MetaPanelPortrait @JvmOverloads constructor(
             metaChooserBinding.tvMetaItemChooserTitle.text = "Выбрать место"
         }
         metaChooserBinding.ibtnMetaItemChooserClose.setOnClickListener {
-            Log.d("Gestures", " ibtnMetaItemChooserClose.setOnClickListener")
+            
             dialogMetaItemChoose.dismiss()
         }
         metaChooserBinding.ibtnMetaItemChooserAddItem.setOnClickListener{
             showDialogMetaItemAppend()
         }
         metaChooserBinding.etMetaItemChooserFilter.addTextChangedListener { input ->
-            Log.d("Gestures", " etMetaItemChooserFilter.addTextChangedListener, $input")
+            
             metaAdapter.filter.filter(input)
         }
         dialogMetaItemChoose.show();
@@ -247,7 +247,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
             binding.root.addView(newMetaItem)
             binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsVM.dreamFeelingsIds.toIntArray()
             newMetaItem.setOnLongClickListener {
-                Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
+                
                 showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
                         if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
                                 " \"$feeling\"?", newMetaItem)
@@ -263,7 +263,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
             binding.root.addView(newMetaItem)
             binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
             newMetaItem.setOnLongClickListener {
-                Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
+                
                 showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
                         if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
                                 " \"$location\"?", newMetaItem)
@@ -273,7 +273,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
     }
 
     override fun onMetaItemChoose(item: String) {
-        Log.d("Gestures", "MetaTopPanelPortrait.onMetaItemChoose()")
+        
         // здесь добавить текст с нажатой в диалоге кнопке в Flow, т. е. создать Button и добавить id
         val newMetaItem = TextView(context)
         newMetaItem.text = item
@@ -291,7 +291,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
             binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
         }
         newMetaItem.setOnLongClickListener {
-            Log.d("Gestures", "newMetaItem.setOnLongClickListener, ${newMetaItem.text}")
+            
             showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
                     if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
                     " \"$item\"?", newMetaItem)

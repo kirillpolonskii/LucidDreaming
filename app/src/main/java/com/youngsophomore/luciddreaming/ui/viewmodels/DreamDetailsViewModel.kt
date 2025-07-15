@@ -47,27 +47,27 @@ class DreamDetailsViewModel @Inject constructor(
     val isDreamEditable = MutableLiveData<Boolean>(true)
     private var isDreamInDB = false
     init {
-        Log.d("Lifecycle", "DreamDetailsViewModel.init")
-        Log.d("Lifecycle", " id from args = ${navArgs.dreamId}")
+        
+        
         if (navArgs.dreamId != -1) {
             //dream = repository.getDream(navArgs.dreamId)
             //dream = repository.getDream(navArgs.dreamId).first()
             viewModelScope.launch {
                 dreamById = repository.getDream(navArgs.dreamId)
                 dream = dreamById!!.first()
-                Log.d("Debug", "  dream = ${dream}")
+                
                 dreamListener.onDreamCollected(dream)
                 isDreamInDB = true
                 isDreamEditable.value = false
             }
         }
-        Log.d("Lifecycle", " title of a dream = ${dream.title}")
+        
         //initFeelings()
     }
     fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
         dreamFeelingsIds.add(ibtnFeelingsId)
         dreamLocationsIds.add(ibtnLocationsId)
-        Log.d("Lifecycle", " title of a dream = ${dream.title}")
+        
     }
 
     fun addDreamFeeling(feeling: String, feelingId: Int){
@@ -94,11 +94,11 @@ class DreamDetailsViewModel @Inject constructor(
         title: String,
         content: String
     ) = viewModelScope.launch {
-        Log.d("Data", "DreamDetailsViewModel.addUpdateDream")
-        Log.d("Data", " id = ${dream.id}")
-        Log.d("Data", " " + dreamFeelings.joinToString("|"))
-        Log.d("Data", " " + dreamLocations.joinToString("|"))
-        Log.d("Data", " $isDreamInDB")
+        
+        
+        
+        
+        
         if (!isDreamInDB) {
             dream = dream.copy(
                 title = title,

@@ -31,8 +31,8 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
     var dateRangeEdited: Pair<LocalDateTime, LocalDateTime>? = null
 
     init {
-        Log.d("Debug", "DreamsListViewModel.init")
-        Log.d("Debug", " allDreams = ${allDreams.value}")
+        
+        
 
         //filteredDreams.value = allDreams.value
     }
@@ -85,14 +85,14 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                 ans
             }
             .also {
-                Log.d("Debug", " aft keyword filter, " + it.joinToString())
+                
             }
             .filter {
                 if (isDreamFirstPerson != null) it.isFirstPerson == isDreamFirstPerson
                 else true
             }
             .also {
-                Log.d("Debug", " aft pov filter, " + it.joinToString())
+                
             }
             .filter {
                 var ans = filterFeelings.isEmpty()
@@ -104,7 +104,7 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                 ans
             }
             .also {
-                Log.d("Debug", " aft feeling filter, " + it.joinToString())
+                
             }
             .filter {
                 var ans = filterLocations.isEmpty()
@@ -116,7 +116,7 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                 ans
             }
             .also {
-                Log.d("Debug", " aft locs filter, " + it.joinToString())
+                
             }
             .filter {
                 if (dateRangeCreated != null)
@@ -125,7 +125,7 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                 else true
             }
             .also {
-                Log.d("Debug", " aft created filter, " + it.joinToString())
+                
             }
             .filter {
                 if (dateRangeEdited != null)
@@ -134,7 +134,7 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                 else true
             }
             .also {
-                Log.d("Debug", " aft edited filter, " + it.joinToString())
+                
             }
 
     }

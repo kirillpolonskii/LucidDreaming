@@ -46,10 +46,10 @@ class SettingsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("Lifecycle", "SettingsFragment.onAttach()")
+        
         val backPressedCallback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                Log.d("Lifecycle", " handleOnBackPressed()")
+                
                 scheduleNotifs()
             }
         }
@@ -72,22 +72,22 @@ class SettingsFragment : Fragment() {
 
 
         lucidDreamingVM.notifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
-            Log.d("Debug", " notifsActiveHoursCalendarStart.observe")
-            Log.d("Debug", " " + activeHoursStart.toString())
+            
+            
             binding.tvSettingsNotifsActiveHoursStart.text =
                 "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}:${activeHoursStart.get(Calendar.MINUTE)}"
 
         }
         lucidDreamingVM.notifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
-            Log.d("Debug", " notifsActiveHoursCalendarEnd.observe")
-            Log.d("Debug", " " + activeHoursEnd.toString())
+            
+            
             binding.tvSettingsNotifsActiveHoursEnd.text =
                 "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
         }
 
         lucidDreamingVM.ivThemesSelectedState.observe(viewLifecycleOwner) { ivSelectedState ->
-            Log.d("Debug", " ivThemesSelectedState.observe")
-            Log.d("Debug", " " + ivSelectedState.joinToString())
+            
+            
             binding.ivSettingsThemeBlue.isSelected = ivSelectedState[0]
             binding.ivSettingsThemePurple.isSelected = ivSelectedState[1]
             binding.ivSettingsThemeGreen.isSelected = ivSelectedState[2]
@@ -107,7 +107,7 @@ class SettingsFragment : Fragment() {
             }
 
             swchSettingsNotifs.setOnCheckedChangeListener { buttonView, isChecked ->
-                Log.d("Debug", " swchSettingsNotifs.setOnCheckedChangeListener")
+                
                 lucidDreamingVM.updateNotifsEnabled(isChecked)
                 if (isChecked){
                     notifsUIToEnabledState()
@@ -129,7 +129,7 @@ class SettingsFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    Log.d("Debug", " sprSettingsNotifsFrequency.onItemSelectedListener, pos=$position")
+                    
                     if (position > 0)
                         lucidDreamingVM.updateFrequency(position)
                 }
@@ -158,7 +158,7 @@ class SettingsFragment : Fragment() {
             }
 
             swchSettingsPassword.setOnClickListener {
-                Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
+                
                 showDialogSetPassword(binding.swchSettingsPassword.isChecked)
             }
         }
@@ -206,7 +206,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun scheduleNotifs(){
-        Log.d("Debug", "SettingsFragment.scheduleNotifs()")
+        
         val notifsReceiverIntent = Intent(context, NotificationReceiver::class.java)
         val notifsPendingIntent = PendingIntent.getBroadcast(
             context,
@@ -224,20 +224,20 @@ class SettingsFragment : Fragment() {
             )
             val cal = Calendar.getInstance()
             cal.timeInMillis = it
-            Log.d("Debug", " cur time point for alarm = ")
-            Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
+            
+            
         }
 
     }
 
     private fun showTimeChooser(isStart: Boolean){
-        Log.d("Debug", "SettingFragment.showTimeChooser()")
+        
         val timePicker = MaterialTimePicker.Builder()
             .setTitleText("Время начала")
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
         timePicker.addOnPositiveButtonClickListener {
-            Log.d("Debug", " timePicker.addOnPositiveButtonClickListener")
+            
             lucidDreamingVM.updateActiveHours(timePicker.hour, timePicker.minute, isStart)
         }
         timePicker.show(childFragmentManager, "TIME_PICKER")

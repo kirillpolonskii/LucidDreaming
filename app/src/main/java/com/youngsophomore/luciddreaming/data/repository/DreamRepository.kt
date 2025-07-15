@@ -17,19 +17,13 @@ class DreamRepository @Inject constructor(private val dreamDao: DreamDao) {
         dreamDao.delete(dream)
     }
 
-    suspend fun getDream(id: Int): Flow<Dream> {
+    fun getDream(id: Int): Flow<Dream> {
         val dream = dreamDao.getDream(id)
-        Log.d("Debug", "repository, dream = ${dream.first()}")
         return dream
     }
 
-    /*suspend fun updateDream(dream: Dream) {
-        dreamDao.update(dream)
-    }*/
-
     fun getAllDreams() : LiveData<List<Dream>> {
         val dreams = dreamDao.getAllDreams()
-        Log.d("Debug", "repository, dreams.size = ${dreams.value?.size}")
         return dreams
     }
 }

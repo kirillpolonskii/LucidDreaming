@@ -19,7 +19,6 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
     private var allMetaItems = emptyList<String>()
     private val searchFilter: Filter = object : Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            Log.d("Gestures", "MetaListAdapter, performFiltering, $constraint")
             val filteredList = if (constraint.isNullOrEmpty()){
                 allMetaItems
             }
@@ -30,7 +29,6 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            Log.d("Gestures", "MetaListAdapter, publishResults")
             submitList(results?.values as List<String>)
         }
 
@@ -39,11 +37,9 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
     inner class ViewHolder(val binding: ItemMetaBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                Log.d("Gestures", "MetaListAdapter.ViewHolder, root.setOnClickListener")
                 listener.onMetaItemChoose(binding.root.text.toString())
             }
             binding.root.setOnLongClickListener {
-                Log.d("Gestures", "MetaListAdapter.ViewHolder, root.setOnLongClickListener")
                 listener.onMetaItemDelete(binding.root.text.toString())
                 //notifyDataSetChanged()
                 true
@@ -65,10 +61,6 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
         val metaItem = allMetaItems[position]
         holder.binding.root.text = metaItem
     }
-
-    /*override fun getItemCount(): Int {
-        return allMetaItems.size
-    }*/
 
     override fun getFilter(): Filter {
         return searchFilter

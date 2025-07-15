@@ -44,7 +44,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("Gestures", "DreamDetailsFragment.onCreateView")
+        
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
@@ -57,7 +57,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
             else R.drawable.all_edit_24))
         }
         binding.ibtnDreamDetailsSaveEdit.setOnClickListener {
-            Log.d("Gestures", " ibtnDreamDetailSaveEdit.setOnClickListener")
+            
             if (dreamDetailsVM.isDreamEditable.value!!) {
                 with(binding){
                     dreamDetailsVM.addUpdateDream(
@@ -81,7 +81,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /*dreamDetailsVM.dreamById?.observe(viewLifecycleOwner) { dream ->
-            Log.d("Debug", " dreamById?.observe, dream=${dream}")
+            
             val editable = Editable.Factory.getInstance().newEditable(dream.title)
             binding.etDreamDetailsTitle.text = editable
         }*/
@@ -101,7 +101,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     }
 
     override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
-        Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
+        
         if (isItemFeeling)
             lucidDreamingViewModel.appendFeeling(item)
         else
@@ -109,7 +109,7 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     }
 
     override fun onDreamCollected(dream: Dream) {
-        Log.d("Debug", "onDreamCollected, dream=${dream}")
+        
         val editableTitle = Editable.Factory.getInstance().newEditable(dream.title)
         binding.etDreamDetailsTitle.text = editableTitle
         val editableContent = Editable.Factory.getInstance().newEditable(dream.content)

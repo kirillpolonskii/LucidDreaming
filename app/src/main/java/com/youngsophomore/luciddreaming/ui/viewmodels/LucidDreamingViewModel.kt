@@ -46,32 +46,32 @@ class LucidDreamingViewModel @Inject constructor(
     }
 
     fun initFromPrefs() = viewModelScope.launch {
-        Log.d("Preferences", "LucidDreamingViewModel.initFeelingsAndLocations")
+        
         val keyFeelings = stringPreferencesKey("feelings")
         val keyLocations = stringPreferencesKey("locations")
 
         val keyEnablePassword = booleanPreferencesKey("enable_password")
         val preferences = dataStore.data.first()
-        Log.d("Preferences", " preferences = $preferences")
+        
         val feelingsString = preferences[keyFeelings] ?: ""
         val locationsString = preferences[keyLocations] ?: ""
 
         isPasswordEnabled = preferences[keyEnablePassword] ?: false
-        Log.d("Preferences", " feelingsString = $feelingsString")
+        
         feelings.value?.addAll(feelingsString.split("|"))
         locations.value?.addAll(locationsString.split("|"))
-        Log.d("Preferences", " feelings = $feelings")
+        
 
     }
 
     fun appendFeeling(newFeeling: String){
-        Log.d("Preferences", "LucidDreamingViewModel.appendFeeling, $newFeeling")
+        
         feelings.value?.add(newFeeling)
         val keyFeelings = stringPreferencesKey("feelings")
         viewModelScope.launch {
             dataStore.edit { prefs ->
                 val curFeelings = prefs[keyFeelings] ?: ""
-                Log.d("Preferences", " $curFeelings")
+                
                 if (curFeelings.isEmpty())
                     prefs[keyFeelings] = "$curFeelings$newFeeling"
                 else
@@ -85,20 +85,20 @@ class LucidDreamingViewModel @Inject constructor(
         val keyFeelings = stringPreferencesKey("feelings")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                Log.d("Preferences", " " + feelings.value?.joinToString())
+                
                 prefs[keyFeelings] = feelings.value?.joinToString()!!
             }
         }
     }
 
     fun appendLocation(newLocation: String){
-        Log.d("Preferences", "LucidDreamingViewModel.appendLocation, $newLocation")
+        
         locations.value?.add(newLocation)
         val keyLocations = stringPreferencesKey("locations")
         viewModelScope.launch {
             dataStore.edit { prefs ->
                 val curLocations = prefs[keyLocations] ?: ""
-                Log.d("Preferences", " $curLocations")
+                
                 if (curLocations.isEmpty())
                     prefs[keyLocations] = "$curLocations$newLocation"
                 else
@@ -112,7 +112,7 @@ class LucidDreamingViewModel @Inject constructor(
         val keyLocations = stringPreferencesKey("locations")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                Log.d("Preferences", " " + locations.value?.joinToString())
+                
                 prefs[keyLocations] = locations.value?.joinToString()!!
             }
         }
@@ -124,14 +124,14 @@ class LucidDreamingViewModel @Inject constructor(
         val keyTheme = intPreferencesKey("theme")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                //Log.d("Preferences", " " + locations.value?.joinToString())
+                //
                 prefs[keyTheme] = theme.ordinal
             }
         }
     }
 
     fun initSettings() = viewModelScope.launch {
-        Log.d("Lifecycle", "LucidDreamingViewModel.initSettings()")
+        
         val keyNotifsEnabled = booleanPreferencesKey("notifs_enabled")
         val keyNotifsActiveHours = stringPreferencesKey("notifs_active_hours")
         val keyNotifsFrequency = intPreferencesKey("notifs_frequency")
@@ -159,7 +159,7 @@ class LucidDreamingViewModel @Inject constructor(
         val keyEnablePassword = booleanPreferencesKey("enable_password")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                //Log.d("Preferences", " " + locations.value?.joinToString())
+                //
                 prefs[keyPassword] = password.sha256()
                 prefs[keyEnablePassword] = true
                 isPasswordEnabled = true
@@ -175,18 +175,18 @@ class LucidDreamingViewModel @Inject constructor(
         val keyNotifsEnabled = booleanPreferencesKey("notifs_enabled")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                //Log.d("Preferences", " " + locations.value?.joinToString())
+                //
                 prefs[keyNotifsEnabled] = isChecked
             }
         }
     }
 
     fun updateActiveHours(hours: Int, minutes: Int, isStart: Boolean){
-        Log.d("Debug", "LucidDreamingViewModel.updateActiveHours()")
+        
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hours)
         calendar.set(Calendar.MINUTE, minutes)
-        Log.d("Debug", " $calendar")
+        
         if (isStart) {
             notifsActiveHours[0] = calendar.timeInMillis
             notifsActiveHoursCalendarStart.value = calendar
@@ -198,7 +198,7 @@ class LucidDreamingViewModel @Inject constructor(
         val keyNotifsActiveHours = stringPreferencesKey("notifs_active_hours")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                //Log.d("Preferences", " " + locations.value?.joinToString())
+                //
                 prefs[keyNotifsActiveHours] = "${notifsActiveHours[0]}-${notifsActiveHours[1]}"
             }
         }
@@ -211,7 +211,7 @@ class LucidDreamingViewModel @Inject constructor(
         val keyNotifsFrequency = intPreferencesKey("notifs_frequency")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                //Log.d("Preferences", " " + locations.value?.joinToString())
+                //
                 prefs[keyNotifsFrequency] = newFrequency
             }
         }
@@ -219,15 +219,15 @@ class LucidDreamingViewModel @Inject constructor(
     }
 
     fun updateTimePoints(){
-        Log.d("Debug", "LucidDreamingViewModel.updateTimePoints()")
+        
         notifsTimePoints.clear()
         val timeInterval = (notifsActiveHours[1] - notifsActiveHours[0]) / notifsFrequency
         for (i in 0..<notifsFrequency){
             notifsTimePoints.add(notifsActiveHours[0] + i * timeInterval)
             val cal = Calendar.getInstance()
             cal.timeInMillis = notifsActiveHours[0] + i * timeInterval
-            Log.d("Debug", " cur time point for alarm = ")
-            Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
+            
+            
         }
     }
 
@@ -244,7 +244,7 @@ class LucidDreamingViewModel @Inject constructor(
         val keyEnablePassword = booleanPreferencesKey("enable_password")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                //Log.d("Preferences", " " + locations.value?.joinToString())
+                //
                 prefs[keyEnablePassword] = false
                 isPasswordEnabled = false
             }

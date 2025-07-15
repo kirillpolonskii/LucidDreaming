@@ -23,14 +23,12 @@ class LucidDreamingActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityLucidDreamingBinding
     private val lucidDreamingVM: LucidDreamingViewModel by viewModels()
-    private val settingsVM: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lucidDreamingVM.initTheme()
         enableEdgeToEdge()
 
-        Log.d("Debug", "bef setTheme(), lucidDreamingVM.selectedTheme=${lucidDreamingVM.selectedTheme}")
         setTheme(when (lucidDreamingVM.selectedTheme){
             LDTheme.Blue.ordinal -> R.style.Theme_LucidDreaming_Blue
             LDTheme.Purple.ordinal -> R.style.Theme_LucidDreaming_Purple
@@ -50,6 +48,5 @@ class LucidDreamingActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         lucidDreamingVM.initSettings()
-        //Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingVM}")
     }
 }
