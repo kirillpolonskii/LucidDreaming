@@ -50,8 +50,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                 }
                 else when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
-                        //super.onInterceptTouchEvent(event)
-                        //true
                         if (etDreamDetailsContent.hasFocus()){
                             etDreamDetailsContent.clearFocus()
                             imm.hideSoftInputFromWindow(etDreamDetailsContent.windowToken, 0)
@@ -60,7 +58,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
                         if (event.y <= ibtnDreamDetailsShowMeta.y){
-                            //super.onTouchEvent(event)
                             false
                         }
                         else {
@@ -96,7 +93,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                             ibtnDreamDetailsShowMeta.isPressed = false
                             if (moveWasCaptured){
                                 moveWasCaptured = false
-                                //this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
                                 super.onTouchEvent(event)
                             }
                             else{
@@ -112,7 +108,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
                         if (touchInsideBtnShowMeta){
-                            Log.d("Gestures", " dreamdetails_toppanel_expanded, touchInsideBtnShowMetal")
                             ibtnDreamDetailsShowMeta.isPressed = false
                             vwDreamDetailsButtonStripe.isPressed = false
                             if (moveWasCaptured){
@@ -134,15 +129,12 @@ class DreamDetailsMotionLayout: MotionLayout {
                             touchInsideBtnShowMeta = false
                             moveWasCaptured = false
                             if (event.y <= ibtnDreamDetailsShowMeta.y){
-                                //super.onTouchEvent(event)
                                 false
                             }
                             else {
                                 touchOutsideTopPanel = false
-                                //super.onInterceptTouchEvent(event)
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                                 false
-                                //true
                             }
                         }
                     }
@@ -175,10 +167,7 @@ class DreamDetailsMotionLayout: MotionLayout {
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-
                                 touchInsideBtnShowMeta = false
-                                //this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
-                                //super.onTouchEvent(event)
                             }
                             else{
                                 moveWasCaptured = false
@@ -195,13 +184,9 @@ class DreamDetailsMotionLayout: MotionLayout {
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
                         if (touchInsideBtnShowMeta){
-                            if (moveWasCaptured){
-                            }
-                            else{
+                            if (!moveWasCaptured){
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                             }
-                        }
-                        else {
                         }
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
@@ -211,8 +196,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
                         touchInsideBtnShowMeta = false
-                        //super.onTouchEvent(event)
-                        //true
                     }
                 }
                 super.onTouchEvent(event)

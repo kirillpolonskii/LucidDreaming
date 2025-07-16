@@ -50,8 +50,6 @@ class DreamDetailsViewModel @Inject constructor(
         
         
         if (navArgs.dreamId != -1) {
-            //dream = repository.getDream(navArgs.dreamId)
-            //dream = repository.getDream(navArgs.dreamId).first()
             viewModelScope.launch {
                 dreamById = repository.getDream(navArgs.dreamId)
                 dream = dreamById!!.first()
@@ -62,7 +60,6 @@ class DreamDetailsViewModel @Inject constructor(
             }
         }
         
-        //initFeelings()
     }
     fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
         dreamFeelingsIds.add(ibtnFeelingsId)
@@ -94,11 +91,6 @@ class DreamDetailsViewModel @Inject constructor(
         title: String,
         content: String
     ) = viewModelScope.launch {
-        
-        
-        
-        
-        
         if (!isDreamInDB) {
             dream = dream.copy(
                 title = title,

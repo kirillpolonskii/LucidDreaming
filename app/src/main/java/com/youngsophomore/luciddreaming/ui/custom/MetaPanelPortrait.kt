@@ -77,63 +77,12 @@ class MetaPanelPortrait @JvmOverloads constructor(
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        
-        //return super.onInterceptTouchEvent(ev)
-        return when (ev?.action){
-            MotionEvent.ACTION_DOWN -> {
-                
-                //true
-                false
-            }
-            MotionEvent.ACTION_UP -> {
-                
-                //true
-                false
-            }
-            MotionEvent.ACTION_BUTTON_PRESS -> {
-                
-                //true
-                false
-            }
-            else -> {
-                
-                //true
-                false
-            }
-        }
+        return false
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        
-        //return super.onTouchEvent(event)
-        //return false
         super.onTouchEvent(event)
-        //performClick()
-        return when (event?.action){
-            MotionEvent.ACTION_DOWN -> {
-                
-                true
-            }
-            MotionEvent.ACTION_UP -> {
-                
-                //binding.tglgrDreamDetailsPOV.check(0)
-                //binding.tvDreamDetailsFeelings.text = "WHAT"
-                true
-            }
-            MotionEvent.ACTION_BUTTON_PRESS -> {
-                
-                true
-            }
-            else -> {
-                
-                true
-            }
-        }
-    }
-
-    override fun performClick(): Boolean {
-        
-        return super.performClick()
+        return true
     }
 
     private fun showMetaItemChooser(metaItems: List<String>){
@@ -141,9 +90,6 @@ class MetaPanelPortrait @JvmOverloads constructor(
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
         }*/
         val metaAdapter = MetaListAdapter(this)
-        /*lucidDreamingVM.feelings.observe(findViewTreeLifecycleOwner()!!) { items ->
-            metaAdapter.setMetaItems(items)
-        }*/
         metaAdapter.setMetaItems(metaItems)
         metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
         val layoutManager = LinearLayoutManager(context)
@@ -238,7 +184,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
         else {
             binding.btnDreamDetailsThirdPerson.performClick()
         }
-        // TODO: заполнить список чувств
+
         dream.feelings.split("|").forEach { feeling ->
             val newMetaItem = TextView(context)
             newMetaItem.text = feeling
@@ -254,7 +200,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
                 true
             }
         }
-        // TODO: заполнить список мест
+
         dream.locations.split("|").forEach { location ->
             val newMetaItem = TextView(context)
             newMetaItem.text = location
@@ -273,8 +219,6 @@ class MetaPanelPortrait @JvmOverloads constructor(
     }
 
     override fun onMetaItemChoose(item: String) {
-        
-        // здесь добавить текст с нажатой в диалоге кнопке в Flow, т. е. создать Button и добавить id
         val newMetaItem = TextView(context)
         newMetaItem.text = item
         if (dreamDetailsVM.isNewMetaItemFeeling!!){

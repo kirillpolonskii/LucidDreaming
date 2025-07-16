@@ -36,10 +36,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,14 +76,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*dreamDetailsVM.dreamById?.observe(viewLifecycleOwner) { dream ->
-            
-            val editable = Editable.Factory.getInstance().newEditable(dream.title)
-            binding.etDreamDetailsTitle.text = editable
-        }*/
-        /*Toast.makeText(context, "title=${dreamDetailsVM.dream.title}", Toast.LENGTH_LONG).show()
-        val editable = Editable.Factory.getInstance().newEditable(dreamDetailsVM.dream.title)
-        binding.etDreamDetailsTitle.text = editable*/
     }
 
     override fun onDestroyView() {

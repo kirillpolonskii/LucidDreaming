@@ -41,8 +41,8 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dream = allDreams[position]
-        holder.binding.tvDreamsListItemTitle.text = dream.title ?: "null title"
-        holder.binding.tvDreamsListItemContent.text = dream.content ?: "NULL CONTENT"
+        holder.binding.tvDreamsListItemTitle.text = dream.title
+        holder.binding.tvDreamsListItemContent.text = dream.content
     }
 
     override fun getItemCount(): Int {

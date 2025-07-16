@@ -41,7 +41,6 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
             }
             binding.root.setOnLongClickListener {
                 listener.onMetaItemDelete(binding.root.text.toString())
-                //notifyDataSetChanged()
                 true
             }
         }

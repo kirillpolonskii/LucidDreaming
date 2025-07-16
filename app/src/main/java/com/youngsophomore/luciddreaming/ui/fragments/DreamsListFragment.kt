@@ -33,10 +33,6 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
     private var _binding: FragmentDreamsListBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,11 +47,8 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
         adapter.listener = this
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
         dreamsListVM
-            //.fetchAllDreams()
-            //.filteredDreams
             .allDreams
             .observe(viewLifecycleOwner) { dreams ->
-                
                 adapter.setDreams(dreams)
             }
         binding.rvDreamsList.adapter = adapter
@@ -72,28 +65,18 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
                     
                     binding.mtnLaytDreamsList.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     v.onTouchEvent(event)
-                    //false
-                    //true // - так rv не двигался
                 }
                 MotionEvent.ACTION_MOVE -> {
                     
                     v.onTouchEvent(event)
-                    //false
-                    //true //- так rv не двигался
                 }
                 MotionEvent.ACTION_UP -> {
                     
                     v.onTouchEvent(event)
-
-                    //false
-                    //true //- так rv не двигался
                 }
                 else -> {
                     
                     v.onTouchEvent(event)
-
-                    //false
-                    //true //- так rv не двигался
                 }
             }
 

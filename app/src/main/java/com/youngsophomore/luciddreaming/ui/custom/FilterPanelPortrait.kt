@@ -65,15 +65,13 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
         super.onAttachedToWindow()
         
         binding.ibtnDreamsListAddFeeling.setOnClickListener {
-            
             dreamsListVM.isNewFilterItemFeeling = true
-            showMetaItemChooser(lucidDreamingVM.feelings?.value!!)
-
+            showMetaItemChooser(lucidDreamingVM.feelings.value!!)
         }
         binding.ibtnDreamsListAddLocation.setOnClickListener {
             dreamsListVM.isNewFilterItemFeeling = false
             
-            showMetaItemChooser(lucidDreamingVM.locations?.value!!)
+            showMetaItemChooser(lucidDreamingVM.locations.value!!)
         }
 
         binding.tglgrDreamsListPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
@@ -98,7 +96,6 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
             binding.flowDreamsListKeywords.requestLayout()
 
             tvNewKeyword.setOnLongClickListener {
-                
                 dreamsListVM.deleteFilterKeyword(tvNewKeyword.text.toString(), tvNewKeyword.id)
                 binding.flowDreamsListKeywords.referencedIds = dreamsListVM.filterKeywordsIds.toIntArray()
                 binding.root.removeView(tvNewKeyword)
@@ -108,12 +105,9 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
         }
 
         binding.ibtnDreamsListAddCreatedDateRange.setOnClickListener {
-            
             showDateCreatedChooser("Интервал даты создания", binding.tvDreamsListCreatedDateRange)
-
         }
         binding.ibtnDreamsListAddEditedDateRange.setOnClickListener {
-            
             showDateCreatedChooser("Интервал даты изменения", binding.tvDreamsListEditedDateRange)
         }
 
@@ -128,15 +122,10 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        
         return false
     }
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        
-        //return super.onTouchEvent(event)
-        //return false
         super.onTouchEvent(event)
-        //performClick()
         return true
     }
 
@@ -145,9 +134,6 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
         }*/
         val metaAdapter = MetaListAdapter(this)
-        /*lucidDreamingVM.feelings.observe(findViewTreeLifecycleOwner()!!) { items ->
-            metaAdapter.setMetaItems(items)
-        }*/
         metaAdapter.setMetaItems(metaItems)
         metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
         val layoutManager = LinearLayoutManager(context)
@@ -258,8 +244,6 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
     }
 
     override fun onMetaItemChoose(item: String) {
-        
-        // здесь добавить текст с нажатой в диалоге кнопке в Flow, т. е. создать Button и добавить id
         val newMetaItem = TextView(context)
         newMetaItem.text = item
         if (dreamsListVM.isNewFilterItemFeeling!!){
@@ -276,10 +260,9 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
             binding.flowDreamsListLocations.referencedIds = dreamsListVM.filterLocationsIds.toIntArray()
         }
         newMetaItem.setOnLongClickListener {
-            
             showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
                     if (dreamsListVM.filterFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
-                            " \"$item\"?", newMetaItem)
+                            " \"${item}\"?", newMetaItem)
             true
         }
         dialogMetaItemChoose.dismiss()

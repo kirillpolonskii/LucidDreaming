@@ -47,6 +47,7 @@ class LucidDreamingActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
         navController = navHostFragment.navController
 
+        lucidDreamingVM.initFromPrefs()
         lucidDreamingVM.initSettings()
     }
 }

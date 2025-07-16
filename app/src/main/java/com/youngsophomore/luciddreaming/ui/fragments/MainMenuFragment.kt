@@ -29,11 +29,6 @@ class MainMenuFragment : Fragment() {
     private var _binding: FragmentMainMenuBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +55,6 @@ class MainMenuFragment : Fragment() {
             mainMenuVM.setNewBiases()
             navController.navigate(R.id.action_main_menu_to_settings)
         }
-
 
         return view
     }

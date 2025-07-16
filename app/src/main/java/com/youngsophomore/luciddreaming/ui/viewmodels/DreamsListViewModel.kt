@@ -30,12 +30,6 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
     var dateRangeCreated: Pair<LocalDateTime, LocalDateTime>? = null
     var dateRangeEdited: Pair<LocalDateTime, LocalDateTime>? = null
 
-    init {
-        
-        
-
-        //filteredDreams.value = allDreams.value
-    }
 
     fun initFeelingsAndLocations(ibtnFeelingsId: Int, ibtnLocationsId: Int) {
         filterFeelingsIds.add(ibtnFeelingsId)
@@ -84,15 +78,9 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                     }
                 ans
             }
-            .also {
-                
-            }
             .filter {
                 if (isDreamFirstPerson != null) it.isFirstPerson == isDreamFirstPerson
                 else true
-            }
-            .also {
-                
             }
             .filter {
                 var ans = filterFeelings.isEmpty()
@@ -103,9 +91,6 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                     }
                 ans
             }
-            .also {
-                
-            }
             .filter {
                 var ans = filterLocations.isEmpty()
                 for (location in filterLocations)
@@ -115,26 +100,17 @@ class DreamsListViewModel @Inject constructor(val repository: DreamRepository) :
                     }
                 ans
             }
-            .also {
-                
-            }
             .filter {
                 if (dateRangeCreated != null)
                     it.creationDateTime.isAfter(dateRangeCreated!!.first)
                             && it.creationDateTime.isBefore(dateRangeCreated!!.second)
                 else true
             }
-            .also {
-                
-            }
             .filter {
                 if (dateRangeEdited != null)
                     it.changeDateTime.isAfter(dateRangeEdited!!.first)
                             && it.changeDateTime.isBefore(dateRangeEdited!!.second)
                 else true
-            }
-            .also {
-                
             }
 
     }
