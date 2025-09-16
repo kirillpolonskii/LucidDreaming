@@ -3,7 +3,6 @@ package com.youngsophomore.luciddreaming.ui.custom
 import android.app.Dialog
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.timepicker.MaterialTimePicker
 import com.youngsophomore.luciddreaming.R
 import com.youngsophomore.luciddreaming.databinding.DialogConfirmActionBinding
 import com.youngsophomore.luciddreaming.databinding.DialogMetaItemAppendBinding
@@ -24,7 +22,7 @@ import com.youngsophomore.luciddreaming.databinding.LayoutDreamslistPanelportrai
 import com.youngsophomore.luciddreaming.ui.adapters.DreamsListAdapter
 import com.youngsophomore.luciddreaming.ui.adapters.MetaListAdapter
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
-import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 import java.time.Instant
@@ -34,7 +32,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
+class FilterPanelPortrait : ConstraintLayout, MetaItemListener {
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet? = null): super(context, attrs)
     constructor(context: Context,
@@ -63,19 +61,17 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        
         binding.ibtnDreamsListAddFeeling.setOnClickListener {
             dreamsListVM.isNewFilterItemFeeling = true
             showMetaItemChooser(lucidDreamingVM.feelings.value!!)
         }
+
         binding.ibtnDreamsListAddLocation.setOnClickListener {
             dreamsListVM.isNewFilterItemFeeling = false
-            
             showMetaItemChooser(lucidDreamingVM.locations.value!!)
         }
 
         binding.tglgrDreamsListPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            
             if (group.checkedButtonId == R.id.btnDreamsListFirstPerson &&
                 !binding.btnDreamsListThirdPerson.isPressed)
                 dreamsListVM.isDreamFirstPerson = true
@@ -243,7 +239,7 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
 
     }
 
-    override fun onMetaItemChoose(item: String) {
+    override fun onChooseMetaItem(item: String) {
         val newMetaItem = TextView(context)
         newMetaItem.text = item
         if (dreamsListVM.isNewFilterItemFeeling!!){
@@ -268,7 +264,7 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemChooseListener {
         dialogMetaItemChoose.dismiss()
     }
 
-    override fun onMetaItemDelete(item: String) {
+    override fun onDeleteMetaItem(item: String) {
         showDialogConfirmMetaItemDelete("Удалить " +
                 if (dreamsListVM.isNewFilterItemFeeling!!) "настроение" else "место" +
                         " \"${item}\"?", item)

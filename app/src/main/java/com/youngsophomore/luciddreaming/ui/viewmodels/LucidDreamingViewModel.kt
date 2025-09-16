@@ -137,7 +137,7 @@ class LucidDreamingViewModel @Inject constructor(
         val notifsActiveHoursStrPref = preferences[keyNotifsActiveHours] ?: "00:00"
         notifsActiveHours =
             notifsActiveHoursStrPref
-                .split("-")
+                .split(":")
                 .map { it.toLong() }
                 .toMutableList()
         notifsActiveHoursCalendarStart.value = Calendar.getInstance().apply {
@@ -191,7 +191,7 @@ class LucidDreamingViewModel @Inject constructor(
         val keyNotifsActiveHours = stringPreferencesKey("notifs_active_hours")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                prefs[keyNotifsActiveHours] = "${notifsActiveHours[0]}-${notifsActiveHours[1]}"
+                prefs[keyNotifsActiveHours] = "${notifsActiveHours[0]}:${notifsActiveHours[1]}"
             }
         }
         updateTimePoints()

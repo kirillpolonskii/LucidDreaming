@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.utils.isEventInsideTargetView
 
 class DreamsListMotionLayout: MotionLayout {
     constructor(context: Context): super(context)
@@ -210,9 +211,5 @@ class DreamsListMotionLayout: MotionLayout {
             }
         }
 
-    }
-    private fun isEventInsideTargetView(ev: MotionEvent, v: View): Boolean {
-        return ev.x >= v.left && ev.x <= v.left + v.width
-                && ev.y >= v.top && ev.y <= v.top + v.height
     }
 }

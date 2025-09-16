@@ -21,7 +21,7 @@ import com.youngsophomore.luciddreaming.databinding.DialogMetaItemChooseBinding
 import com.youngsophomore.luciddreaming.databinding.LayoutDreamdetailsPanelportraitBinding
 import com.youngsophomore.luciddreaming.ui.adapters.MetaListAdapter
 import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemAppendListener
-import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemListener
 import com.youngsophomore.luciddreaming.ui.viewmodels.DreamDetailsViewModel
 import com.youngsophomore.luciddreaming.ui.viewmodels.LucidDreamingViewModel
 
@@ -30,7 +30,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr)
-    , MetaItemChooseListener
+    , MetaItemListener
 {
     private val binding: LayoutDreamdetailsPanelportraitBinding =
         LayoutDreamdetailsPanelportraitBinding.inflate(LayoutInflater.from(context), this, true)
@@ -67,8 +67,6 @@ class MetaPanelPortrait @JvmOverloads constructor(
         }
 
         binding.tglgrDreamDetailsPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            Log.d("Gestures", " tglgrDreamDetailsPOV.addOnButtonCheckedListener " +
-                    dreamDetailsVM.dream.isFirstPerson)
             dreamDetailsVM.dream = dreamDetailsVM.dream.copy(
                 isFirstPerson = group.checkedButtonId == R.id.btnDreamDetailsFirstPerson
             )
@@ -84,11 +82,13 @@ class MetaPanelPortrait @JvmOverloads constructor(
         super.onTouchEvent(event)
         return true
     }
+    override fun onDeleteMetaItem(item: String) {
+        showDialogConfirmMetaItemDelete("Удалить " +
+                if (dreamDetailsVM.isNewMetaItemFeeling!!) "настроение" else "место" +
+                        " \"${item}\"?", item)
 
+    }
     private fun showMetaItemChooser(metaItems: List<String>){
-        /*if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
-        }*/
         val metaAdapter = MetaListAdapter(this)
         metaAdapter.setMetaItems(metaItems)
         metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
@@ -218,7 +218,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
         }
     }
 
-    override fun onMetaItemChoose(item: String) {
+    override fun onChooseMetaItem(item: String) {
         val newMetaItem = TextView(context)
         newMetaItem.text = item
         if (dreamDetailsVM.isNewMetaItemFeeling!!){
@@ -244,11 +244,6 @@ class MetaPanelPortrait @JvmOverloads constructor(
         dialogMetaItemChoose.dismiss()
     }
 
-    override fun onMetaItemDelete(item: String) {
-        showDialogConfirmMetaItemDelete("Удалить " +
-                if (dreamDetailsVM.isNewMetaItemFeeling!!) "настроение" else "место" +
-                " \"${item}\"?", item)
 
-    }
 
 }

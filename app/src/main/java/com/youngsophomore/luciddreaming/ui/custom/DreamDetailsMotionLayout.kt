@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.youngsophomore.luciddreaming.R
+import com.youngsophomore.luciddreaming.utils.isEventInsideTargetView
 
 class DreamDetailsMotionLayout: MotionLayout {
     constructor(context: Context): super(context)
@@ -91,6 +92,7 @@ class DreamDetailsMotionLayout: MotionLayout {
                             touchOutsideTopPanel = false
                             touchInsideBtnShowMeta = false
                             ibtnDreamDetailsShowMeta.isPressed = false
+                            vwDreamDetailsButtonStripe.isPressed = false
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 super.onTouchEvent(event)
@@ -205,8 +207,5 @@ class DreamDetailsMotionLayout: MotionLayout {
 
     }
 
-    private fun isEventInsideTargetView(ev: MotionEvent, v: View): Boolean {
-        return ev.x >= v.left && ev.x <= v.left + v.width
-                && ev.y >= v.top && ev.y <= v.top + v.height
-    }
+
 }

@@ -64,22 +64,7 @@ class SettingsFragment : Fragment() {
             hscrvwSettingsThemes.isHorizontalScrollBarEnabled = false
         }
 
-        lucidDreamingVM.notifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
-            binding.tvSettingsNotifsActiveHoursStart.text =
-                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}:${activeHoursStart.get(Calendar.MINUTE)}"
-
-        }
-        lucidDreamingVM.notifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
-            binding.tvSettingsNotifsActiveHoursEnd.text =
-                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
-        }
-
-        lucidDreamingVM.ivThemesSelectedState.observe(viewLifecycleOwner) { ivSelectedState ->
-            binding.ivSettingsThemeBlue.isSelected = ivSelectedState[0]
-            binding.ivSettingsThemePurple.isSelected = ivSelectedState[1]
-            binding.ivSettingsThemeGreen.isSelected = ivSelectedState[2]
-            binding.ivSettingsThemePink.isSelected = ivSelectedState[3]
-        }
+        subscribeToObservers()
 
         val view = binding.root
         return view
@@ -146,6 +131,25 @@ class SettingsFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun subscribeToObservers(){
+        lucidDreamingVM.notifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
+            binding.tvSettingsNotifsActiveHoursStart.text =
+                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}:${activeHoursStart.get(Calendar.MINUTE)}"
+
+        }
+        lucidDreamingVM.notifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
+            binding.tvSettingsNotifsActiveHoursEnd.text =
+                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
+        }
+
+        lucidDreamingVM.ivThemesSelectedState.observe(viewLifecycleOwner) { ivSelectedState ->
+            binding.ivSettingsThemeBlue.isSelected = ivSelectedState[0]
+            binding.ivSettingsThemePurple.isSelected = ivSelectedState[1]
+            binding.ivSettingsThemeGreen.isSelected = ivSelectedState[2]
+            binding.ivSettingsThemePink.isSelected = ivSelectedState[3]
+        }
     }
 
     private fun showDialogConfirmTheme(){
@@ -216,7 +220,6 @@ class SettingsFragment : Fragment() {
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
         timePicker.addOnPositiveButtonClickListener {
-            
             lucidDreamingVM.updateActiveHours(timePicker.hour, timePicker.minute, isStart)
         }
         timePicker.show(childFragmentManager, "TIME_PICKER")

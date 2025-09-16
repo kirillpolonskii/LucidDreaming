@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LucidDreamingActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
+    //private lateinit var navController: NavController
     private lateinit var binding: ActivityLucidDreamingBinding
     private val lucidDreamingVM: LucidDreamingViewModel by viewModels()
 
@@ -43,10 +43,11 @@ class LucidDreamingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
-        navController = navHostFragment.navController
 
+        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
+        //navController = navHostFragment.navController
+
+        // TODO: correct the load of settings from Prefs
         lucidDreamingVM.initFromPrefs()
         lucidDreamingVM.initSettings()
     }

@@ -38,22 +38,24 @@ class MainMenuFragment : Fragment() {
         setBiasesForButtons()
 
         navController = findNavController()
-        binding.ibtnMainMenuAddNewDream.setOnClickListener {
-            mainMenuVM.setNewBiases()
-            navController.navigate(R.id.action_main_menu_to_dream_details)
-        }
-        binding.ibtnMainMenuShowDreamsList.setOnClickListener {
-            if (lucidDreamingVM.isPasswordEnabled) {
-                showDialogEnterPassword()
-            }
-            else {
-                navController.navigate(R.id.action_main_menu_to_dreams_list)
+        binding.apply {
+            ibtnMainMenuAddNewDream.setOnClickListener {
                 mainMenuVM.setNewBiases()
+                navController.navigate(R.id.action_main_menu_to_dream_details)
             }
-        }
-        binding.ibtnMainMenuSettings.setOnClickListener {
-            mainMenuVM.setNewBiases()
-            navController.navigate(R.id.action_main_menu_to_settings)
+            ibtnMainMenuShowDreamsList.setOnClickListener {
+                if (lucidDreamingVM.isPasswordEnabled) {
+                    showDialogEnterPassword()
+                }
+                else {
+                    navController.navigate(R.id.action_main_menu_to_dreams_list)
+                    mainMenuVM.setNewBiases()
+                }
+            }
+            ibtnMainMenuSettings.setOnClickListener {
+                mainMenuVM.setNewBiases()
+                navController.navigate(R.id.action_main_menu_to_settings)
+            }
         }
 
         return view

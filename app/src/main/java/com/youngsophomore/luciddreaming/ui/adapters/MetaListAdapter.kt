@@ -1,6 +1,5 @@
 package com.youngsophomore.luciddreaming.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -8,14 +7,12 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.youngsophomore.luciddreaming.databinding.ItemDreamBinding
 import com.youngsophomore.luciddreaming.databinding.ItemMetaBinding
-import com.youngsophomore.luciddreaming.ui.adapters.DreamsListAdapter.ViewHolder
-import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemListener
 
-class MetaListAdapter(val listener: MetaItemChooseListener) :
+class MetaListAdapter(val listener: MetaItemListener) :
     ListAdapter<String, MetaListAdapter.ViewHolder>(diffUtil),
-    Filterable{
+    Filterable {
     private var allMetaItems = emptyList<String>()
     private val searchFilter: Filter = object : Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -37,10 +34,10 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
     inner class ViewHolder(val binding: ItemMetaBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onMetaItemChoose(binding.root.text.toString())
+                listener.onChooseMetaItem(binding.root.text.toString())
             }
             binding.root.setOnLongClickListener {
-                listener.onMetaItemDelete(binding.root.text.toString())
+                listener.onDeleteMetaItem(binding.root.text.toString())
                 true
             }
         }

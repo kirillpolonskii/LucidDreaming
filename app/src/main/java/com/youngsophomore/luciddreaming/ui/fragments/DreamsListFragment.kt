@@ -110,12 +110,12 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
             DreamsListFragment()
     }
 
-    override fun onDreamClick(id: Int) {
+    override fun onChooseDream(id: Int) {
         val action = DreamsListFragmentDirections.actionDreamsListToDreamDetails(dreamId = id)
         findNavController().navigate(action)
     }
 
-    override fun onDreamLongClick(dream: Dream) {
+    override fun onDeleteDream(dream: Dream) {
         val dialog = Dialog(requireContext())
         val confirmActionBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(confirmActionBinding.root)
