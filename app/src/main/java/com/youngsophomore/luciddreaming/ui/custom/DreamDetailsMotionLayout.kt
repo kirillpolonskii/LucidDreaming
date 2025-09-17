@@ -25,7 +25,6 @@ class DreamDetailsMotionLayout: MotionLayout {
     lateinit var etDreamDetailsContent: EditText
     var moveWasCaptured = false
     var touchOutsideTopPanel = false
-    var touchInsideBtnShowMeta = false
     val imm: InputMethodManager = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
     override fun onAttachedToWindow() {
@@ -40,9 +39,7 @@ class DreamDetailsMotionLayout: MotionLayout {
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
                 if (isEventInsideTargetView(event, ibtnDreamDetailsShowMeta)){
-                    touchInsideBtnShowMeta = true
-                    ibtnDreamDetailsShowMeta.isPressed = true
-                    vwDreamDetailsButtonStripe.isPressed = true
+                    setBtnShowMetaPressed(true)
                     if (this.currentState == R.id.dreamdetails_toppanel_hidden) {
                         etDreamDetailsContent.clearFocus()
                         imm.hideSoftInputFromWindow(etDreamDetailsContent.windowToken, 0)
@@ -81,18 +78,14 @@ class DreamDetailsMotionLayout: MotionLayout {
                     this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                     moveWasCaptured = false
                     touchOutsideTopPanel = false
-                    touchInsideBtnShowMeta = false
-                    ibtnDreamDetailsShowMeta.isPressed = false
-                    vwDreamDetailsButtonStripe.isPressed = false
+                    setBtnShowMetaPressed(false)
                     super.onInterceptTouchEvent(event)
                 }
                 when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
-                        if (touchInsideBtnShowMeta){
+                        if (ibtnDreamDetailsShowMeta.isPressed){
                             touchOutsideTopPanel = false
-                            touchInsideBtnShowMeta = false
-                            ibtnDreamDetailsShowMeta.isPressed = false
-                            vwDreamDetailsButtonStripe.isPressed = false
+                            setBtnShowMetaPressed(false)
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 super.onTouchEvent(event)
@@ -104,31 +97,25 @@ class DreamDetailsMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            touchInsideBtnShowMeta = false
                             super.onInterceptTouchEvent(event)
                         }
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
-                        if (touchInsideBtnShowMeta){
-                            ibtnDreamDetailsShowMeta.isPressed = false
-                            vwDreamDetailsButtonStripe.isPressed = false
+                        if (ibtnDreamDetailsShowMeta.isPressed){
+                            setBtnShowMetaPressed(false)
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                //touchInsideBtnShowMeta = false
-
                                 super.onTouchEvent(event)
                             }
                             else{
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                touchInsideBtnShowMeta = false
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                                 super.onInterceptTouchEvent(event)
                             }
                         }
                         else {
-                            touchInsideBtnShowMeta = false
                             moveWasCaptured = false
                             if (event.y <= ibtnDreamDetailsShowMeta.y){
                                 false
@@ -144,7 +131,6 @@ class DreamDetailsMotionLayout: MotionLayout {
                         true
                     }
                 }
-
             }
             else -> super.onInterceptTouchEvent(event)
         }
@@ -160,23 +146,18 @@ class DreamDetailsMotionLayout: MotionLayout {
                 super.onTouchEvent(event)
             }
             MotionEvent.ACTION_UP -> {
-                ibtnDreamDetailsShowMeta.isPressed = false
-                vwDreamDetailsButtonStripe.isPressed = false
-
                 when (this.currentState){
                     R.id.dreamdetails_toppanel_hidden -> {
-                        if (touchInsideBtnShowMeta){
+                        if (ibtnDreamDetailsShowMeta.isPressed){
+                            setBtnShowMetaPressed(false)
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                touchInsideBtnShowMeta = false
                             }
                             else{
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                touchInsideBtnShowMeta = false
                                 this.transitionToState(R.id.dreamdetails_toppanel_expanded, 100)
-                                //super.onTouchEvent(event)
                             }
                         }
                         else {
@@ -185,27 +166,29 @@ class DreamDetailsMotionLayout: MotionLayout {
                         }
                     }
                     R.id.dreamdetails_toppanel_expanded -> {
-                        if (touchInsideBtnShowMeta){
+                        if (ibtnDreamDetailsShowMeta.isPressed){
                             if (!moveWasCaptured){
                                 this.transitionToState(R.id.dreamdetails_toppanel_hidden, 100)
                             }
                         }
+                        setBtnShowMetaPressed(false)
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
-                        touchInsideBtnShowMeta = false
                     }
                     else -> {
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
-                        touchInsideBtnShowMeta = false
+                        setBtnShowMetaPressed(false)
                     }
                 }
                 super.onTouchEvent(event)
             }
             else -> super.onTouchEvent(event)
         }
-
     }
 
-
+    private fun setBtnShowMetaPressed(isPressed: Boolean){
+        ibtnDreamDetailsShowMeta.isPressed = isPressed
+        vwDreamDetailsButtonStripe.isPressed = isPressed
+    }
 }

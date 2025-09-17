@@ -53,17 +53,14 @@ class MetaPanelPortrait @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        
         binding.ibtnDreamDetailsAddFeeling.setOnClickListener {
-            
             dreamDetailsVM.isNewMetaItemFeeling = true
-            showMetaItemChooser(lucidDreamingVM.feelings?.value!!)
+            showMetaItemChooser(lucidDreamingVM.feelings.value!!)
 
         }
         binding.ibtnDreamDetailsAddLocation.setOnClickListener {
             dreamDetailsVM.isNewMetaItemFeeling = false
-            
-            showMetaItemChooser(lucidDreamingVM.locations?.value!!)
+            showMetaItemChooser(lucidDreamingVM.locations.value!!)
         }
 
         binding.tglgrDreamDetailsPOV.addOnButtonCheckedListener { group, checkedId, isChecked ->
@@ -84,7 +81,7 @@ class MetaPanelPortrait @JvmOverloads constructor(
     }
     override fun onDeleteMetaItem(item: String) {
         showDialogConfirmMetaItemDelete("Удалить " +
-                if (dreamDetailsVM.isNewMetaItemFeeling!!) "настроение" else "место" +
+                (if (dreamDetailsVM.isNewMetaItemFeeling!!) "настроение" else "место") +
                         " \"${item}\"?", item)
 
     }
@@ -188,15 +185,14 @@ class MetaPanelPortrait @JvmOverloads constructor(
         dream.feelings.split("|").forEach { feeling ->
             val newMetaItem = TextView(context)
             newMetaItem.text = feeling
-            dreamDetailsVM.addDreamFeeling(feeling, View.generateViewId())
+            dreamDetailsVM.addDreamFeeling(feeling, generateViewId())
             newMetaItem.id = dreamDetailsVM.dreamFeelingsIds[dreamDetailsVM.dreamFeelingsIds.size - 2]
             binding.root.addView(newMetaItem)
             binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsVM.dreamFeelingsIds.toIntArray()
             newMetaItem.setOnLongClickListener {
-                
                 showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
-                        if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
-                                " \"$feeling\"?", newMetaItem)
+                        (if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место") +
+                                " \"${feeling}\"?", newMetaItem)
                 true
             }
         }
@@ -204,15 +200,14 @@ class MetaPanelPortrait @JvmOverloads constructor(
         dream.locations.split("|").forEach { location ->
             val newMetaItem = TextView(context)
             newMetaItem.text = location
-            dreamDetailsVM.addDreamLocation(location, View.generateViewId())
+            dreamDetailsVM.addDreamLocation(location, generateViewId())
             newMetaItem.id = dreamDetailsVM.dreamLocationsIds[dreamDetailsVM.dreamLocationsIds.size - 2]
             binding.root.addView(newMetaItem)
             binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
             newMetaItem.setOnLongClickListener {
-                
                 showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
-                        if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
-                                " \"$location\"?", newMetaItem)
+                        (if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место") +
+                                " \"${location}\"?", newMetaItem)
                 true
             }
         }
@@ -222,23 +217,22 @@ class MetaPanelPortrait @JvmOverloads constructor(
         val newMetaItem = TextView(context)
         newMetaItem.text = item
         if (dreamDetailsVM.isNewMetaItemFeeling!!){
-            dreamDetailsVM.addDreamFeeling(item, View.generateViewId())
+            dreamDetailsVM.addDreamFeeling(item, generateViewId())
             newMetaItem.id = dreamDetailsVM.dreamFeelingsIds[dreamDetailsVM.dreamFeelingsIds.size - 2]
             binding.root.addView(newMetaItem)
             binding.flowDreamDetailsFeelings.referencedIds = dreamDetailsVM.dreamFeelingsIds.toIntArray()
 
         }
         else {
-            dreamDetailsVM.addDreamLocation(item, View.generateViewId())
+            dreamDetailsVM.addDreamLocation(item, generateViewId())
             newMetaItem.id = dreamDetailsVM.dreamLocationsIds[dreamDetailsVM.dreamLocationsIds.size - 2]
             binding.root.addView(newMetaItem)
             binding.flowDreamDetailsLocations.referencedIds = dreamDetailsVM.dreamLocationsIds.toIntArray()
         }
         newMetaItem.setOnLongClickListener {
-            
             showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
-                    if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
-                    " \"$item\"?", newMetaItem)
+                    (if (dreamDetailsVM.dreamFeelingsIds.contains(newMetaItem.id)) "настроение" else "место") +
+                    " \"${item}\"?", newMetaItem)
             true
         }
         dialogMetaItemChoose.dismiss()

@@ -24,7 +24,6 @@ class DreamsListMotionLayout: MotionLayout {
     lateinit var rvDreamsList: RecyclerView
     var moveWasCaptured = false
     var touchOutsideTopPanel = false
-    var touchInsideBtnSearch = false
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -38,9 +37,7 @@ class DreamsListMotionLayout: MotionLayout {
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
                 if (isEventInsideTargetView(event, ibtnDreamsListSearch)){
-                    touchInsideBtnSearch = true
-                    ibtnDreamsListSearch.isPressed = true
-                    vwDreamsListButtonStripe.isPressed = true
+                    setBtnSearchPressed(true)
                     super.onTouchEvent(event)
                 }
                 else when (this.currentState){
@@ -71,18 +68,14 @@ class DreamsListMotionLayout: MotionLayout {
                     this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     moveWasCaptured = false
                     touchOutsideTopPanel = false
-                    touchInsideBtnSearch = false
-                    ibtnDreamsListSearch.isPressed = false
-                    vwDreamsListButtonStripe.isPressed = false
+                    setBtnSearchPressed(false)
                     super.onInterceptTouchEvent(event)
                 }
                 when (this.currentState){
                     R.id.dreamslist_toppanel_hidden -> {
-                        if (touchInsideBtnSearch){
+                        if (ibtnDreamsListSearch.isPressed){
                             touchOutsideTopPanel = false
-                            touchInsideBtnSearch = false
-                            ibtnDreamsListSearch.isPressed = false
-                            vwDreamsListButtonStripe.isPressed = false
+                            setBtnSearchPressed(false)
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 this.transitionToState(R.id.dreamslist_toppanel_expanded, 100)
@@ -95,14 +88,12 @@ class DreamsListMotionLayout: MotionLayout {
                             }
                         }
                         else {
-                            touchInsideBtnSearch = false
                             super.onInterceptTouchEvent(event)
                         }
                     }
                     R.id.dreamslist_toppanel_expanded -> {
-                        if (touchInsideBtnSearch){
-                            ibtnDreamsListSearch.isPressed = false
-                            vwDreamsListButtonStripe.isPressed = false
+                        if (ibtnDreamsListSearch.isPressed){
+                            setBtnSearchPressed(false)
                             touchOutsideTopPanel = false
                             if (moveWasCaptured){
                                 moveWasCaptured = false
@@ -116,7 +107,6 @@ class DreamsListMotionLayout: MotionLayout {
                         }
                         else {
                             moveWasCaptured = false
-                            touchInsideBtnSearch = false
                             if (event.y <= ibtnDreamsListSearch.y){
                                 false
                             }
@@ -143,7 +133,6 @@ class DreamsListMotionLayout: MotionLayout {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return when (event?.action){
             MotionEvent.ACTION_DOWN -> {
-                
                 if (event.y > ibtnDreamsListSearch.y + ibtnDreamsListSearch.height){
                     this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     false
@@ -157,41 +146,31 @@ class DreamsListMotionLayout: MotionLayout {
                 super.onTouchEvent(event)
             }
             MotionEvent.ACTION_UP -> {
-                ibtnDreamsListSearch.isPressed = false
-                vwDreamsListButtonStripe.isPressed = false
                 when (this.currentState){
                     R.id.dreamslist_toppanel_hidden -> {
-                        if (touchInsideBtnSearch){
+                        if (ibtnDreamsListSearch.isPressed){
+                            setBtnSearchPressed(false)
                             if (moveWasCaptured){
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                touchInsideBtnSearch = false
                             }
                             else{
-                                
                                 moveWasCaptured = false
                                 touchOutsideTopPanel = false
-                                touchInsideBtnSearch = false
                                 this.transitionToState(R.id.dreamslist_toppanel_expanded, 100)
                             }
                         }
-                        else {
-                        }
                     }
                     R.id.dreamslist_toppanel_expanded -> {
-                        if (touchInsideBtnSearch){
-                            
+                        if (ibtnDreamsListSearch.isPressed){
                             touchOutsideTopPanel = false
-                            touchInsideBtnSearch = false
-                            if (moveWasCaptured){
-                            }
-                            else{
+                            setBtnSearchPressed(false)
+                            if (!moveWasCaptured){
                                 this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                             }
                             moveWasCaptured = false
                         }
                         else {
-                            
                             if (touchOutsideTopPanel){
                                 this.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                                 touchOutsideTopPanel = false
@@ -201,7 +180,7 @@ class DreamsListMotionLayout: MotionLayout {
                     else -> {
                         moveWasCaptured = false
                         touchOutsideTopPanel = false
-                        touchInsideBtnSearch = false
+                        setBtnSearchPressed(false)
                     }
                 }
                 super.onTouchEvent(event)
@@ -211,5 +190,10 @@ class DreamsListMotionLayout: MotionLayout {
             }
         }
 
+    }
+
+    private fun setBtnSearchPressed(isPressed: Boolean){
+        ibtnDreamsListSearch.isPressed = isPressed
+        vwDreamsListButtonStripe.isPressed = isPressed
     }
 }

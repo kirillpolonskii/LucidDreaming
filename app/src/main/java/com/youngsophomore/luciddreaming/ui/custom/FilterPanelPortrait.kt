@@ -126,9 +126,6 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemListener {
     }
 
     private fun showMetaItemChooser(metaItems: List<String>){
-        /*if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
-        }*/
         val metaAdapter = MetaListAdapter(this)
         metaAdapter.setMetaItems(metaItems)
         metaChooserBinding.rvMetaItemChooser.adapter = metaAdapter
@@ -217,8 +214,7 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemListener {
         }
         dialog.show()
     }
-    // здесь можно в функцию передавать лямбду и уже на уровне вызова метода управлять,
-    // в какой именно tv установится выбранное значение
+
     private fun showDateCreatedChooser(title: String, tvDateRange: TextView){
         val builder = MaterialDatePicker.Builder.dateRangePicker()
 
@@ -257,7 +253,7 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemListener {
         }
         newMetaItem.setOnLongClickListener {
             showDialogConfirmDreamMetaItemDelete("Удалить выбранное " +
-                    if (dreamsListVM.filterFeelingsIds.contains(newMetaItem.id)) "настроение" else "место" +
+                    (if (dreamsListVM.filterFeelingsIds.contains(newMetaItem.id)) "настроение" else "место") +
                             " \"${item}\"?", newMetaItem)
             true
         }
@@ -266,7 +262,7 @@ class FilterPanelPortrait : ConstraintLayout, MetaItemListener {
 
     override fun onDeleteMetaItem(item: String) {
         showDialogConfirmMetaItemDelete("Удалить " +
-                if (dreamsListVM.isNewFilterItemFeeling!!) "настроение" else "место" +
+                (if (dreamsListVM.isNewFilterItemFeeling!!) "настроение" else "место") +
                         " \"${item}\"?", item)
 
     }
