@@ -53,7 +53,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
             else R.drawable.all_edit_24))
         }
         binding.ibtnDreamDetailsSaveEdit.setOnClickListener {
-            
             if (dreamDetailsVM.isDreamEditable.value!!) {
                 with(binding){
                     dreamDetailsVM.addUpdateDream(
@@ -68,8 +67,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
         binding.ibtnDreamDetailsBack.setOnClickListener {
             findNavController().navigateUp()
         }
-        //dreamDetailsVM.addDream()
-
 
         return view
     }
@@ -85,7 +82,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     }
 
     override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
-        
         if (isItemFeeling)
             lucidDreamingViewModel.appendFeeling(item)
         else
@@ -93,7 +89,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     }
 
     override fun onDreamCollected(dream: Dream) {
-        
         val editableTitle = Editable.Factory.getInstance().newEditable(dream.title)
         binding.etDreamDetailsTitle.text = editableTitle
         val editableContent = Editable.Factory.getInstance().newEditable(dream.content)

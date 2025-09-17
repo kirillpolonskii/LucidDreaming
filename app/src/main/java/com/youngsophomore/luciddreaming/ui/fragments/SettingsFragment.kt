@@ -193,6 +193,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun scheduleNotifs(){
+        //Log.d("Debug", "SettingsFragment.scheduleNotifs()")
         val notifsReceiverIntent = Intent(context, NotificationReceiver::class.java)
         val notifsPendingIntent = PendingIntent.getBroadcast(
             context,
@@ -210,6 +211,8 @@ class SettingsFragment : Fragment() {
             )
             val cal = Calendar.getInstance()
             cal.timeInMillis = it
+            //Log.d("Debug", " cur time point for alarm = ")
+            //Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
         }
 
     }

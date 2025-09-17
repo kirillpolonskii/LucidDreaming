@@ -16,8 +16,7 @@ class NotificationReceiver : BroadcastReceiver() {
     private var notifManager: NotificationManagerCompat? = null
     override fun onReceive(context: Context?, intent: Intent?) {
         val notif = context?.let { context ->
-            // тег канала потом нужно переместить в LucidDreamingApplication,
-            // где будет создаваться канал для уведомлений
+            Log.d("Debug", "NotificationReceiver")
             NotificationCompat.Builder(context, LucidDreamingApplication.NOTIFS_CHANNEL_ID)
                 .setContentTitle("Проверка реальности")
                 .setContentText("Выполните проверку окружения на реальность")

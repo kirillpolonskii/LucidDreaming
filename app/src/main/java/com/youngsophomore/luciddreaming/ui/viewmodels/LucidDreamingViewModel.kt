@@ -179,7 +179,7 @@ class LucidDreamingViewModel @Inject constructor(
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hours)
         calendar.set(Calendar.MINUTE, minutes)
-        
+        // Log.d("Debug", " $calendar")
         if (isStart) {
             notifsActiveHours[0] = calendar.timeInMillis
             notifsActiveHoursCalendarStart.value = calendar

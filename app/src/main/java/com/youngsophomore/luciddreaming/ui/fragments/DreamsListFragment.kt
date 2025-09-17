@@ -62,7 +62,6 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
             v.getParent().requestDisallowInterceptTouchEvent(true)
             when (event?.action){
                 MotionEvent.ACTION_DOWN -> {
-                    
                     binding.mtnLaytDreamsList.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     v.onTouchEvent(event)
                 }
@@ -75,7 +74,6 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
                     v.onTouchEvent(event)
                 }
                 else -> {
-                    
                     v.onTouchEvent(event)
                 }
             }
@@ -92,7 +90,6 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
     }
 
     override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
-        
         if (isItemFeeling)
             lucidDreamingVM.appendFeeling(item)
         else
