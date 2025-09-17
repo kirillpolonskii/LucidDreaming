@@ -41,7 +41,8 @@ class LucidDreamingViewModel @Inject constructor(
         val keyTheme = intPreferencesKey("theme")
         val preferences = dataStore.data.first()
         selectedTheme = preferences[keyTheme] ?: 0
-        ivThemesSelectedState.value = (BooleanArray(4){i -> if (i == selectedTheme) true else false}).toMutableList()
+        ivThemesSelectedState.value =
+            (BooleanArray(4){i -> if (i == selectedTheme) true else false}).toMutableList()
 
     }
 
@@ -110,7 +111,6 @@ class LucidDreamingViewModel @Inject constructor(
         val keyLocations = stringPreferencesKey("locations")
         viewModelScope.launch {
             dataStore.edit { prefs ->
-                
                 prefs[keyLocations] = locations.value?.joinToString()!!
             }
         }

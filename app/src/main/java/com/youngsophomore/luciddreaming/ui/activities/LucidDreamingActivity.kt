@@ -48,6 +48,8 @@ class LucidDreamingActivity : AppCompatActivity() {
         //navController = navHostFragment.navController
 
         // TODO: correct the load of settings from Prefs
+        // - not on every config change
+        // - in respected methods
         lucidDreamingVM.initFromPrefs()
         lucidDreamingVM.initSettings()
     }
