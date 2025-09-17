@@ -44,11 +44,9 @@ class DreamDetailsViewModel @Inject constructor(
     val dreamFeelingsIds = mutableListOf<Int>()
     val dreamLocationsIds = mutableListOf<Int>()
     var isNewMetaItemFeeling: Boolean? = null
-    val isDreamEditable = MutableLiveData<Boolean>(true)
+    val isDreamEditable = MutableLiveData(true)
     private var isDreamInDB = false
     init {
-        
-        
         if (navArgs.dreamId != -1) {
             viewModelScope.launch {
                 dreamById = repository.getDream(navArgs.dreamId)
