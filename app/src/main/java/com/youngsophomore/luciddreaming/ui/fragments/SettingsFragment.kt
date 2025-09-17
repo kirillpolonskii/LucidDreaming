@@ -39,18 +39,12 @@ class SettingsFragment : Fragment() {
     private val settingsVM: SettingsViewModel by viewModels()
     private val lucidDreamingVM: LucidDreamingViewModel by activityViewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("Lifecycle", "SettingsFragment.onAttach()")
         val backPressedCallback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                Log.d("Lifecycle", " handleOnBackPressed()")
                 scheduleNotifs()
+                findNavController().navigateUp()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
@@ -70,29 +64,7 @@ class SettingsFragment : Fragment() {
             hscrvwSettingsThemes.isHorizontalScrollBarEnabled = false
         }
 
-
-        lucidDreamingVM.notifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
-            Log.d("Debug", " notifsActiveHoursCalendarStart.observe")
-            Log.d("Debug", " " + activeHoursStart.toString())
-            binding.tvSettingsNotifsActiveHoursStart.text =
-                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}:${activeHoursStart.get(Calendar.MINUTE)}"
-
-        }
-        lucidDreamingVM.notifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
-            Log.d("Debug", " notifsActiveHoursCalendarEnd.observe")
-            Log.d("Debug", " " + activeHoursEnd.toString())
-            binding.tvSettingsNotifsActiveHoursEnd.text =
-                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
-        }
-
-        lucidDreamingVM.ivThemesSelectedState.observe(viewLifecycleOwner) { ivSelectedState ->
-            Log.d("Debug", " ivThemesSelectedState.observe")
-            Log.d("Debug", " " + ivSelectedState.joinToString())
-            binding.ivSettingsThemeBlue.isSelected = ivSelectedState[0]
-            binding.ivSettingsThemePurple.isSelected = ivSelectedState[1]
-            binding.ivSettingsThemeGreen.isSelected = ivSelectedState[2]
-            binding.ivSettingsThemePink.isSelected = ivSelectedState[3]
-        }
+        subscribeToObservers()
 
         val view = binding.root
         return view
@@ -105,9 +77,7 @@ class SettingsFragment : Fragment() {
                 scheduleNotifs()
                 findNavController().navigateUp()
             }
-
             swchSettingsNotifs.setOnCheckedChangeListener { buttonView, isChecked ->
-                Log.d("Debug", " swchSettingsNotifs.setOnCheckedChangeListener")
                 lucidDreamingVM.updateNotifsEnabled(isChecked)
                 if (isChecked){
                     notifsUIToEnabledState()
@@ -129,7 +99,6 @@ class SettingsFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    Log.d("Debug", " sprSettingsNotifsFrequency.onItemSelectedListener, pos=$position")
                     if (position > 0)
                         lucidDreamingVM.updateFrequency(position)
                 }
@@ -158,18 +127,36 @@ class SettingsFragment : Fragment() {
             }
 
             swchSettingsPassword.setOnClickListener {
-                Log.d("Debug", "swchSettingsPassword.setOnCheckedChangeListener")
                 showDialogSetPassword(binding.swchSettingsPassword.isChecked)
             }
         }
 
     }
 
+    private fun subscribeToObservers(){
+        lucidDreamingVM.notifsActiveHoursCalendarStart.observe(viewLifecycleOwner) { activeHoursStart ->
+            binding.tvSettingsNotifsActiveHoursStart.text =
+                "${activeHoursStart.get(Calendar.HOUR_OF_DAY)}:${activeHoursStart.get(Calendar.MINUTE)}"
+
+        }
+        lucidDreamingVM.notifsActiveHoursCalendarEnd.observe(viewLifecycleOwner) { activeHoursEnd ->
+            binding.tvSettingsNotifsActiveHoursEnd.text =
+                "${activeHoursEnd.get(Calendar.HOUR_OF_DAY)}:${activeHoursEnd.get(Calendar.MINUTE)}"
+        }
+
+        lucidDreamingVM.ivThemesSelectedState.observe(viewLifecycleOwner) { ivSelectedState ->
+            binding.ivSettingsThemeBlue.isSelected = ivSelectedState[0]
+            binding.ivSettingsThemePurple.isSelected = ivSelectedState[1]
+            binding.ivSettingsThemeGreen.isSelected = ivSelectedState[2]
+            binding.ivSettingsThemePink.isSelected = ivSelectedState[3]
+        }
+    }
+
     private fun showDialogConfirmTheme(){
         val dialog = Dialog(requireContext())
         val confirmThemeBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(confirmThemeBinding.root)
-        confirmThemeBinding.tvConfirmActionDialogTitle.text = "Подтверждение"
+        confirmThemeBinding.tvConfirmActionDialogTitle.text = "Подтверждение темы"
         confirmThemeBinding.tvConfirmActionDialogAction.text = "Для смены темы требуется перезапуск приложения. Сменить тему?"
 
         confirmThemeBinding.ibtnConfirmActionDialogConfirm.setOnClickListener {
@@ -186,7 +173,7 @@ class SettingsFragment : Fragment() {
 
         setPasswordBinding.ibtnSettingsConfirm.setOnClickListener {
             if (isSwitchChecked) {
-                // показать диалоговое окно подтверждения, но это позже
+                // TODO: dialog for password confirmation
                 lucidDreamingVM.setPassword(setPasswordBinding.etSettingsPassword.text.toString())
             }
             else {
@@ -206,7 +193,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun scheduleNotifs(){
-        Log.d("Debug", "SettingsFragment.scheduleNotifs()")
+        //Log.d("Debug", "SettingsFragment.scheduleNotifs()")
         val notifsReceiverIntent = Intent(context, NotificationReceiver::class.java)
         val notifsPendingIntent = PendingIntent.getBroadcast(
             context,
@@ -224,31 +211,29 @@ class SettingsFragment : Fragment() {
             )
             val cal = Calendar.getInstance()
             cal.timeInMillis = it
-            Log.d("Debug", " cur time point for alarm = ")
-            Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
+            //Log.d("Debug", " cur time point for alarm = ")
+            //Log.d("Debug", " ${cal.get(Calendar.DATE)}, ${cal.get(Calendar.HOUR)}:${cal.get(Calendar.MINUTE)}:${cal.get(Calendar.SECOND)}")
         }
 
     }
 
     private fun showTimeChooser(isStart: Boolean){
-        Log.d("Debug", "SettingFragment.showTimeChooser()")
         val timePicker = MaterialTimePicker.Builder()
             .setTitleText("Время начала")
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .build()
         timePicker.addOnPositiveButtonClickListener {
-            Log.d("Debug", " timePicker.addOnPositiveButtonClickListener")
             lucidDreamingVM.updateActiveHours(timePicker.hour, timePicker.minute, isStart)
         }
         timePicker.show(childFragmentManager, "TIME_PICKER")
     }
 
     fun notifsUIToEnabledState(){
-        // поменять стили всех text view, edit text, spinner
+        // TODO: change styles of every related UI component
     }
 
     fun notifsUIToDisabledState(){
-        // поменять стили всех text view, edit text, spinner
+        // TODO: change styles of every related UI component
     }
 
     override fun onDestroyView() {

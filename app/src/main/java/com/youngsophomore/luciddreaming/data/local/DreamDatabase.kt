@@ -17,9 +17,7 @@ abstract class DreamDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: DreamDatabase? = null
         fun getDatabase(context: Context): DreamDatabase {
-            Log.d("Debug tag", "in getDatabase()")
             return INSTANCE ?: synchronized(this) {
-                Log.d("Debug tag", "in synchronized()")
                 val instance = Room.databaseBuilder(
                     context,
                     DreamDatabase::class.java,

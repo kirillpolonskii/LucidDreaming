@@ -1,16 +1,10 @@
 package com.youngsophomore.luciddreaming.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
-import com.youngsophomore.luciddreaming.ui.viewmodels.DreamsListViewModel
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.youngsophomore.luciddreaming.data.model.Dream
 import com.youngsophomore.luciddreaming.databinding.ItemDreamBinding
-import javax.inject.Inject
 
 class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     private var allDreams = listOf<Dream>()
@@ -19,21 +13,17 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemDreamBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onDreamClick(allDreams[adapterPosition].id)
+                listener.onChooseDream(allDreams[adapterPosition].id)
             }
             binding.root.setOnLongClickListener {
-                listener.onDreamLongClick(allDreams[adapterPosition])
+                listener.onDeleteDream(allDreams[adapterPosition])
                 true
             }
         }
-
     }
 
     fun setDreams(dreams: List<Dream>){
-        Log.d("RecyclerView", "DreamsListAdapter.setDreams()")
-        Log.d("RecyclerView", " dreams = ${dreams.joinToString() }}")
         allDreams = dreams
-        Log.d("RecyclerView", " allDreams = ${allDreams.joinToString() }}")
         notifyDataSetChanged()
     }
 
@@ -43,20 +33,17 @@ class DreamsListAdapter : RecyclerView.Adapter<DreamsListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("RecyclerView", "DreamsListAdapter.onBindViewHolder()")
         val dream = allDreams[position]
-        Log.d("RecyclerView", " ${allDreams[position]} = ${allDreams[position].title}")
-        holder.binding.tvDreamsListItemTitle.text = dream.title ?: "null title"
-        holder.binding.tvDreamsListItemContent.text = dream.content ?: "NULL CONTENT"
+        holder.binding.tvDreamsListItemTitle.text = dream.title
+        holder.binding.tvDreamsListItemContent.text = dream.content
     }
 
     override fun getItemCount(): Int {
-        Log.d("RecyclerView", "allDreams.size = ${allDreams.size}")
         return allDreams.size
     }
 
     interface DreamClickListener {
-        fun onDreamClick(id: Int)
-        fun onDreamLongClick(dream: Dream)
+        fun onChooseDream(id: Int)
+        fun onDeleteDream(dream: Dream)
     }
 }

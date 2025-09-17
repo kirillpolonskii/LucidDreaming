@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DreamDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(dream: Dream): Long
 

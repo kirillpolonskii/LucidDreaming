@@ -36,15 +36,11 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     private var _binding: FragmentDreamDetailsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("Gestures", "DreamDetailsFragment.onCreateView")
+        
         _binding = FragmentDreamDetailsBinding.inflate(inflater, container, false)
         binding.tpDreamDetailsMeta.listener = this
         val view = binding.root
@@ -57,7 +53,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
             else R.drawable.all_edit_24))
         }
         binding.ibtnDreamDetailsSaveEdit.setOnClickListener {
-            Log.d("Gestures", " ibtnDreamDetailSaveEdit.setOnClickListener")
             if (dreamDetailsVM.isDreamEditable.value!!) {
                 with(binding){
                     dreamDetailsVM.addUpdateDream(
@@ -72,22 +67,8 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
         binding.ibtnDreamDetailsBack.setOnClickListener {
             findNavController().navigateUp()
         }
-        //dreamDetailsVM.addDream()
-
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        /*dreamDetailsVM.dreamById?.observe(viewLifecycleOwner) { dream ->
-            Log.d("Debug", " dreamById?.observe, dream=${dream}")
-            val editable = Editable.Factory.getInstance().newEditable(dream.title)
-            binding.etDreamDetailsTitle.text = editable
-        }*/
-        /*Toast.makeText(context, "title=${dreamDetailsVM.dream.title}", Toast.LENGTH_LONG).show()
-        val editable = Editable.Factory.getInstance().newEditable(dreamDetailsVM.dream.title)
-        binding.etDreamDetailsTitle.text = editable*/
     }
 
     override fun onDestroyView() {
@@ -101,7 +82,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     }
 
     override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
-        Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
         if (isItemFeeling)
             lucidDreamingViewModel.appendFeeling(item)
         else
@@ -109,7 +89,6 @@ class DreamDetailsFragment : Fragment(), MetaItemAppendListener, DreamDetailsVie
     }
 
     override fun onDreamCollected(dream: Dream) {
-        Log.d("Debug", "onDreamCollected, dream=${dream}")
         val editableTitle = Editable.Factory.getInstance().newEditable(dream.title)
         binding.etDreamDetailsTitle.text = editableTitle
         val editableContent = Editable.Factory.getInstance().newEditable(dream.content)

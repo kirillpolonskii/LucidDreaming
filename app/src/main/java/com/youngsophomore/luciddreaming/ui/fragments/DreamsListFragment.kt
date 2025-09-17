@@ -33,10 +33,6 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
     private var _binding: FragmentDreamsListBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,11 +47,8 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
         adapter.listener = this
         binding.rvDreamsList.layoutManager = LinearLayoutManager(context)
         dreamsListVM
-            //.fetchAllDreams()
-            //.filteredDreams
             .allDreams
             .observe(viewLifecycleOwner) { dreams ->
-                Log.d("Debug", "observe, dreams = ${dreams?.joinToString()}")
                 adapter.setDreams(dreams)
             }
         binding.rvDreamsList.adapter = adapter
@@ -69,31 +62,19 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
             v.getParent().requestDisallowInterceptTouchEvent(true)
             when (event?.action){
                 MotionEvent.ACTION_DOWN -> {
-                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, DOWN")
                     binding.mtnLaytDreamsList.transitionToState(R.id.dreamslist_toppanel_hidden, 100)
                     v.onTouchEvent(event)
-                    //false
-                    //true // - так rv не двигался
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, MOVE")
+                    
                     v.onTouchEvent(event)
-                    //false
-                    //true //- так rv не двигался
                 }
                 MotionEvent.ACTION_UP -> {
-                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, UP")
+                    
                     v.onTouchEvent(event)
-
-                    //false
-                    //true //- так rv не двигался
                 }
                 else -> {
-                    Log.d("Gestures", "DreamsListFragment.rvDreamsList.setOnTouchListener, else")
                     v.onTouchEvent(event)
-
-                    //false
-                    //true //- так rv не двигался
                 }
             }
 
@@ -109,7 +90,6 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
     }
 
     override fun onConfirmItem(item: String, isItemFeeling: Boolean) {
-        Log.d("Gestures", "DreamDetailsFragment.onConfirmItem, $item")
         if (isItemFeeling)
             lucidDreamingVM.appendFeeling(item)
         else
@@ -127,12 +107,12 @@ class DreamsListFragment : Fragment(), MetaItemAppendListener, DreamsListAdapter
             DreamsListFragment()
     }
 
-    override fun onDreamClick(id: Int) {
+    override fun onChooseDream(id: Int) {
         val action = DreamsListFragmentDirections.actionDreamsListToDreamDetails(dreamId = id)
         findNavController().navigate(action)
     }
 
-    override fun onDreamLongClick(dream: Dream) {
+    override fun onDeleteDream(dream: Dream) {
         val dialog = Dialog(requireContext())
         val confirmActionBinding = DialogConfirmActionBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(confirmActionBinding.root)

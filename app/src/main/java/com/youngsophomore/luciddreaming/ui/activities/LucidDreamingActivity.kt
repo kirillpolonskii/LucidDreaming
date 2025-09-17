@@ -20,17 +20,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LucidDreamingActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
+    //private lateinit var navController: NavController
     private lateinit var binding: ActivityLucidDreamingBinding
     private val lucidDreamingVM: LucidDreamingViewModel by viewModels()
-    private val settingsVM: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lucidDreamingVM.initTheme()
         enableEdgeToEdge()
 
-        Log.d("Debug", "bef setTheme(), lucidDreamingVM.selectedTheme=${lucidDreamingVM.selectedTheme}")
         setTheme(when (lucidDreamingVM.selectedTheme){
             LDTheme.Blue.ordinal -> R.style.Theme_LucidDreaming_Blue
             LDTheme.Purple.ordinal -> R.style.Theme_LucidDreaming_Purple
@@ -45,11 +43,14 @@ class LucidDreamingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
-        navController = navHostFragment.navController
 
+        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.frgtActivityNavHost) as NavHostFragment
+        //navController = navHostFragment.navController
+
+        // TODO: correct the load of settings from Prefs
+        // - not on every config change
+        // - in respected methods
+        lucidDreamingVM.initFromPrefs()
         lucidDreamingVM.initSettings()
-        //Log.d("Gestures", " lucidDreamingVM = ${lucidDreamingVM}")
     }
 }

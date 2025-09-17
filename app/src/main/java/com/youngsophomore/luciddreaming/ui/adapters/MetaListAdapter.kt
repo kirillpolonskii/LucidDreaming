@@ -1,6 +1,5 @@
 package com.youngsophomore.luciddreaming.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -8,18 +7,15 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.youngsophomore.luciddreaming.databinding.ItemDreamBinding
 import com.youngsophomore.luciddreaming.databinding.ItemMetaBinding
-import com.youngsophomore.luciddreaming.ui.adapters.DreamsListAdapter.ViewHolder
-import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemChooseListener
+import com.youngsophomore.luciddreaming.ui.interfaces.MetaItemListener
 
-class MetaListAdapter(val listener: MetaItemChooseListener) :
+class MetaListAdapter(val listener: MetaItemListener) :
     ListAdapter<String, MetaListAdapter.ViewHolder>(diffUtil),
-    Filterable{
+    Filterable {
     private var allMetaItems = emptyList<String>()
     private val searchFilter: Filter = object : Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            Log.d("Gestures", "MetaListAdapter, performFiltering, $constraint")
             val filteredList = if (constraint.isNullOrEmpty()){
                 allMetaItems
             }
@@ -30,7 +26,6 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            Log.d("Gestures", "MetaListAdapter, publishResults")
             submitList(results?.values as List<String>)
         }
 
@@ -39,13 +34,10 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
     inner class ViewHolder(val binding: ItemMetaBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                Log.d("Gestures", "MetaListAdapter.ViewHolder, root.setOnClickListener")
-                listener.onMetaItemChoose(binding.root.text.toString())
+                listener.onChooseMetaItem(binding.root.text.toString())
             }
             binding.root.setOnLongClickListener {
-                Log.d("Gestures", "MetaListAdapter.ViewHolder, root.setOnLongClickListener")
-                listener.onMetaItemDelete(binding.root.text.toString())
-                //notifyDataSetChanged()
+                listener.onDeleteMetaItem(binding.root.text.toString())
                 true
             }
         }
@@ -65,10 +57,6 @@ class MetaListAdapter(val listener: MetaItemChooseListener) :
         val metaItem = allMetaItems[position]
         holder.binding.root.text = metaItem
     }
-
-    /*override fun getItemCount(): Int {
-        return allMetaItems.size
-    }*/
 
     override fun getFilter(): Filter {
         return searchFilter

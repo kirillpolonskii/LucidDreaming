@@ -112,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvSettingsNotifsActiveHoursSubtitle"
         app:layout_constraintBottom_toTopOf="@id/tvSettingsThemesTitle"
 
-        android:text="Интервал между уведомлениями"
+        android:text="Количество уведомлений"
         />
     <Spinner
         android:id="@+id/sprSettingsNotifsFrequency"

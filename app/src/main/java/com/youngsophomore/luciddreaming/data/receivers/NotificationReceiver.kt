@@ -15,10 +15,8 @@ import com.youngsophomore.luciddreaming.R
 class NotificationReceiver : BroadcastReceiver() {
     private var notifManager: NotificationManagerCompat? = null
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("Debug", "NotificationReceiver.onReceive()")
         val notif = context?.let { context ->
-            // тег канала потом нужно переместить в LucidDreamingApplication,
-            // где будет создаваться канал для слабых уведомлений
+            Log.d("Debug", "NotificationReceiver")
             NotificationCompat.Builder(context, LucidDreamingApplication.NOTIFS_CHANNEL_ID)
                 .setContentTitle("Проверка реальности")
                 .setContentText("Выполните проверку окружения на реальность")
@@ -32,7 +30,7 @@ class NotificationReceiver : BroadcastReceiver() {
         if (ActivityCompat.checkSelfPermission(
             context!!, Manifest.permission.POST_NOTIFICATIONS
         ) != PackageManager.PERMISSION_GRANTED){
-            Log.d("Debug", " BLYAT! Gde razreshenie???")
+            Log.d("Debug", " Missing permission")
             return
         }
         notifManager?.notify(1, notif!!)
